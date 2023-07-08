@@ -1,12 +1,20 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Swiper demo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  <style>
+  <head>
+    <meta charset="utf-8" />
+    <title>Swiper demo</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    /> <!-- Link Swiper's CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Demo styles -->
+        <style>
       html,
       body {
         position: relative;
@@ -146,39 +154,164 @@ margin-right: 70px;
     cursor: not-allowed;
   }
 
-  html,
-body {
-  position: relative;
-  height: 100% !important;
-  width: 100% !important;
-  background: #eee;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
-  margin: 0;
-  padding: 0;
+
+
+    </style>
+  </head>
+
+  <body>
+   
+<!-- Swiper -->
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444640354.jpg?k=45cf87dfc093933924e4def8f0f7a9f1e11d5ef9c75803ef23d242a87a62655f&o=" alt="salon"></div>
+    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444643706.jpg?k=702f7265392ee76414b6029ac8d04caac30109dc25c441ae438854e79789072f&o=" alt="kitchen"></div>
+    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444642261.jpg?k=a347328da01d536d5e344362fb93828ac35a7b3f7b4210d62a456160fbdce5d4&o=" alt="small room"></div>
+    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444641536.jpg?k=037d6826d1ebcb5b40db0dc123be85b13e6f3026276712e8194f793b729fd095&o=" alt="big room"></div>
+    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/443362031.jpg?k=a2cf57d76ff2b5a5a429e3176a173797eab121b7239c4455b691964d93cf4790&o=" alt="bathroom"></div>
+  </div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: "auto",
+    spaceBetween: 10,
+    pagination: {
+      el: ".swiper-pagination",
+      type: "progressbar",
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script>
+
+    <script src="https://kit.fontawesome.com/85226a432e.js" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+ <html>
+    
+    <!-- styles -->
+    <style>
+    .caleran-container .caleran-input, .caleran-container-mobile .caleran-input {
+        width: 100% !important;
+margin: 0 !important;
+
+    }
+    .caleran-container-mobile .caleran-input {
+        margin: 0 !important;
+    }
+    .caleran-container-mobile.caleran-inline .caleran-input .caleran-calendars {
+        width: 100% !important;
+margin: 0 !important;
+    }
+    .caleran-hovered
+    {
+            background: #c8e1ff !important;
+            border-radius: 0 !important;
+    }
+
+    .caleran-hovered .caleran-cell-text{
+        color: #ff1493 !important;
+    }
+
+    .caleran-hovered-last
+    {
+            background: linear-gradient(225deg, #ffffff 49%, #c8e1ff 50%) !important;
+            border-radius: 0 !important;
+    }
+
+    .caleran-hovered-last .caleran-cell-text{
+        color: #C71585 !important;
+    }
+
+    .caleran-hovered-first
+    {
+            background: linear-gradient(225deg, #c8e1ff 49%, #ffffff 50%) !important;
+            border-radius: 0 !important;
+    }
+
+  .caleran-weekend {
+        color: #000000 !important;
+    }
+  
+  .caleran-today {
+        color: #28ba39 !important;
+    }
+  
+.caleran-disabled {
+        color: #ff1000 !important;
+    }
+
+
+    .fa-arrow-left:before {
+        content: "<" !important;
+    }
+    .fa-arrow-right:before {
+        content: ">" !important;
+    }
+    .flaticon2-left-arrow:before {
+        content: "<";
+    }
+
+    .flaticon2-right-arrow:before {
+        content: ">";
+    }
+
+.calendar {
+  margin: auto;
+  
 }
+   
+
+      html,
+      body {
+        position: relative;
+        height: 100% !important;
+        width: 100% !important;
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+      .swiper {
+        width: 350px;
+        height: 180px;
+      }
 
 .text-info {
-  color: #ea9999 !important;
-  padding-top: 3%;
-  padding-left: 3%;
+        color: #ea9999 !important;
+padding-top: 3%;
+padding-left: 3%;
 }
+      
 
 .btn-info {
-  color: white;
-  background-color: #ea9999;
-  border-color: ff9494;
+    color: white;
+    background-color: #ea9999;
+    border-color: ff9494;
 }
+      
 
 .btn-info:hover {
   background-color: #FB6161;
   border-color: ff9494;
 }
 
-.fa-solid,
-fa-users {
-  color: #ea9999 !important;
+.fa-solid, fa-users {
+    color: #ea9999 !important;
 }
 
 .swiper {
@@ -204,47 +337,114 @@ fa-users {
   object-fit: contain;
 }
 
-.card-block {
-  padding: 20px;
+.card-block{
+padding: 20px;
 }
 
+.caleran-container {
+        width: 100%; !important
+  display: flex;
+  flex-direction: column;
+    }
+      
+    .caleran-container-mobile.caleran-inline .caleran-input .caleran-calendars {
+        width: 100%; !important
+      display: flex;
+      flex-direction: column;
+    }
+    .caleran-hovered
+    {
+            background: #c8e1ff !important;
+            border-radius: 0 !important;
+    }
+
+    .caleran-hovered .caleran-cell-text{
+        color: #ff1493 !important;
+    }
+
+    .caleran-hovered-last
+    {
+            background: linear-gradient(225deg, #ffffff 49%, #c8e1ff 50%) !important;
+            border-radius: 0 !important;
+    }
+
+    .caleran-hovered-last .caleran-cell-text{
+        color: #C71585 !important;
+    }
+
+    .caleran-hovered-first
+    {
+            background: linear-gradient(225deg, #c8e1ff 49%, #ffffff 50%) !important;
+            border-radius: 0 !important;
+    }
+
+  .caleran-weekend {
+        color: #000000 !important;
+    }
+  
+  .caleran-today {
+        color: #28ba39 !important;
+    }
+  
+.caleran-disabled {
+        color: #ff1000 !important;
+    }
+
+    .fa-arrow-left:before {
+        content: "<" !important;
+    }
+    .fa-arrow-right:before {
+        content: ">" !important;
+    }
+    .flaticon2-left-arrow:before {
+        content: "<";
+    }
+
+    .flaticon2-right-arrow:before {
+        content: ">";
+    }
+      
 .card-title {
   text-align: center;
 }
-
-.required-label::after {
+      
+      .required-label::after {
   content: "*";
   color: red;
 }
 
-#loading {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
+      .required-label::after {
+  content: "*";
+  color: red;
 }
+    #loading {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+    }
 
-#loading p {
-  margin-top: 10px;
-  color: #333;
-  font-size: 14px;
-  opacity: 0; /* Set initial opacity to 0 */
-  animation: fadeAnimation 2s infinite; /* Apply the animation */
-}
+  #loading p {
+    margin-top: 10px;
+    color: #333;
+    font-size: 14px;
+    opacity: 0; /* Set initial opacity to 0 */
+    animation: fadeAnimation 2s infinite; /* Apply the animation */
+  }
 
-@keyframes fadeAnimation {
-  0% {
-    opacity: 0; /* Start with fade out */
+  @keyframes fadeAnimation {
+    0% {
+      opacity: 0; /* Start with fade out */
+    }
+    50% {
+      opacity: 1; /* Fade in */
+    }
+    100% {
+      opacity: 0; /* Fade out */
+    }
   }
-  50% {
-    opacity: 1; /* Fade in */
-  }
-  100% {
-    opacity: 0; /* Fade out */
-  }
-}
 
 .separator {
   border: none;
@@ -261,7 +461,39 @@ fa-users {
 .error-message {
   margin-bottom: 5px;
 }
-    @keyframes ldio-5pc9ti1scmm {
+    </style>
+
+<div class="card-block">
+<h4 class="card-title text-info">Domek 1</h4>
+<ul class="list-inline text-sm mb-4" align="center">
+<li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Os.</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Łazienka</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 4 Łóżka</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-temperature-arrow-down"></i> Klima</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
+</ul>
+<p align="center"><a href="https://www.napanskiejgorze.com/nasze-domki/domek-1" class="btn btn-info">Więcej szczegółów</a></p>
+</div>
+
+
+  
+   
+
+
+  <body>
+<!-- Link -->
+ <input id="caleranc801df7b-671c-413e-9c14-fd996d747b3e" />
+  <link href="https://nobeds.app/src3/caleran.min.css" rel="stylesheet" type="text/css">
+<script src="https://nobeds.app/src3/plugins.bundle.js"></script>
+<script src="https://nobeds.app/src3/caleran.min.js"></script>
+<img src="https://i.ibb.co/q5bsxPT/Untitled-1.png" style="width:100px;height:35px">
+<div id="success-message"></div>
+    <div id="loading" class="loadingio-spinner-spinner-7646pt8rie"><p>Może to potrwać do 15 sekund...</p><div class="ldio-5pc9ti1scmm">
+<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+</div></div>
+<style type="text/css">
+@keyframes ldio-5pc9ti1scmm {
   0% { opacity: 1 }
   100% { opacity: 0 }
 }
@@ -343,74 +575,49 @@ fa-users {
 /* generated by https://loading.io/ */
   
   
-  </style>
-   <div id="loading" class="loadingio-spinner-spinner-7646pt8rie"><p>Może to potrwać do 15 sekund...</p><div class="ldio-5pc9ti1scmm">
-<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-</div></div>
+</style>
 
-</head>
-<body>
- <!-- Swiper -->
-<div class="swiper mySwiper">
-  <div class="swiper-wrapper">
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444640354.jpg?k=45cf87dfc093933924e4def8f0f7a9f1e11d5ef9c75803ef23d242a87a62655f&o=" alt="salon"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444643706.jpg?k=702f7265392ee76414b6029ac8d04caac30109dc25c441ae438854e79789072f&o=" alt="kitchen"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444642261.jpg?k=a347328da01d536d5e344362fb93828ac35a7b3f7b4210d62a456160fbdce5d4&o=" alt="small room"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444641536.jpg?k=037d6826d1ebcb5b40db0dc123be85b13e6f3026276712e8194f793b729fd095&o=" alt="big room"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/443362031.jpg?k=a2cf57d76ff2b5a5a429e3176a173797eab121b7239c4455b691964d93cf4790&o=" alt="bathroom"></div>
-  </div>
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-pagination"></div>
-</div>
-
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-<!-- Initialize Swiper -->
 <script>
-  var swiper = new Swiper(".mySwiper", {
-    slidesPerView: "auto",
-    spaceBetween: 10,
-    pagination: {
-      el: ".swiper-pagination",
-      type: "progressbar",
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
+  $(document).ready(function() {
+    // Parse the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const checkin = urlParams.get('checkin');
+    const checkout = urlParams.get('checkout');
+
+    // Check if the checkin and checkout dates are valid
+    if (checkin && checkout) {
+      // Convert the checkin and checkout dates to moment objects
+      const startDate = moment(checkin);
+      const endDate = moment(checkout);
+
+      // Update the form with the selected dates
+      updateForm(startDate, endDate);
+
+      // Select the dates in the calendar
+      const caleran = $("#caleranc801df7b-671c-413e-9c14-fd996d747b3e").data('caleran');
+      caleran.setSelectedDates(startDate, endDate);
+
+      // Show the form and return button
+      formContainer.show();
+      returnButton.show();
+    }
   });
-</script>
+  
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
 
-<script src="https://kit.fontawesome.com/85226a432e.js" crossorigin="anonymous"></script>
-<div class="card-block">
-<h4 class="card-title text-info">Domek 1</h4>
-<ul class="list-inline text-sm mb-4" align="center">
-<li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Os.</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Łazienka</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 4 Łóżka</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-temperature-arrow-down"></i> Klima</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
-</ul>
-<p align="center"><a href="https://www.napanskiejgorze.com/nasze-domki/domek-1" class="btn btn-info">Więcej szczegółów</a></p>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-  <script src="https://kit.fontawesome.com/85226a432e.js" crossorigin="anonymous"></script>
-  <script>
-    $(document).ready(function () {
-      // Extract checkin and checkout values from the URL parameters
-      var urlParams = new URLSearchParams(window.location.search);
-      var checkinDate = urlParams.get('checkin');
-      var checkoutDate = urlParams.get('checkout');
+    var userLanguage = 'pl' || navigator.userLanguage || navigator.language;
 
-      // Update the form with the extracted values
-      updateForm(moment(checkinDate), moment(checkoutDate));
+    var hotel = false;
+    if ("1" === 1) {
+        hotel = true;
+    }
 
-   var numberOfGuestsInput = null;
+    var formContainer = null;
+    var numberOfGuestsInput = null;
     var priceInput = null;
 var specialDayPrices = {
   '12-25': 400,  // Christmas: December 25
@@ -419,7 +626,7 @@ var specialDayPrices = {
 };
 
 
-     function updateForm(startDate, endDate) {
+    function updateForm(startDate, endDate) {
         var fromInput = formContainer.find('[name="from"]');
         var toInput = formContainer.find('[name="to"]');
         var nameInput = formContainer.find('[name="name"]');
@@ -434,14 +641,15 @@ var specialDayPrices = {
         toInput.val(endDate.format('YYYY-MM-DD'));
 
         // Calculate the price based on the number of nights and the number of guests
-        var oneNightPrice = 360;
-        var additionalPrice = 0;
-        var numberOfGuests = parseInt(numberOfGuestsInput.val());
-        var startDateFormatted = startDate.format('MM-DD');
+        // Calculate the price based on the number of nights and the number of guests
+var oneNightPrice = 360;
+var additionalPrice = 0;
+var numberOfGuests = parseInt(numberOfGuestsInput.val());
+var startDateFormatted = startDate.format('MM-DD');
 
-        if (startDateFormatted in specialDayPrices) {
-          oneNightPrice = specialDayPrices[startDateFormatted];
-        }
+if (startDateFormatted in specialDayPrices) {
+  oneNightPrice = specialDayPrices[startDateFormatted];
+}
 
 // Rest of the code remains the same
 
@@ -460,7 +668,7 @@ var specialDayPrices = {
     }
 
     // Create the form container and fields
-    formContainer = $('<div>').addClass('form-container');
+    formContainer = $('<div>').addClass('form-container').hide();
     var fromLabel = $('<label>').text('Zameldowanie: ');
     var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').prop('readonly', true);
     formContainer.append(fromLabel).append(fromInput);
@@ -633,8 +841,85 @@ if (hasError) {
 function redirectToCongratulationsPage() {
     // Redirect to the congratulatory page
     window.location.href = 'https://teteje.github.io/congrats.html'; // Replace with your actual page URL
-}    
-});
-      </script>
-</body>
+}
+    returnButton.click(function () {
+        formContainer.hide();
+        caleranContainer.show();
+    });
+    if ('1' === '1') {
+        $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (rates) {
+            $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (data) {
+
+                var caleranContainer = $('<div>').addClass('caleran-container');
+                var caleran = $("#caleranc801df7b-671c-413e-9c14-fd996d747b3e").caleran({
+                    inline: true,
+                    showHeader: false,
+                    showFooter: false,
+                    isHotelBooking: hotel,
+                    continuous: true,
+                    mobileBreakpoint: 300,
+                    isMobile: false,
+                    calendarCount: 1,
+                    minSelectedDays: 2,
+                    startEmpty: !1,
+                    locale: 'pl',
+                    dayText: rates,
+                    startOnMonday: true,
+
+                    disableDays: function (day) {
+                        return !(day.format('YYYY-MM-DD') in data) || data[day.format('YYYY-MM-DD')] == 0 ? true : false;
+                    },
+                    onbeforeselect: function (caleran, startDate, endDate) {
+                        return true; // false prevents update
+                    },
+                    onafterselect: function (caleran, startDate, endDate) {
+                        caleranContainer.hide();
+                        formContainer.show();
+                        returnButton.show();
+
+                        updateForm(startDate, endDate);
+                    },
+                });
+
+                caleranContainer.append(caleran);
+                $('body').append(caleranContainer);
+            });
+        });
+    } else {
+        $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (data) {
+            var caleranContainer = $('<div>').addClass('caleran-container');
+            var caleran = $("#caleranc801df7b-671c-413e-9c14-fd996d747b3e").caleran({
+                inline: true,
+                showHeader: false,
+                showFooter: false,
+                isHotelBooking: hotel,
+                continuous: true,
+                mobileBreakpoint: 300,
+                isMobile: false,
+                calendarCount: 1,
+                minSelectedDays: 2,
+                startEmpty: !1,
+                locale: userLanguage,
+                disableDays: function (day) {
+                    return !(day.format('YYYY-MM-DD') in data) || data[day.format('YYYY-MM-DD')] == 0 ? true : false;
+                },
+                onbeforeselect: function (caleran, startDate, endDate) {
+                    return true; // false prevents update
+                },
+                onafterselect: function (caleran, startDate, endDate) {
+                    caleranContainer.hide();
+                    formContainer.show();
+                    returnButton.show();
+
+                    updateForm(startDate, endDate);
+                },
+            });
+
+            caleranContainer.append(caleran);
+            $('body').append(caleranContainer);
+        });
+    }
+</script>
+
+    </body>
 </html>

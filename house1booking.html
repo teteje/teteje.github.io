@@ -567,62 +567,9 @@ padding: 20px;
 </style>
 
 <script>
-  function addDays(date, days) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
-
-  var urlParams = new URLSearchParams(window.location.search);
-  var checkinDate = urlParams.get('checkin');
-  var checkoutDate = urlParams.get('checkout');
-
   var formContainer = null;
   var numberOfGuestsInput = null;
   var priceInput = null;
-
-  function updateForm(startDate, endDate) {
-    var fromInput = formContainer.find('[name="from"]');
-    var toInput = formContainer.find('[name="to"]');
-    var nameInput = formContainer.find('[name="name"]');
-    var addressInput = formContainer.find('[name="address"]');
-    var emailInput = formContainer.find('[name="email"]');
-    var phoneInput = formContainer.find('[name="phone"]');
-    var commentsInput = formContainer.find('[name="comments"]');
-    numberOfGuestsInput = formContainer.find('[name="numberOfGuests"]');
-    priceInput = formContainer.find('[name="price"]');
-
-    fromInput.val(startDate);
-    toInput.val(endDate);
-
-    // Calculate the price based on the number of nights and the number of guests
-    var oneNightPrice = 360;
-    var additionalPrice = 0;
-    var numberOfGuests = parseInt(numberOfGuestsInput.val());
-    var startDateFormatted = moment(startDate, 'YYYY-MM-DD').format('MM-DD');
-
-    var specialDayPrices = {
-      '12-25': 400,  // Christmas: December 25
-      '12-26': 400,  // Christmas: December 25
-      '12-27': 400,  // Christmas: December 25
-    };
-
-    if (startDateFormatted in specialDayPrices) {
-      oneNightPrice = specialDayPrices[startDateFormatted];
-    }
-
-    if (numberOfGuests === 3) {
-      additionalPrice = 20;
-    } else if (numberOfGuests === 4) {
-      additionalPrice = 35;
-    } else if (numberOfGuests >= 5) {
-      additionalPrice = 70;
-    }
-
-    var numberOfNights = Math.ceil((moment(endDate, 'YYYY-MM-DD') - moment(startDate, 'YYYY-MM-DD')) / (1000 * 60 * 60 * 24));
-    var totalPrice = (oneNightPrice * numberOfNights) + (additionalPrice * numberOfNights);
-    priceInput.val(totalPrice);
-  }
 
   // Create the form container and fields
   formContainer = $('<div>').addClass('form-container');
@@ -693,22 +640,57 @@ padding: 20px;
   $('body').append(formContainer);
 
   numberOfGuestsSelect.change(function () {
-    var startDate = fromInput.val();
-    var endDate = toInput.val();
-    updateForm(startDate, endDate);
+    // Your logic here
   });
 
   surveyButton.click(function () {
     // Your form submission logic
   });
 
+  // Update the form based on the initial values
+  updateForm('2023-07-01', '2023-07-08');
 
-  // Display the form by default
-  formContainer.show();
+  function updateForm(startDate, endDate) {
+    var fromInput = formContainer.find('[name="from"]');
+    var toInput = formContainer.find('[name="to"]');
+    var nameInput = formContainer.find('[name="name"]');
+    var addressInput = formContainer.find('[name="address"]');
+    var emailInput = formContainer.find('[name="email"]');
+    var phoneInput = formContainer.find('[name="phone"]');
+    var commentsInput = formContainer.find('[name="comments"]');
+    numberOfGuestsInput = formContainer.find('[name="numberOfGuests"]');
+    priceInput = formContainer.find('[name="price"]');
 
-  // Update the form with the provided check-in and check-out dates
-  if (checkinDate && checkoutDate) {
-    updateForm(checkinDate, checkoutDate);
+    fromInput.val(startDate);
+    toInput.val(endDate);
+
+    // Calculate the price based on the number of nights and the number of guests
+    var oneNightPrice = 360;
+    var additionalPrice = 0;
+    var numberOfGuests = parseInt(numberOfGuestsInput.val());
+    var startDateFormatted = moment(startDate, 'YYYY-MM-DD').format('MM-DD');
+
+    var specialDayPrices = {
+      '12-25': 400,  // Christmas: December 25
+      '12-26': 400,  // Christmas: December 25
+      '12-27': 400,  // Christmas: December 25
+    };
+
+    if (startDateFormatted in specialDayPrices) {
+      oneNightPrice = specialDayPrices[startDateFormatted];
+    }
+
+    if (numberOfGuests === 3) {
+      additionalPrice = 20;
+    } else if (numberOfGuests === 4) {
+      additionalPrice = 35;
+    } else if (numberOfGuests >= 5) {
+      additionalPrice = 70;
+    }
+
+    var numberOfNights = Math.ceil((moment(endDate, 'YYYY-MM-DD') - moment(startDate, 'YYYY-MM-DD')) / (1000 * 60 * 60 * 24));
+    var totalPrice = (oneNightPrice * numberOfNights) + (additionalPrice * numberOfNights);
+    priceInput.val(totalPrice);
   }
 </script>
 

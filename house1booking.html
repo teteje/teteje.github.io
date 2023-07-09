@@ -299,16 +299,19 @@
 </div>
     <!-- Form container -->
     <div id="form-container">
-      <div id="error-container"></div>
+      
+
 
       <!-- Form fields will be added here dynamically -->
     </div>
+    
   </div>
+  
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<div class="loading">
+<div class="ldio-5pc9ti1scmm">
 <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
 <script>
@@ -406,9 +409,6 @@ formContainer.append(priceLabel).append(priceInput);
     // Create the submit button
     var submitButton = $('<button>').attr('type', 'submit').text('Submit');
     formContainer.append(submitButton);
-    
-  
-
 
     // Get the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -451,23 +451,55 @@ formContainer.append(priceLabel).append(priceInput);
       priceInput.val(totalPrice);
     });
   }
-   
-   function showError(message) {
-  var errorContainer = $('#error-container');
-  errorContainer.empty(); // Clear existing error messages
-  
-  var errorMessage = $('<div>').addClass('error-message').text(message);
-  errorContainer.append(errorMessage);
+  // Create a function to handle the form submission
+  function submitForm() {
+    // Prepare the form data
+    var formData = new FormData();
+    formData.append('entry.877086558', fromInput.val());
+    formData.append('entry.665948324', toInput.val());
+    formData.append('entry.1287236081', numberOfGuestsInput.val());
+    formData.append('entry.79383842', priceInput.val());
+    formData.append('entry.1498135098', nameInput.val());
+    formData.append('entry.652505441', addressInput.val());
+    formData.append('entry.793117739', emailInput.val());
+    formData.append('entry.1455513917', phoneInput.val());
+    formData.append('entry.2606285', commentsInput.val());
+    formData.append('entry.1847943848', acceptInput.prop('checked') ? 'Accept' : '');
 
-  // Scroll to the bottom of the error container
-  $('html, body').animate({
-    scrollTop: errorContainer.offset().top + errorContainer.height()
-  }, 500);
-}
+    // Show loading GIF
+    $('#loading').show();
 
-   
-   
+    // Send the AJAX request
+    $.ajax({
+      url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        // Hide loading GIF
+        $('#loading').hide();
 
+        // Redirect to congratulatory page
+        redirectToCongratulationsPage();
+      },
+      error: function () {
+        // Hide loading GIF
+        $('#loading').hide();
+
+        // Redirect to congratulatory page
+        redirectToCongratulationsPage();
+      }
+    });
+  }
+
+  // Attach the submitForm function to the click event of the submit button
+  $('button[type="submit"]').click(function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Call the submitForm function
+    submitForm();
+  });
   // Call the updateForm function to generate the form
   updateForm();
 });

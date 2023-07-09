@@ -310,203 +310,205 @@
 <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
 <script>
- $(document).ready(function () {
-  // Pricing logic
-  var specialDayPrices = {
-    '12-25': 400,  // Christmas: December 25
-    '12-26': 400,  // Christmas: December 26
-    '12-27': 400,  // Christmas: December 27
-  };
+  $(document).ready(function () {
+    // Pricing logic
+    var specialDayPrices = {
+      '12-25': 400, // Christmas: December 25
+      '12-26': 400, // Christmas: December 26
+      '12-27': 400, // Christmas: December 27
+    };
 
-  var normalDayPrice = 360;
-  var additionalPrice = 0;
+    var normalDayPrice = 360;
+    var additionalPrice = 0;
 
-  function calculateTotalPrice(startDate, endDate, numberOfGuests) {
-    var oneNightPrice = normalDayPrice;
-    var startDateFormatted = startDate.format('MM-DD');
+    function calculateTotalPrice(startDate, endDate, numberOfGuests) {
+      var oneNightPrice = normalDayPrice;
+      var startDateFormatted = startDate.format('MM-DD');
 
-    if (startDateFormatted in specialDayPrices) {
-      oneNightPrice = specialDayPrices[startDateFormatted];
+      if (startDateFormatted in specialDayPrices) {
+        oneNightPrice = specialDayPrices[startDateFormatted];
+      }
+
+      if (numberOfGuests === 3) {
+        additionalPrice = 20;
+      } else if (numberOfGuests === 4) {
+        additionalPrice = 35;
+      } else if (numberOfGuests >= 5) {
+        additionalPrice = 70;
+      }
+
+      var numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+      var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
+      return totalPrice;
     }
 
-    if (numberOfGuests === 3) {
-      additionalPrice = 20;
-    } else if (numberOfGuests === 4) {
-      additionalPrice = 35;
-    } else if (numberOfGuests >= 5) {
-      additionalPrice = 70;
+    var checkin;
+    var checkout;
+
+    function updateForm() {
+      var formContainer = $('#form-container');
+      // Clear existing form fields
+      formContainer.empty();
+
+      // Add the form fields dynamically
+      var fromLabel = $('<label>').text('Check-in:');
+      var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').addClass('read-only-field');
+      formContainer.append(fromLabel).append(fromInput);
+
+      var toLabel = $('<label>').text('Check-out:');
+      var toInput = $('<input>').attr('type', 'text').attr('name', 'to').addClass('read-only-field');
+      formContainer.append(toLabel).append(toInput);
+
+      var priceLabel = $('<label>').text('Cena: ');
+      var priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field');
+      formContainer.append(priceLabel).append(priceInput);
+
+      var numberOfGuestsLabel = $('<label>').text('Liczba gości:').addClass('required-label');
+      var numberOfGuestsSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
+      numberOfGuestsSelect.append('<option value="1">1 osoba</option>');
+      numberOfGuestsSelect.append('<option value="2">2 osoby</option>');
+      numberOfGuestsSelect.append('<option value="3">3 osoby</option>');
+      numberOfGuestsSelect.append('<option value="4">4 osoby</option>');
+      numberOfGuestsSelect.append('<option value="5">5 osób</option>');
+      numberOfGuestsSelect.append('<option value="6">6 osób</option>');
+      formContainer.append(numberOfGuestsLabel).append(numberOfGuestsSelect);
+
+      var nameLabel = $('<label>').text('Imię i nazwisko:').addClass('required-label');
+      var nameInput = $('<input>').attr('type', 'text').attr('name', 'name').prop('required', true);
+      formContainer.append(nameLabel).append(nameInput);
+
+      var addressLabel = $('<label>').text('Adres:').addClass('required-label');
+      var addressInput = $('<input>').attr('type', 'text').attr('name', 'address').prop('required', true);
+      formContainer.append(addressLabel).append(addressInput);
+
+      var emailLabel = $('<label>').text('Email:').addClass('required-label');
+      var emailInput = $('<input>').attr('type', 'email').attr('name', 'email').prop('required', true);
+      formContainer.append(emailLabel).append(emailInput);
+
+      var phoneLabel = $('<label>').text('Nr kontaktowy:').addClass('required-label');
+      var phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true);
+      formContainer.append(phoneLabel).append(phoneInput);
+
+      var commentsLabel = $('<label>').text('Uwagi: ');
+      var commentsInput = $('<textarea>').attr('name', 'comments');
+      formContainer.append(commentsLabel).append(commentsInput);
+
+      var acceptContainer = $('<div>').addClass('accept-container');
+      var acceptLabel = $('<label>').text('Zapoznałem się z regulaminem obiektu:').addClass('required-label');
+      var acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
+      var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu');
+
+      acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
+      formContainer.append(acceptContainer);
+
+      // Add a separator
+      var separator = $('<hr>').addClass('separator');
+      formContainer.append(separator);
+
+      // Create the submit button
+      var submitButton = $('<button>').attr('type', 'submit').text('Submit');
+      formContainer.append(submitButton);
+
+      // Get the URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      checkin = urlParams.get('checkin');
+      checkout = urlParams.get('checkout');
+
+      // Set the values of the fromInput and toInput fields
+      fromInput.val(checkin);
+      toInput.val(checkout);
+
+      // Calculate and set the initial price
+      var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+      var startDate = moment(checkin);
+      var endDate = moment(checkout);
+      var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+      priceInput.val(totalPrice);
+
+      // Update the price when the number of guests or check-in date changes
+      numberOfGuestsSelect.on('change', function () {
+        var numberOfGuests = parseInt($(this).val());
+        var startDate = moment(checkin);
+        var endDate = moment(checkout);
+        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+        priceInput.val(totalPrice);
+      });
+
+      fromInput.on('change', function () {
+        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+        var startDate = moment($(this).val());
+        var endDate = moment(checkout);
+        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+        priceInput.val(totalPrice);
+      });
+
+      toInput.on('change', function () {
+        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+        var startDate = moment(checkin);
+        var endDate = moment($(this).val());
+        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+        priceInput.val(totalPrice);
+      });
     }
 
-    var numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-    var totalPrice = (oneNightPrice * numberOfNights) + (additionalPrice * numberOfNights);
-    return totalPrice;
+   // Show error messages and scroll to the error container
+var errorContainer = $('<div>').attr('id', 'error-container');
+formContainer.append(errorContainer);
+
+function showError(message) {
+  var errorMessage = $('<div>').addClass('error-message').text(message);
+  errorContainer.append(errorMessage);
+
+  // Scroll to the bottom of the error container
+  $('html, body').animate({
+    scrollTop: errorContainer.offset().top + errorContainer.height()
+  }, 500);
+}
+
+submitButton.click(function (event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  // Remove previous error messages
+  errorContainer.empty();
+
+  // Check if terms and conditions are accepted
+  if (!acceptInput.prop('checked')) {
+    showError('Proszę zaakceptować warunki.');
+    return;
   }
 
-  var checkin;
-  var checkout;
+  // Email validation
+  var emailValue = emailInput.val();
+  if (emailValue.indexOf('@') === -1 || emailValue.indexOf('.') === -1) {
+    showError('Proszę wprowadzić prawidłowy email.');
+    return;
+  }
 
-function updateForm() {
-  var formContainer = $('#form-container');
-  // Clear existing form fields
-  formContainer.empty();
+  var inputs = formContainer.find('input[required], textarea[required]');
+  var hasError = false;
 
-  // Add the form fields dynamically
-  var fromLabel = $('<label>').text('Check-in:');
-  var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').addClass('read-only-field');
-  formContainer.append(fromLabel).append(fromInput);
+  inputs.each(function () {
+    var inputValue = $(this).val().trim();
+    var inputLabel = $(this).prev('label').text();
 
-  var toLabel = $('<label>').text('Check-out:');
-  var toInput = $('<input>').attr('type', 'text').attr('name', 'to').addClass('read-only-field');
-  formContainer.append(toLabel).append(toInput);
-
-  var priceLabel = $('<label>').text('Cena: ');
-  var priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field');
-  formContainer.append(priceLabel).append(priceInput);
-
-  var numberOfGuestsLabel = $('<label>').text('Liczba gości:').addClass('required-label');
-  var numberOfGuestsSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
-  numberOfGuestsSelect.append('<option value="1">1 osoba</option>');
-  numberOfGuestsSelect.append('<option value="2">2 osoby</option>');
-  numberOfGuestsSelect.append('<option value="3">3 osoby</option>');
-  numberOfGuestsSelect.append('<option value="4">4 osoby</option>');
-  numberOfGuestsSelect.append('<option value="5">5 osób</option>');
-  numberOfGuestsSelect.append('<option value="6">6 osób</option>');
-  formContainer.append(numberOfGuestsLabel).append(numberOfGuestsSelect);
-
-  var nameLabel = $('<label>').text('Imię i nazwisko:').addClass('required-label');
-  var nameInput = $('<input>').attr('type', 'text').attr('name', 'name').prop('required', true);
-  formContainer.append(nameLabel).append(nameInput);
-
-  var addressLabel = $('<label>').text('Adres:').addClass('required-label');
-  var addressInput = $('<input>').attr('type', 'text').attr('name', 'address').prop('required', true);
-  formContainer.append(addressLabel).append(addressInput);
-
-  var emailLabel = $('<label>').text('Email:').addClass('required-label');
-  var emailInput = $('<input>').attr('type', 'email').attr('name', 'email').prop('required', true);
-  formContainer.append(emailLabel).append(emailInput);
-
-  var phoneLabel = $('<label>').text('Nr kontaktowy:').addClass('required-label');
-  var phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true);
-  formContainer.append(phoneLabel).append(phoneInput);
-
-  var commentsLabel = $('<label>').text('Uwagi: ');
-  var commentsInput = $('<textarea>').attr('name', 'comments');
-  formContainer.append(commentsLabel).append(commentsInput);
-
-  var acceptContainer = $('<div>').addClass('accept-container');
-  var acceptLabel = $('<label>').text('Zapoznałem się z regulaminem obiektu:').addClass('required-label');
-  var acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
-  var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu');
-
-  acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
-  formContainer.append(acceptContainer);
-
-  // Add a separator
-  var separator = $('<hr>').addClass('separator');
-  formContainer.append(separator);
-
-  // Create the submit button
-  var submitButton = $('<button>').attr('type', 'submit').text('Submit');
-  formContainer.append(submitButton);
-
-  // Get the URL parameters
-  const urlParams = new URLSearchParams(window.location.search);
-  checkin = urlParams.get('checkin');
-  checkout = urlParams.get('checkout');
-
-  // Set the values of the fromInput and toInput fields
-  fromInput.val(checkin);
-  toInput.val(checkout);
-
-  // Calculate and set the initial price
-  var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-  var startDate = moment(checkin);
-  var endDate = moment(checkout);
-  var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-  priceInput.val(totalPrice);
-
-  // Update the price when the number of guests or check-in date changes
-  numberOfGuestsSelect.on('change', function () {
-    var numberOfGuests = parseInt($(this).val());
-    var startDate = moment(checkin);
-    var endDate = moment(checkout);
-    var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-    priceInput.val(totalPrice);
-  });
-
-  fromInput.on('change', function () {
-    var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-    var startDate = moment($(this).val());
-    var endDate = moment(checkout);
-    var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-    priceInput.val(totalPrice);
-  });
-
-  toInput.on('change', function () {
-    var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-    var startDate = moment(checkin);
-    var endDate = moment($(this).val());
-    var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-    priceInput.val(totalPrice);
-  });
-}
-    // Show error messages and scroll to error container
-    var errorContainer = $('<div>').attr('id', 'error-container');
-    formContainer.append(errorContainer);
-
-    function showError(message) {
-      var errorMessage = $('<div>').addClass('error-message').text(message);
-      errorContainer.append(errorMessage);
-
-      // Scroll to the bottom of the error container
-      $('html, body').animate({
-        scrollTop: errorContainer.offset().top + errorContainer.height()
-      }, 500);
+    if (inputValue === '') {
+      showError('Proszę wypełnić wymagane pole: ' + inputLabel);
+      hasError = true;
     }
+  });
 
-    submitButton.click(function () {
-      // Remove previous error messages
-      errorContainer.empty();
+  // Show or hide the error container
+  if (hasError) {
+    errorContainer.show();
+    return; // Block the process and prevent form submission
+  } else {
+    errorContainer.hide();
 
-      // Check if terms and conditions are accepted
-      if (!acceptInput.prop('checked')) {
-        showError('Proszę zaakceptować warunki.');
-        return;
-      }
-
-      // Email validation
-      var emailValue = emailInput.val();
-      if (emailValue.indexOf('@') === -1 || emailValue.indexOf('.') === -1) {
-        showError('Proszę wprowadzić prawidłowy email.');
-        return;
-      }
-
-      var inputs = formContainer.find('input[required], textarea[required]');
-      var hasError = false;
-
-      for (var i = 0; i < inputs.length; i++) {
-        var input = inputs[i];
-        var inputValue = input.value.trim();
-        var inputLabel = $(input).prev('label').text();
-        if (inputValue === '') {
-          showError('Proszę wypełnić wymagane pola: ' + inputLabel);
-          hasError = true;
-        }
-      }
-
-      // Show or hide the error container
-      if (hasError) {
-        errorContainer.show();
-        return; // Block the process and prevent form submission
-      } else {
-        errorContainer.hide();
-
-        
     // Prepare the form data
     var formData = new FormData();
     formData.append('entry.877086558', fromInput.val());
     formData.append('entry.665948324', toInput.val());
-    formData.append('entry.1287236081', numberOfGuestsInput.val());
+    formData.append('entry.1287236081', numberOfGuestsSelect.val());
     formData.append('entry.79383842', priceInput.val());
     formData.append('entry.1498135098', nameInput.val());
     formData.append('entry.652505441', addressInput.val());
@@ -514,42 +516,42 @@ function updateForm() {
     formData.append('entry.1455513917', phoneInput.val());
     formData.append('entry.2606285', commentsInput.val());
     formData.append('entry.1847943848', acceptInput.prop('checked') ? 'Accept' : '');
-  
-      // Show loading GIF
-    $('#loading').show();
 
+    // Show loading GIF
+    $('#loading').show();
 
     // Send the AJAX request
     $.ajax({
-        url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            // Hide loading GIF
-            $('#loading').hide();
+      url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        // Hide loading GIF
+        $('#loading').hide();
 
-            // Redirect to congratulatory page
-            redirectToCongratulationsPage();
-        },
-        error: function () {
-            // Hide loading GIF
-            $('#loading').hide();
+        // Redirect to congratulatory page
+        redirectToCongratulationsPage();
+      },
+      error: function () {
+        // Hide loading GIF
+        $('#loading').hide();
 
-            // Redirect to congratulatory page
-            redirectToCongratulationsPage();
-        }
+        // Redirect to congratulatory page
+        redirectToCongratulationsPage();
+      }
     });
+  }
 });
-           
+
 function redirectToCongratulationsPage() {
-    // Redirect to the congratulatory page
-    window.location.href = 'https://teteje.github.io/congrats.html'; // Replace with your actual page URL
+  // Redirect to the congratulatory page
+  window.location.href = 'https://teteje.github.io/congrats.html'; // Replace with your actual page URL
 }
-   
-  // Call the updateForm function to generate the form
-  updateForm();
+
+// Call the updateForm function to generate the form
+updateForm();
 });
 </script>
 </body>

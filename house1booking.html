@@ -313,9 +313,9 @@
   $(document).ready(function () {
     // Pricing logic
     var specialDayPrices = {
-      '12-25': 400, // Christmas: December 25
-      '12-26': 400, // Christmas: December 26
-      '12-27': 400, // Christmas: December 27
+      '12-25': 400,  // Christmas: December 25
+      '12-26': 400,  // Christmas: December 26
+      '12-27': 400,  // Christmas: December 27
     };
 
     var normalDayPrice = 360;
@@ -338,19 +338,21 @@
       }
 
       var numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-      var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
+      var totalPrice = (oneNightPrice * numberOfNights) + (additionalPrice * numberOfNights);
       return totalPrice;
     }
 
     var checkin;
     var checkout;
 
+    // Declare variables outside the updateForm function
+    var submitButton, acceptInput, formContainer, errorContainer;
+
     function updateForm() {
-      var formContainer = $('#form-container');
+      formContainer = $('#form-container');
       // Clear existing form fields
       formContainer.empty();
 
-      // Add the form fields dynamically
       var fromLabel = $('<label>').text('Check-in:');
       var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').addClass('read-only-field');
       formContainer.append(fromLabel).append(fromInput);
@@ -394,8 +396,8 @@
       formContainer.append(commentsLabel).append(commentsInput);
 
       var acceptContainer = $('<div>').addClass('accept-container');
+      acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
       var acceptLabel = $('<label>').text('Zapoznałem się z regulaminem obiektu:').addClass('required-label');
-      var acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
       var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu');
 
       acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
@@ -406,8 +408,12 @@
       formContainer.append(separator);
 
       // Create the submit button
-      var submitButton = $('<button>').attr('type', 'submit').text('Submit');
+      submitButton = $('<button>').attr('type', 'submit').text('Submit');
       formContainer.append(submitButton);
+
+      // Create the error container
+      errorContainer = $('<div>').attr('id', 'error-container');
+      formContainer.append(errorContainer);
 
       // Get the URL parameters
       const urlParams = new URLSearchParams(window.location.search);
@@ -425,7 +431,7 @@
       var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
       priceInput.val(totalPrice);
 
-      // Update the price when the number of guests or check-in date changes
+      // Update the price when number of guests or check-in date changes
       numberOfGuestsSelect.on('change', function () {
         var numberOfGuests = parseInt($(this).val());
         var startDate = moment(checkin);
@@ -441,35 +447,18 @@
         var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
         priceInput.val(totalPrice);
       });
+      
+     toInput.on('change', function () {
+  var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+  var startDate = moment(checkin);
+  var endDate = moment($(this).val());
+  var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+  priceInput.val(totalPrice);
+});
 
-      toInput.on('change', function () {
-        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-        var startDate = moment(checkin);
-        var endDate = moment($(this).val());
-        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-        priceInput.val(totalPrice);
-      });
-    }
-
-   // Show error messages and scroll to the error container
-var errorContainer = $('<div>').attr('id', 'error-container');
-formContainer.append(errorContainer);
-
-function showError(message) {
-  var errorMessage = $('<div>').addClass('error-message').text(message);
-  errorContainer.append(errorMessage);
-
-  // Scroll to the bottom of the error container
-  $('html, body').animate({
-    scrollTop: errorContainer.offset().top + errorContainer.height()
-  }, 500);
-}
-
-submitButton.click(function (event) {
-  event.preventDefault(); // Prevent the default form submission
-
-  // Remove previous error messages
-  errorContainer.empty();
+// Check if terms and conditions are accepted
+submitButton.on('click', function (e) {
+  e.preventDefault(); // Prevent form submission
 
   // Check if terms and conditions are accepted
   if (!acceptInput.prop('checked')) {
@@ -486,68 +475,86 @@ submitButton.click(function (event) {
 
   var inputs = formContainer.find('input[required], textarea[required]');
   var hasError = false;
-
-  inputs.each(function () {
-    var inputValue = $(this).val().trim();
-    var inputLabel = $(this).prev('label').text();
-
+  for (var i = 0; i < inputs.length; i++) {
+    var input = inputs[i];
+    var inputValue = input.value.trim();
+    var inputLabel = $(input).prev('label').text();
     if (inputValue === '') {
       showError('Proszę wypełnić wymagane pole: ' + inputLabel);
       hasError = true;
     }
-  });
+  }
 
   // Show or hide the error container
   if (hasError) {
     errorContainer.show();
-    return; // Block the process and prevent form submission
   } else {
     errorContainer.hide();
-
-    // Prepare the form data
-    var formData = new FormData();
-    formData.append('entry.877086558', fromInput.val());
-    formData.append('entry.665948324', toInput.val());
-    formData.append('entry.1287236081', numberOfGuestsSelect.val());
-    formData.append('entry.79383842', priceInput.val());
-    formData.append('entry.1498135098', nameInput.val());
-    formData.append('entry.652505441', addressInput.val());
-    formData.append('entry.793117739', emailInput.val());
-    formData.append('entry.1455513917', phoneInput.val());
-    formData.append('entry.2606285', commentsInput.val());
-    formData.append('entry.1847943848', acceptInput.prop('checked') ? 'Accept' : '');
-
-    // Show loading GIF
-    $('#loading').show();
-
-    // Send the AJAX request
-    $.ajax({
-      url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (response) {
-        // Hide loading GIF
-        $('#loading').hide();
-
-        // Redirect to congratulatory page
-        redirectToCongratulationsPage();
-      },
-      error: function () {
-        // Hide loading GIF
-        $('#loading').hide();
-
-        // Redirect to congratulatory page
-        redirectToCongratulationsPage();
-      }
-    });
+    // Proceed with form submission
+    submitForm();
   }
 });
 
+// Function to submit the form
+function submitForm() {
+  // Prepare the form data
+  var formData = new FormData();
+  formData.append('entry.877086558', fromInput.val());
+  formData.append('entry.665948324', toInput.val());
+  formData.append('entry.1287236081', numberOfGuestsSelect.val());
+  formData.append('entry.79383842', priceInput.val());
+  formData.append('entry.1498135098', nameInput.val());
+  formData.append('entry.652505441', addressInput.val());
+  formData.append('entry.793117739', emailInput.val());
+  formData.append('entry.1455513917', phoneInput.val());
+  formData.append('entry.2606285', commentsInput.val());
+  formData.append('entry.1847943848', acceptInput.prop('checked') ? 'Accept' : '');
+
+  // Show loading GIF
+  $('#loading').show();
+
+  // Send the AJAX request
+  $.ajax({
+    url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (response) {
+      // Hide loading GIF
+      $('#loading').hide();
+
+      // Redirect to congratulatory page
+      redirectToCongratulationsPage();
+    },
+    error: function () {
+      // Hide loading GIF
+      $('#loading').hide();
+
+      // Redirect to congratulatory page
+      redirectToCongratulationsPage();
+    }
+  });
+}
+
+// Function to redirect to the congratulatory page
 function redirectToCongratulationsPage() {
   // Redirect to the congratulatory page
   window.location.href = 'https://teteje.github.io/congrats.html'; // Replace with your actual page URL
+}
+
+// Function to show error messages and scroll to error container
+function showError(message) {
+  var errorContainer = $('#error-container');
+  errorContainer.empty(); // Clear existing error messages
+
+  var errorMessage = $('<div>').addClass('error-message').text(message);
+  errorContainer.append(errorMessage);
+
+  // Scroll to the bottom of the error container
+  $('html, body').animate({
+    scrollTop: errorContainer.offset().top + errorContainer.height()
+  }, 500);
 }
 
 // Call the updateForm function to generate the form

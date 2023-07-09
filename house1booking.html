@@ -428,12 +428,18 @@ formContainer.append(priceLabel).append(priceInput);
 
     // Update the price when number of guests or check-in date changes
     numberOfGuestsSelect.on('change', function () {
-      var numberOfGuests = parseInt($(this).val());
-      var startDate = moment(checkin);
-      var endDate = moment(checkout);
-      var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-      priceInput.val(totalPrice);
-    });
+  var numberOfGuests = parseInt($(this).val());
+  var startDate = moment(checkin);
+  var endDate = moment(checkout);
+
+  // Reset additionalPrice if number of guests is changed to 1
+  if (numberOfGuests === 1) {
+    additionalPrice = 0;
+  }
+
+  var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+  priceInput.val(totalPrice);
+});
 
     fromInput.on('change', function () {
       var numberOfGuests = parseInt(numberOfGuestsSelect.val());

@@ -355,15 +355,15 @@
     // Clear existing form fields
     formContainer.empty();
         var fromLabel = $('<label>').text('Check-in:');
-var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').addClass('read-only-field');
+var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').addClass('read-only-field').attr('readonly', true);
 formContainer.append(fromLabel).append(fromInput);
 
 var toLabel = $('<label>').text('Check-out:');
-var toInput = $('<input>').attr('type', 'text').attr('name', 'to').addClass('read-only-field');
+var toInput = $('<input>').attr('type', 'text').attr('name', 'to').addClass('read-only-field').attr('readonly', true);
 formContainer.append(toLabel).append(toInput);
 
 var priceLabel = $('<label>').text('Cena: ');
-var priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field');
+var priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field').attr('readonly', true);
 formContainer.append(priceLabel).append(priceInput);
 
     var numberOfGuestsLabel = $('<label>').text('Liczba gości:').addClass('required-label');

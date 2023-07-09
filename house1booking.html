@@ -336,34 +336,21 @@
 <div class="loading">
 <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
-  <script>
+ <script>
     $(document).ready(function () {
       function updateForm() {
         var formContainer = $('#form-container');
-
         // Clear existing form fields
-        
         formContainer.empty();
-   // Extract parameters from the URL
-    var urlParams = new URLSearchParams(window.location.search);
-    var fromValue = urlParams.get('from');
-    var toValue = urlParams.get('to');
-
-    // Set the input values
-    fromInput.val(fromValue);
-    toInput.val(toValue);
         var fromLabel = $('<label>').text('Check-in:');
         var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').prop('readonly', true);
         formContainer.append(fromLabel).append(fromInput);
-
         var toLabel = $('<label>').text('Check-out:');
         var toInput = $('<input>').attr('type', 'text').attr('name', 'to').prop('readonly', true);
         formContainer.append(toLabel).append(toInput);
-
         var priceLabel = $('<label>').text('Price:');
         var priceInput = $('<input>').attr('type', 'text').attr('name', 'price').prop('readonly', true);
         formContainer.append(priceLabel).append(priceInput);
-
         var numberOfGuestsLabel = $('<label>').text('Number of Guests:');
         var numberOfGuestsSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
         numberOfGuestsSelect.append('<option value="1">1 person</option>');
@@ -373,47 +360,49 @@
         numberOfGuestsSelect.append('<option value="5">5 people</option>');
         numberOfGuestsSelect.append('<option value="6">6 people</option>');
         formContainer.append(numberOfGuestsLabel).append(numberOfGuestsSelect);
-
         var nameLabel = $('<label>').text('Name:');
         var nameInput = $('<input>').attr('type', 'text').attr('name', 'name').prop('required', true);
         formContainer.append(nameLabel).append(nameInput);
-
         var addressLabel = $('<label>').text('Address:');
         var addressInput = $('<input>').attr('type', 'text').attr('name', 'address').prop('required', true);
         formContainer.append(addressLabel).append(addressInput);
-
         var emailLabel = $('<label>').text('Email:');
         var emailInput = $('<input>').attr('type', 'email').attr('name', 'email').prop('required', true);
         formContainer.append(emailLabel).append(emailInput);
-
         var phoneLabel = $('<label>').text('Phone Number:');
         var phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true);
         formContainer.append(phoneLabel).append(phoneInput);
-
         var commentsLabel = $('<label>').text('Comments:');
         var commentsInput = $('<textarea>').attr('name', 'comments');
         formContainer.append(commentsLabel).append(commentsInput);
-
         var acceptContainer = $('<div>').addClass('accept-container');
         var acceptLabel = $('<label>').text('I have read and accept the terms and conditions:');
         var acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
         var termsLink = $('<a>').attr('href', 'https://www.example.com/terms').attr('target', '_blank').text('Terms and Conditions');
         acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
         formContainer.append(acceptContainer);
-
         // Add a separator
         var separator = $('<hr>').addClass('separator');
         formContainer.append(separator);
-
         // Create the submit button
         var submitButton = $('<button>').attr('type', 'submit').text('Submit');
         formContainer.append(submitButton);
+
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const checkin = urlParams.get('checkin');
+        const checkout = urlParams.get('checkout');
+
+        // Set the values of the fromInput and toInput fields
+        fromInput.val(checkin);
+        toInput.val(checkout);
       }
 
       // Call the updateForm function to generate the form
       updateForm();
     });
   </script>
+
 
 </body>
 

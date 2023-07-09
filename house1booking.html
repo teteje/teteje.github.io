@@ -16,7 +16,171 @@
 
   <!-- Demo styles -->
   <style>
-    /* Your custom CSS styles here */
+     <style>
+    html,
+    body {
+      position: relative;
+      height: 100%;
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .text-info {
+      color: #ea9999 !important;
+      padding-top: 3%;
+      padding-left: 3%;
+    }
+
+    .btn-info {
+      color: white;
+      background-color: #ea9999;
+      border-color: #ff9494;
+    }
+
+    .btn-info:hover {
+      background-color: #fb6161;
+      border-color: #ff9494;
+    }
+
+    .btn-info:active {
+      background-color: #fb6161 !important;
+      border-color: #ff9494 !important;
+    }
+
+    .Guestselection {
+      color: white;
+      background-color: #ea9999;
+      border-color: #ff9494;
+      width: 100px;
+      margin: auto;
+      font-size: 16px;
+    }
+
+    .Guestselection:hover {
+      background-color: #fb6161;
+      border-color: #ff9494;
+    }
+
+    .Guestselection:active {
+      background-color: #fb6161 !important;
+      border-color: #ff9494 !important;
+    }
+
+    .fa-solid,
+    fa-users {
+      color: #ea9999 !important;
+    }
+
+    /* Style for the form container */
+    .form-container {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    /* Style for the labels */
+    .form-container label {
+      display: block;
+      margin-bottom: 0px;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0px;
+    }
+
+    /* Style for the input fields */
+    .form-container input[type="text"] {
+      width: 200px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background-color: #fff;
+    }
+
+    /* Style for the "Book!" button */
+    .form-container button {
+      margin-top: 0px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 3px;
+      background-color: #ea9999;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .form-container button:last-child {
+      margin-top: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
+    .accept-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0px;
+      margin-right: 70px;
+    }
+
+    .accept-container label {
+      margin-right: 0px;
+    }
+
+    .read-only-field {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+    }
+
+    .card-block {
+      padding: 20px;
+    }
+
+    .card-title {
+      text-align: center;
+    }
+
+    .required-label::after {
+      content: "*";
+      color: red;
+    }
+
+    .separator {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    #error-container {
+      margin-top: 10px;
+      padding: 10px;
+      color: #ff0000;
+    }
+
+    .error-message {
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 
@@ -47,43 +211,23 @@
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Initialize Swiper -->
-  <script>
-    // Your Swiper initialization script here
-  </script>
-
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <script>
     $(document).ready(function () {
-      // Parse the URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
-      const checkin = urlParams.get('checkin');
-      const checkout = urlParams.get('checkout');
-
-      // Check if the checkin and checkout dates are valid
-      if (checkin && checkout) {
-        // Convert the checkin and checkout dates to moment objects
-        const startDate = moment(checkin);
-        const endDate = moment(checkout);
-
- // Update the form with the selected dates
-        updateForm(startDate, endDate);
-      }
-
-      function updateForm(startDate, endDate) {
+      function updateForm() {
         var formContainer = $('#form-container');
 
         // Clear existing form fields
         formContainer.empty();
 
         var fromLabel = $('<label>').text('Check-in:');
-        var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').prop('readonly', true).val(startDate.format('YYYY-MM-DD'));
+        var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').prop('readonly', true);
         formContainer.append(fromLabel).append(fromInput);
 
         var toLabel = $('<label>').text('Check-out:');
-        var toInput = $('<input>').attr('type', 'text').attr('name', 'to').prop('readonly', true).val(endDate.format('YYYY-MM-DD'));
+        var toInput = $('<input>').attr('type', 'text').attr('name', 'to').prop('readonly', true);
         formContainer.append(toLabel).append(toInput);
 
         var priceLabel = $('<label>').text('Price:');
@@ -130,13 +274,17 @@
         // Add a separator
         var separator = $('<hr>').addClass('separator');
         formContainer.append(separator);
-        
-         // Create the submit button
-  var submitButton = $('<button>').attr('type', 'submit').text('Submit');
-  formContainer.append(submitButton);
-}
-      
+
+        // Create the submit button
+        var submitButton = $('<button>').attr('type', 'submit').text('Submit');
+        formContainer.append(submitButton);
+      }
+
+      // Call the updateForm function to generate the form
+      updateForm();
+    });
   </script>
-  
-    </body>
+
+</body>
+
 </html>

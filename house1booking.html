@@ -446,7 +446,56 @@ formContainer.append(priceLabel).append(priceInput);
       priceInput.val(totalPrice);
     });
   }
+    // Show error messages and scroll to error container
+    var errorContainer = $('<div>').attr('id', 'error-container');
+    formContainer.append(errorContainer);
 
+    function showError(message) {
+      var errorMessage = $('<div>').addClass('error-message').text(message);
+      errorContainer.append(errorMessage);
+
+      // Scroll to the bottom of the error container
+      $('html, body').animate({
+        scrollTop: errorContainer.offset().top + errorContainer.height()
+      }, 500);
+    }
+
+    surveyButton.click(function () {
+      // Remove previous error messages
+      errorContainer.empty();
+
+      // Check if terms and conditions are accepted
+      if (!acceptInput.prop('checked')) {
+        showError('Proszę zaakceptować warunki.');
+        return;
+      }
+
+      // Email validation
+      var emailValue = emailInput.val();
+      if (emailValue.indexOf('@') === -1 || emailValue.indexOf('.') === -1) {
+        showError('Proszę wprowadzić prawidłowy email.');
+        return;
+      }
+
+      var inputs = formContainer.find('input[required], textarea[required]');
+      var hasError = false;
+
+      for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        var inputValue = input.value.trim();
+        var inputLabel = $(input).prev('label').text();
+        if (inputValue === '') {
+          showError('Proszę wypełnić wymagane pola: ' + inputLabel);
+          hasError = true;
+        }
+      }
+
+      // Show or hide the error container
+      if (hasError) {
+        errorContainer.show();
+        return; // Block the process and prevent form submission
+      } else {
+        errorContainer.hide();
   // Call the updateForm function to generate the form
   updateForm();
 });

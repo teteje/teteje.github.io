@@ -16,171 +16,7 @@
 
   <!-- Demo styles -->
   <style>
-     <style>
-    html,
-    body {
-      position: relative;
-      height: 100%;
-      background: #eee;
-      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      color: #000;
-      margin: 0;
-      padding: 0;
-    }
-
-    .text-info {
-      color: #ea9999 !important;
-      padding-top: 3%;
-      padding-left: 3%;
-    }
-
-    .btn-info {
-      color: white;
-      background-color: #ea9999;
-      border-color: #ff9494;
-    }
-
-    .btn-info:hover {
-      background-color: #fb6161;
-      border-color: #ff9494;
-    }
-
-    .btn-info:active {
-      background-color: #fb6161 !important;
-      border-color: #ff9494 !important;
-    }
-
-    .Guestselection {
-      color: white;
-      background-color: #ea9999;
-      border-color: #ff9494;
-      width: 100px;
-      margin: auto;
-      font-size: 16px;
-    }
-
-    .Guestselection:hover {
-      background-color: #fb6161;
-      border-color: #ff9494;
-    }
-
-    .Guestselection:active {
-      background-color: #fb6161 !important;
-      border-color: #ff9494 !important;
-    }
-
-    .fa-solid,
-    fa-users {
-      color: #ea9999 !important;
-    }
-
-    /* Style for the form container */
-    .form-container {
-      margin: 20px;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #ffffff;
-      border: 1px solid #ccc;
-    }
-
-    .form-container input,
-    .form-container select,
-    .form-container textarea {
-      width: 100%;
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-
-    /* Style for the labels */
-    .form-container label {
-      display: block;
-      margin-bottom: 0px;
-      font-weight: bold;
-      display: block;
-      margin-bottom: 0px;
-    }
-
-    /* Style for the input fields */
-    .form-container input[type="text"] {
-      width: 200px;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      background-color: #fff;
-    }
-
-    /* Style for the "Book!" button */
-    .form-container button {
-      margin-top: 0px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 3px;
-      background-color: #ea9999;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .form-container button:last-child {
-      margin-top: 0;
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-    }
-
-    .accept-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0px;
-      margin-right: 70px;
-    }
-
-    .accept-container label {
-      margin-right: 0px;
-    }
-
-    .read-only-field {
-      background-color: #f0f0f0;
-      cursor: not-allowed;
-    }
-
-    .card-block {
-      padding: 20px;
-    }
-
-    .card-title {
-      text-align: center;
-    }
-
-    .required-label::after {
-      content: "*";
-      color: red;
-    }
-
-    .separator {
-      border: none;
-      border-top: 1px solid #ccc;
-      margin: 20px 0;
-    }
-
-    #error-container {
-      margin-top: 10px;
-      padding: 10px;
-      color: #ff0000;
-    }
-
-    .error-message {
-      margin-bottom: 5px;
-    }
+    /* Your custom CSS styles here */
   </style>
 </head>
 
@@ -278,6 +114,15 @@
         // Create the submit button
         var submitButton = $('<button>').attr('type', 'submit').text('Submit');
         formContainer.append(submitButton);
+
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const checkin = urlParams.get('checkin');
+        const checkout = urlParams.get('checkout');
+
+        // Set the values of the fromInput and toInput fields
+        fromInput.val(checkin);
+        toInput.val(checkout);
       }
 
       // Call the updateForm function to generate the form

@@ -389,35 +389,42 @@
       const checkin = urlParams.get('checkin');
       const checkout = urlParams.get('checkout');
 
-      // Set the values of the fromInput and toInput fields
-      fromInput.val(checkin);
-      toInput.val(checkout);
+  // Set the values of the fromInput and toInput fields
+fromInput.val(checkin);
+toInput.val(checkout);
 
-      // Update the price when number of guests or check-in date changes
-      numberOfGuestsSelect.on('change', function () {
-        var numberOfGuests = parseInt($(this).val());
-        var startDate = moment(checkin);
-        var endDate = moment(checkout);
-        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-        priceInput.val(totalPrice);
-      });
+// Calculate and set the initial price
+var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+var startDate = moment(checkin);
+var endDate = moment(checkout);
+var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+priceInput.val(totalPrice);
 
-      fromInput.on('change', function () {
-        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-        var startDate = moment($(this).val());
-        var endDate = moment(checkout);
-        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-        priceInput.val(totalPrice);
-      });
+// Update the price when number of guests or check-in date changes
+numberOfGuestsSelect.on('change', function () {
+  var numberOfGuests = parseInt($(this).val());
+  var startDate = moment(checkin);
+  var endDate = moment(checkout);
+  var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+  priceInput.val(totalPrice);
+});
 
-      toInput.on('change', function () {
-        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-        var startDate = moment(checkin);
-        var endDate = moment($(this).val());
-        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-        priceInput.val(totalPrice);
-      });
-    }
+fromInput.on('change', function () {
+  var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+  var startDate = moment($(this).val());
+  var endDate = moment(checkout);
+  var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+  priceInput.val(totalPrice);
+});
+
+toInput.on('change', function () {
+  var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+  var startDate = moment(checkin);
+  var endDate = moment($(this).val());
+  var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
+  priceInput.val(totalPrice);
+});
+
 
     // Call the updateForm function to generate the form
     updateForm();

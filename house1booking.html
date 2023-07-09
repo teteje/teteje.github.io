@@ -388,7 +388,8 @@
     var acceptContainer = $('<div>').addClass('accept-container');
     var acceptLabel = $('<label>').text('Zapoznałem się z regulaminem obiektu:').addClass('required-label');
     var acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
-    var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu);
+    var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu');
+
     acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
     formContainer.append(acceptContainer);
     // Add a separator

@@ -342,8 +342,16 @@
         var formContainer = $('#form-container');
 
         // Clear existing form fields
+        
         formContainer.empty();
+   // Extract parameters from the URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var fromValue = urlParams.get('from');
+    var toValue = urlParams.get('to');
 
+    // Set the input values
+    fromInput.val(fromValue);
+    toInput.val(toValue);
         var fromLabel = $('<label>').text('Check-in:');
         var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').prop('readonly', true);
         formContainer.append(fromLabel).append(fromInput);

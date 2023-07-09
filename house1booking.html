@@ -320,7 +320,7 @@
     var specialDayPrices = {
       '12-25': 400, // Christmas: December 25
       '12-26': 400, // Christmas: December 26
-      '12-27': 400, // Christmas: December 27
+      '12-27': 400 // Christmas: December 27
     };
 
     var normalDayPrice = 360;
@@ -410,7 +410,7 @@
 
       acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
       formContainer.append(acceptContainer);
-      // Add a separator
+           // Add a separator
       var separator = $('<hr>').addClass('separator');
       formContainer.append(separator);
 
@@ -478,95 +478,55 @@
 
     var submitButton = $('#submitBtn');
 
-   submitButton.on('click', function(e) {
-  e.preventDefault(); // Prevent the default form submission behavior
+    submitButton.on('click', function(e) {
+      e.preventDefault(); // Prevent the default form submission behavior
 
-  // Hide any existing error messages
-  $('.error-container').remove();
+      // Show the loading GIF
+      $('#loading').show();
 
-  // Perform form validation
-  var isValid = true;
+      // Get form data
+      var formData = {
+        checkin: checkin,
+        checkout: checkout,
+        numberOfGuests: numberOfGuestsSelect.val(),
+        name: nameInput.val(),
+        address: addressInput.val(),
+        email: emailInput.val(),
+        phone: phoneInput.val(),
+        comments: commentsInput.val(),
+        accept: acceptInput.prop('checked')
+      };
 
-  // Check if all mandatory fields are filled
-  var mandatoryFields = ['numberOfGuests', 'name', 'address', 'email', 'phone', 'accept'];
-  for (var i = 0; i < mandatoryFields.length; i++) {
-    var field = mandatoryFields[i];
-    var fieldValue = $('#' + field).val();
-    if (!fieldValue) {
-      isValid = false;
-      showErrorMessage(field, 'Please fill in all required fields.');
-    }
-  }
+      // Submit the form data via AJAX
+      $.ajax({
+        url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+          // Hide loading GIF
+          $('#loading').hide();
 
-  // Validate the phone number format
-  var phoneNumber = $('#phone').val();
-  var phoneRegex = /^\d+$/;
-  if (!phoneRegex.test(phoneNumber)) {
-    isValid = false;
-    showErrorMessage('phone', 'Please provide a valid phone number.');
-  }
+          // Redirect to congratulatory page
+          redirectToCongratulationsPage();
+        },
+        error: function() {
+          // Hide loading GIF
+          $('#loading').hide();
 
-  // Validate the email format
-  var email = $('#email').val();
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    isValid = false;
-    showErrorMessage('email', 'Please provide a valid email.');
-  }
-
-  if (isValid) {
-    // Show the loading GIF
-    $('#loading').show();
-
-    // Get form data
-    var formData = {
-      checkin: checkin,
-      checkout: checkout,
-      numberOfGuests: numberOfGuestsSelect.val(),
-      name: nameInput.val(),
-      address: addressInput.val(),
-      email: emailInput.val(),
-      phone: phoneInput.val(),
-      comments: commentsInput.val(),
-      accept: acceptInput.prop('checked')
-    };
-
-    // Submit the form data via AJAX
-    $.ajax({
-      url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
-      type: 'POST',
-      data: formData,
-      success: function(response) {
-        // Hide loading GIF
-        $('#loading').hide();
-
-        // Redirect to congratulatory page
-        redirectToCongratulationsPage();
-      },
-      error: function() {
-        // Hide loading GIF
-        $('#loading').hide();
-
-        // Redirect to congratulatory page
-        redirectToCongratulationsPage();
-      }
+          // Redirect to congratulatory page
+          redirectToCongratulationsPage();
+        }
+      });
     });
-  }
-}); // <-- Add this closing parenthesis
 
-function redirectToCongratulationsPage() {
-  // Redirect to the congratulatory page
-  window.location.href = 'https://teteje.github.io/congrats.html';
-}
-
-    function showErrorMessage(field, message) {
-  var errorContainer = $('<div>').addClass('error-container');
-  var errorMessage = $('<p>').addClass('error-message').text(message);
-  $('[name="' + field + '"]').after(errorContainer.append(errorMessage));
-}
-
+    function redirectToCongratulationsPage() {
+      // Redirect to the congratulatory page
+      window.location.href = 'https://teteje.github.io/congrats.html';
+    }
   });
 </script>
+
+
 
 
 </body>

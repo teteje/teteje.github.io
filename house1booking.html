@@ -496,6 +496,54 @@ formContainer.append(priceLabel).append(priceInput);
         return; // Block the process and prevent form submission
       } else {
         errorContainer.hide();
+
+        
+    // Prepare the form data
+    var formData = new FormData();
+    formData.append('entry.877086558', fromInput.val());
+    formData.append('entry.665948324', toInput.val());
+    formData.append('entry.1287236081', numberOfGuestsInput.val());
+    formData.append('entry.79383842', priceInput.val());
+    formData.append('entry.1498135098', nameInput.val());
+    formData.append('entry.652505441', addressInput.val());
+    formData.append('entry.793117739', emailInput.val());
+    formData.append('entry.1455513917', phoneInput.val());
+    formData.append('entry.2606285', commentsInput.val());
+    formData.append('entry.1847943848', acceptInput.prop('checked') ? 'Accept' : '');
+  
+      // Show loading GIF
+    $('#loading').show();
+
+
+    // Send the AJAX request
+    $.ajax({
+        url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            // Hide loading GIF
+            $('#loading').hide();
+
+            // Redirect to congratulatory page
+            redirectToCongratulationsPage();
+        },
+        error: function () {
+            // Hide loading GIF
+            $('#loading').hide();
+
+            // Redirect to congratulatory page
+            redirectToCongratulationsPage();
+        }
+    });
+});
+           
+function redirectToCongratulationsPage() {
+    // Redirect to the congratulatory page
+    window.location.href = 'https://teteje.github.io/congrats.html'; // Replace with your actual page URL
+}
+   
   // Call the updateForm function to generate the form
   updateForm();
 });

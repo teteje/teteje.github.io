@@ -1,925 +1,142 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Swiper demo</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
-    /> <!-- Link Swiper's CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
-    />
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-    <!-- Demo styles -->
-        <style>
-      html,
-      body {
-        position: relative;
-        height: 100%;
-        background: #eee;
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color: #000;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+  <meta charset="utf-8" />
+  <title>Swiper demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
 
-          
-.text-info {
-        color: #ea9999 !important;
-padding-top: 3%;
-padding-left: 3%;
-}
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
 
-.btn-info {
-    color: white;
-    background-color: #ea9999;
-    border-color: #ff9494;
-}
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-.btn-info:hover {
-  background-color: #FB6161;
-  border-color: #ff9494;
-}
+  <!-- Demo styles -->
+  <style>
+    /* Your custom CSS styles here */
+  </style>
+</head>
 
-.btn-info:active {
-background-color: #FB6161 !important;
-  border-color: #ff9494 !important;
-}
+<body>
+  <!-- Swiper -->
+  <div class="swiper mySwiper">
+    <!-- Your card div content here -->
+    <div class="card-block">
+      <h4 class="card-title text-info">Domek 1</h4>
+      <ul class="list-inline text-sm mb-4" align="center">
+        <li class="list-inline-item me-3"><i class="fas fa-users"></i> 6 Os.</li>
+        <li class="list-inline-item me-3"><i class="fas fa-shower"></i> 1 Łazienka</li>
+        <li class="list-inline-item me-3"><i class="fas fa-bed"></i> 4 Łóżka</li>
+        <li class="list-inline-item me-3"><i class="fas fa-square-parking"></i> 1 Park.</li>
+        <li class="list-inline-item me-3"><i class="fas fa-temperature-arrow-down"></i> Klima</li>
+        <li class="list-inline-item me-3"><i class="fas fa-wifi"></i> WiFi</li>
+      </ul>
+      <p align="center"><a href="https://www.napanskiejgorze.com/nasze-domki/domek-1" class="btn btn-info">Więcej
+          szczegółów</a></p>
+    </div>
 
-      
-.Guestselection {
-    color: white;
-    background-color: #ea9999;
-    border-color: #ff9494;
-  width: 100px;
-  margin: auto;
-  font-size: 16px;
-
-  
-}
-
-.Guestselection:hover {
-  background-color: #FB6161;
-  border-color: #ff9494;
-}
-
-.Guestselection:active {
-background-color: #FB6161 !important;
-  border-color: #ff9494 !important;
-}
-.fa-solid, fa-users {
-    color: #ea9999 !important;
-}
-
-    /* Style for the form container */
-    .form-container {
-        margin: 20px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-             display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #ffffff;
-        border: 1px solid #ccc;
-    }
-          
-         .form-container input,
-    .form-container select,
-    .form-container textarea {
-        width: 100%;
-        padding: 5px;
-        margin-bottom: 10px;
-    }
-
-    /* Style for the labels */
-    .form-container label {
-        display: block;
-        margin-bottom: 0px;
-        font-weight: bold;
-              display: block;
-        margin-bottom: 0px;
-    }
-    }
-
-    /* Style for the input fields */
-    .form-container input[type="text"] {
-        width: 200px;
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background-color: #fff;
-    }
-
-    /* Style for the "Book!" button */
-    .form-container button {
-        margin-top: 0px;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 3px;
-        background-color: #ea9999;
-        color: #fff;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-    .form-container button:last-child {
-        margin-top: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-    }
-    .accept-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0px;
-margin-right: 70px;
-    }
-
-    .accept-container label {
-        margin-right: 0px;
-    }
-          
-
-  .read-only-field {
-    background-color: #f0f0f0;
-    cursor: not-allowed;
-  }
-
-
-
-    </style>
-  </head>
-
-  <body>
-   
-<!-- Swiper -->
-<div class="swiper mySwiper">
-  <div class="swiper-wrapper">
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444640354.jpg?k=45cf87dfc093933924e4def8f0f7a9f1e11d5ef9c75803ef23d242a87a62655f&o=" alt="salon"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444643706.jpg?k=702f7265392ee76414b6029ac8d04caac30109dc25c441ae438854e79789072f&o=" alt="kitchen"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444642261.jpg?k=a347328da01d536d5e344362fb93828ac35a7b3f7b4210d62a456160fbdce5d4&o=" alt="small room"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444641536.jpg?k=037d6826d1ebcb5b40db0dc123be85b13e6f3026276712e8194f793b729fd095&o=" alt="big room"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/443362031.jpg?k=a2cf57d76ff2b5a5a429e3176a173797eab121b7239c4455b691964d93cf4790&o=" alt="bathroom"></div>
+    <!-- Form container -->
+    <div id="form-container">
+      <!-- Form fields will be added here dynamically -->
+    </div>
   </div>
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-pagination"></div>
-</div>
 
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-<!-- Initialize Swiper -->
-<script>
-  var swiper = new Swiper(".mySwiper", {
-    slidesPerView: "auto",
-    spaceBetween: 10,
-    pagination: {
-      el: ".swiper-pagination",
-      type: "progressbar",
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-  });
-</script>
-
-    <script src="https://kit.fontawesome.com/85226a432e.js" crossorigin="anonymous"></script>
-  </body>
-</html>
-
- <html>
-    
-    <!-- styles -->
-    <style>
-    .caleran-container .caleran-input, .caleran-container-mobile .caleran-input {
-        width: 100% !important;
-margin: 0 !important;
-
-    }
-    .caleran-container-mobile .caleran-input {
-        margin: 0 !important;
-    }
-    .caleran-container-mobile.caleran-inline .caleran-input .caleran-calendars {
-        width: 100% !important;
-margin: 0 !important;
-    }
-    .caleran-hovered
-    {
-            background: #c8e1ff !important;
-            border-radius: 0 !important;
-    }
-
-    .caleran-hovered .caleran-cell-text{
-        color: #ff1493 !important;
-    }
-
-    .caleran-hovered-last
-    {
-            background: linear-gradient(225deg, #ffffff 49%, #c8e1ff 50%) !important;
-            border-radius: 0 !important;
-    }
-
-    .caleran-hovered-last .caleran-cell-text{
-        color: #C71585 !important;
-    }
-
-    .caleran-hovered-first
-    {
-            background: linear-gradient(225deg, #c8e1ff 49%, #ffffff 50%) !important;
-            border-radius: 0 !important;
-    }
-
-  .caleran-weekend {
-        color: #000000 !important;
-    }
-  
-  .caleran-today {
-        color: #28ba39 !important;
-    }
-  
-.caleran-disabled {
-        color: #ff1000 !important;
-    }
-
-
-    .fa-arrow-left:before {
-        content: "<" !important;
-    }
-    .fa-arrow-right:before {
-        content: ">" !important;
-    }
-    .flaticon2-left-arrow:before {
-        content: "<";
-    }
-
-    .flaticon2-right-arrow:before {
-        content: ">";
-    }
-
-.calendar {
-  margin: auto;
-  
-}
-   
-
-      html,
-      body {
-        position: relative;
-        height: 100% !important;
-        width: 100% !important;
-        background: #eee;
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color: #000;
-        margin: 0;
-        padding: 0;
-      }
-
-      .swiper {
-        width: 350px;
-        height: 180px;
-      }
-
-.text-info {
-        color: #ea9999 !important;
-padding-top: 3%;
-padding-left: 3%;
-}
-      
-
-.btn-info {
-    color: white;
-    background-color: #ea9999;
-    border-color: ff9494;
-}
-      
-
-.btn-info:hover {
-  background-color: #FB6161;
-  border-color: ff9494;
-}
-
-.fa-solid, fa-users {
-    color: #ea9999 !important;
-}
-
-.swiper {
-  max-width: 550px;
-  max-height: 300px;
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.card-block{
-padding: 20px;
-}
-
-.caleran-container {
-        width: 100%; !important
-  display: flex;
-  flex-direction: column;
-    }
-      
-    .caleran-container-mobile.caleran-inline .caleran-input .caleran-calendars {
-        width: 100%; !important
-      display: flex;
-      flex-direction: column;
-    }
-    .caleran-hovered
-    {
-            background: #c8e1ff !important;
-            border-radius: 0 !important;
-    }
-
-    .caleran-hovered .caleran-cell-text{
-        color: #ff1493 !important;
-    }
-
-    .caleran-hovered-last
-    {
-            background: linear-gradient(225deg, #ffffff 49%, #c8e1ff 50%) !important;
-            border-radius: 0 !important;
-    }
-
-    .caleran-hovered-last .caleran-cell-text{
-        color: #C71585 !important;
-    }
-
-    .caleran-hovered-first
-    {
-            background: linear-gradient(225deg, #c8e1ff 49%, #ffffff 50%) !important;
-            border-radius: 0 !important;
-    }
-
-  .caleran-weekend {
-        color: #000000 !important;
-    }
-  
-  .caleran-today {
-        color: #28ba39 !important;
-    }
-  
-.caleran-disabled {
-        color: #ff1000 !important;
-    }
-
-    .fa-arrow-left:before {
-        content: "<" !important;
-    }
-    .fa-arrow-right:before {
-        content: ">" !important;
-    }
-    .flaticon2-left-arrow:before {
-        content: "<";
-    }
-
-    .flaticon2-right-arrow:before {
-        content: ">";
-    }
-      
-.card-title {
-  text-align: center;
-}
-      
-      .required-label::after {
-  content: "*";
-  color: red;
-}
-
-      .required-label::after {
-  content: "*";
-  color: red;
-}
-    #loading {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-    }
-
-  #loading p {
-    margin-top: 10px;
-    color: #333;
-    font-size: 14px;
-    opacity: 0; /* Set initial opacity to 0 */
-    animation: fadeAnimation 2s infinite; /* Apply the animation */
-  }
-
-  @keyframes fadeAnimation {
-    0% {
-      opacity: 0; /* Start with fade out */
-    }
-    50% {
-      opacity: 1; /* Fade in */
-    }
-    100% {
-      opacity: 0; /* Fade out */
-    }
-  }
-
-.separator {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 20px 0;
-}
-
-#error-container {
-  margin-top: 10px;
-  padding: 10px;
-  color: #ff0000;
-}
-
-.error-message {
-  margin-bottom: 5px;
-}
-    </style>
-
-<div class="card-block">
-<h4 class="card-title text-info">Domek 1</h4>
-<ul class="list-inline text-sm mb-4" align="center">
-<li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Os.</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Łazienka</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 4 Łóżka</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-temperature-arrow-down"></i> Klima</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
-</ul>
-<p align="center"><a href="https://www.napanskiejgorze.com/nasze-domki/domek-1" class="btn btn-info">Więcej szczegółów</a></p>
-</div>
-
-
-  
-   
-
-
-  <body>
-<!-- Link -->
- <input id="caleranc801df7b-671c-413e-9c14-fd996d747b3e" />
-  <link href="https://nobeds.app/src3/caleran.min.css" rel="stylesheet" type="text/css">
-<script src="https://nobeds.app/src3/plugins.bundle.js"></script>
-<script src="https://nobeds.app/src3/caleran.min.js"></script>
-<img src="https://i.ibb.co/q5bsxPT/Untitled-1.png" style="width:100px;height:35px">
-<div id="success-message"></div>
-    <div id="loading" class="loadingio-spinner-spinner-7646pt8rie"><p>Może to potrwać do 15 sekund...</p><div class="ldio-5pc9ti1scmm">
-<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-</div></div>
-<style type="text/css">
-@keyframes ldio-5pc9ti1scmm {
-  0% { opacity: 1 }
-  100% { opacity: 0 }
-}
-.ldio-5pc9ti1scmm div {
-  left: 94px;
-  top: 48px;
-  position: absolute;
-  animation: ldio-5pc9ti1scmm linear 1s infinite;
-  background: #fe718d;
-  width: 12px;
-  height: 24px;
-  border-radius: 6px / 12px;
-  transform-origin: 6px 52px;
-}.ldio-5pc9ti1scmm div:nth-child(1) {
-  transform: rotate(0deg);
-  animation-delay: -0.9166666666666666s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(2) {
-  transform: rotate(30deg);
-  animation-delay: -0.8333333333333334s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(3) {
-  transform: rotate(60deg);
-  animation-delay: -0.75s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(4) {
-  transform: rotate(90deg);
-  animation-delay: -0.6666666666666666s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(5) {
-  transform: rotate(120deg);
-  animation-delay: -0.5833333333333334s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(6) {
-  transform: rotate(150deg);
-  animation-delay: -0.5s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(7) {
-  transform: rotate(180deg);
-  animation-delay: -0.4166666666666667s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(8) {
-  transform: rotate(210deg);
-  animation-delay: -0.3333333333333333s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(9) {
-  transform: rotate(240deg);
-  animation-delay: -0.25s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(10) {
-  transform: rotate(270deg);
-  animation-delay: -0.16666666666666666s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(11) {
-  transform: rotate(300deg);
-  animation-delay: -0.08333333333333333s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(12) {
-  transform: rotate(330deg);
-  animation-delay: 0s;
-  background: #fe718d;
-}
-.loadingio-spinner-spinner-7646pt8rie {
-  width: 200px;
-  height: 200px;
-  display: inline-block;
-  overflow: hidden;
-  background: rgba(NaN, NaN, NaN, 0);
-}
-.ldio-5pc9ti1scmm {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform: translateZ(0) scale(1);
-  backface-visibility: hidden;
-  transform-origin: 0 0; /* see note above */
-}
-.ldio-5pc9ti1scmm div { box-sizing: content-box; }
-/* generated by https://loading.io/ */
-  
-  
-</style>
-
-<script>
-  $(document).ready(function() {
-    // Parse the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const checkin = urlParams.get('checkin');
-    const checkout = urlParams.get('checkout');
-
-    // Check if the checkin and checkout dates are valid
-    if (checkin && checkout) {
-      // Convert the checkin and checkout dates to moment objects
-      const startDate = moment(checkin);
-      const endDate = moment(checkout);
-
-      // Update the form with the selected dates
-      updateForm(startDate, endDate);
-
-      // Select the dates in the calendar
-      const caleran = $("#caleranc801df7b-671c-413e-9c14-fd996d747b3e").data('caleran');
-      caleran.setSelectedDates(startDate, endDate);
-
-      // Show the form and return button
-      formContainer.show();
-      returnButton.show();
-    }
-  });
-  
-    function addDays(date, days) {
-        var result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result;
-    }
-
-    var userLanguage = 'pl' || navigator.userLanguage || navigator.language;
-
-    var hotel = false;
-    if ("1" === 1) {
-        hotel = true;
-    }
-
-    var formContainer = null;
-    var numberOfGuestsInput = null;
-    var priceInput = null;
-var specialDayPrices = {
-  '12-25': 400,  // Christmas: December 25
-   '12-26': 400,  // Christmas: December 25
-   '12-27': 400,  // Christmas: December 25
-};
-
-
-    function updateForm(startDate, endDate) {
-        var fromInput = formContainer.find('[name="from"]');
-        var toInput = formContainer.find('[name="to"]');
-        var nameInput = formContainer.find('[name="name"]');
-        var addressInput = formContainer.find('[name="address"]');
-        var emailInput = formContainer.find('[name="email"]');
-        var phoneInput = formContainer.find('[name="phone"]');
-        var commentsInput = formContainer.find('[name="comments"]');
-        numberOfGuestsInput = formContainer.find('[name="numberOfGuests"]');
-        priceInput = formContainer.find('[name="price"]');
-
-        fromInput.val(startDate.format('YYYY-MM-DD'));
-        toInput.val(endDate.format('YYYY-MM-DD'));
-
-        // Calculate the price based on the number of nights and the number of guests
-        // Calculate the price based on the number of nights and the number of guests
-var oneNightPrice = 360;
-var additionalPrice = 0;
-var numberOfGuests = parseInt(numberOfGuestsInput.val());
-var startDateFormatted = startDate.format('MM-DD');
-
-if (startDateFormatted in specialDayPrices) {
-  oneNightPrice = specialDayPrices[startDateFormatted];
-}
-
-// Rest of the code remains the same
-
-
-        if (numberOfGuests === 3) {
-            additionalPrice = 20;
-        } else if (numberOfGuests === 4) {
-            additionalPrice = 35;
-        } else if (numberOfGuests >= 5) {
-            additionalPrice = 70;
-        }
-
-        var numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-        var totalPrice = (oneNightPrice * numberOfNights) + (additionalPrice * numberOfNights);
-        priceInput.val(totalPrice);
-    }
-
-    // Create the form container and fields
-    formContainer = $('<div>').addClass('form-container').hide();
-    var fromLabel = $('<label>').text('Zameldowanie: ');
-    var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').prop('readonly', true);
-    formContainer.append(fromLabel).append(fromInput);
-
-    fromInput.addClass('read-only-field');
-
-    var toLabel = $('<label>').text('Wymeldowanie: ');
-    var toInput = $('<input>').attr('type', 'text').attr('name', 'to').prop('readonly', true);
-    formContainer.append(toLabel).append(toInput);
-
-    toInput.addClass('read-only-field');
-
-
-    var priceLabel = $('<label>').text('Cena: ');
-    priceInput = $('<input>').attr('type', 'text').attr('name', 'price').prop('readonly', true).addClass('read-only-field');
-    formContainer.append(priceLabel).append(priceInput);
-  
-  
-    var numberOfGuestsLabel = $('<label>').text('Liczba gości:').addClass('required-label');
-    var numberOfGuestsSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
-    numberOfGuestsSelect.append('<option value="1">1 osoba</option>');
-    numberOfGuestsSelect.append('<option value="2">2 osoby</option>');
-    numberOfGuestsSelect.append('<option value="3">3 osoby</option>');
-    numberOfGuestsSelect.append('<option value="4">4 osoby</option>');
-    numberOfGuestsSelect.append('<option value="5">5 osób</option>');
-    numberOfGuestsSelect.append('<option value="6">6 osób</option>');
-    formContainer.append(numberOfGuestsLabel).append(numberOfGuestsSelect);
-
-    var nameLabel = $('<label>').text('Imię i nazwisko:').addClass('required-label');
-    var nameInput = $('<input>').attr('type', 'text').attr('name', 'name').prop('required', true);
-    formContainer.append(nameLabel).append(nameInput);
-
-    var addressLabel = $('<label>').text('Adres:').addClass('required-label');
-    var addressInput = $('<input>').attr('type', 'text').attr('name', 'address').prop('required', true);
-    formContainer.append(addressLabel).append(addressInput);
-
-    var emailLabel = $('<label>').text('Email:').addClass('required-label');
-    var emailInput = $('<input>').attr('type', 'email').attr('name', 'email').prop('required', true);
-    formContainer.append(emailLabel).append(emailInput);
-
-    var phoneLabel = $('<label>').text('Nr kontaktowy:').addClass('required-label');
-    var phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true);
-    formContainer.append(phoneLabel).append(phoneInput);
-
-    var commentsLabel = $('<label>').text('Uwagi: ');
-    var commentsInput = $('<textarea>').attr('name', 'comments');
-    formContainer.append(commentsLabel).append(commentsInput);
-
-    var acceptContainer = $('<div>').addClass('accept-container');
-    var acceptLabel = $('<label>').text('Zapoznalem się z regulaminem obiektu:').addClass('required-label');
-    var acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
-    var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu');
-
-    acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
-    formContainer.append(acceptContainer);
-// Add a separator here
-var separator = $('<hr>').addClass('separator');
-formContainer.append(separator);
-
-var surveyButton = $('<button>').attr('type', 'button').text('Rezerwacja!');
-formContainer.append(surveyButton);
-
-var returnButton = $('<button>').attr('type', 'button').text('Powrót').hide();
-formContainer.append(returnButton);
-
-$('body').append(formContainer);
-
-    numberOfGuestsSelect.change(function () {
-        var startDate = moment(fromInput.val(), 'YYYY-MM-DD');
-        var endDate = moment(toInput.val(), 'YYYY-MM-DD');
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    // Your Swiper initialization script here
+  </script>
+
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Parse the URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const checkin = urlParams.get('checkin');
+      const checkout = urlParams.get('checkout');
+
+      // Check if the checkin and checkout dates are valid
+      if (checkin && checkout) {
+        // Convert the checkin and checkout dates to moment objects
+        const startDate = moment(checkin);
+        const endDate = moment(checkout);
+
+ // Update the form with the selected dates
         updateForm(startDate, endDate);
-    });
+      }
 
-// Create the error container element
-var errorContainer = $('<div>').attr('id', 'error-container');
+      function updateForm(startDate, endDate) {
+        var formContainer = $('#form-container');
 
-// Append the error container to the form container
-formContainer.append(errorContainer);
+        // Clear existing form fields
+        formContainer.empty();
 
-// Function to show error messages and scroll to error container
-function showError(message) {
-  var errorMessage = $('<div>').addClass('error-message').text(message);
-  errorContainer.append(errorMessage);
+        var fromLabel = $('<label>').text('Check-in:');
+        var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').prop('readonly', true).val(startDate.format('YYYY-MM-DD'));
+        formContainer.append(fromLabel).append(fromInput);
 
-// Scroll to the bottom of the error container
-$('html, body').animate({
-  scrollTop: errorContainer.offset().top + errorContainer.height()
-}, 500);
-   }
+        var toLabel = $('<label>').text('Check-out:');
+        var toInput = $('<input>').attr('type', 'text').attr('name', 'to').prop('readonly', true).val(endDate.format('YYYY-MM-DD'));
+        formContainer.append(toLabel).append(toInput);
 
-surveyButton.click(function () {
-  // Remove previous error messages
-  errorContainer.empty();
+        var priceLabel = $('<label>').text('Price:');
+        var priceInput = $('<input>').attr('type', 'text').attr('name', 'price').prop('readonly', true);
+        formContainer.append(priceLabel).append(priceInput);
 
-  // Check if terms and conditions are accepted
-  if (!acceptInput.prop('checked')) {
-    showError('Proszę zaakceptować warunki.');
-    return;
-  }
+        var numberOfGuestsLabel = $('<label>').text('Number of Guests:');
+        var numberOfGuestsSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
+        numberOfGuestsSelect.append('<option value="1">1 person</option>');
+        numberOfGuestsSelect.append('<option value="2">2 people</option>');
+        numberOfGuestsSelect.append('<option value="3">3 people</option>');
+        numberOfGuestsSelect.append('<option value="4">4 people</option>');
+        numberOfGuestsSelect.append('<option value="5">5 people</option>');
+        numberOfGuestsSelect.append('<option value="6">6 people</option>');
+        formContainer.append(numberOfGuestsLabel).append(numberOfGuestsSelect);
 
-  // Email validation
-  var emailValue = emailInput.val();
-  if (emailValue.indexOf('@') === -1 || emailValue.indexOf('.') === -1) {
-    showError('Proszę wprowadzić prawidłowy email.');
-    return;
-  }
+        var nameLabel = $('<label>').text('Name:');
+        var nameInput = $('<input>').attr('type', 'text').attr('name', 'name').prop('required', true);
+        formContainer.append(nameLabel).append(nameInput);
 
-    var inputs = formContainer.find('input[required], textarea[required]');
-  var hasError = false;
-for (var i = 0; i < inputs.length; i++) {
-  var input = inputs[i];
-  var inputValue = input.value.trim();
-  var inputLabel = $(input).prev('label').text();
-  if (inputValue === '') {
-    showError('Proszę wypełnić wymagane pola: ' + inputLabel);
-    hasError = true;
-  }
+        var addressLabel = $('<label>').text('Address:');
+        var addressInput = $('<input>').attr('type', 'text').attr('name', 'address').prop('required', true);
+        formContainer.append(addressLabel).append(addressInput);
+
+        var emailLabel = $('<label>').text('Email:');
+        var emailInput = $('<input>').attr('type', 'email').attr('name', 'email').prop('required', true);
+        formContainer.append(emailLabel).append(emailInput);
+
+        var phoneLabel = $('<label>').text('Phone Number:');
+        var phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true);
+        formContainer.append(phoneLabel).append(phoneInput);
+
+        var commentsLabel = $('<label>').text('Comments:');
+        var commentsInput = $('<textarea>').attr('name', 'comments');
+        formContainer.append(commentsLabel).append(commentsInput);
+
+        var acceptContainer = $('<div>').addClass('accept-container');
+        var acceptLabel = $('<label>').text('I have read and accept the terms and conditions:');
+        var acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
+        var termsLink = $('<a>').attr('href', 'https://www.example.com/terms').attr('target', '_blank').text('Terms and Conditions');
+        acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
+        formContainer.append(acceptContainer);
+
+        // Add a separator
+        var separator = $('<hr>').addClass('separator');
+        formContainer.append(separator);
+        
+         // Create the submit button
+  var submitButton = $('<button>').attr('type', 'submit').text('Submit');
+  formContainer.append(submitButton);
 }
-
-// Show or hide the error container
-if (hasError) {
-  errorContainer.show();
-  return; // Block the process and prevent form submission
-} else {
-  errorContainer.hide();
-}
-
-
-    // Prepare the form data
-    var formData = new FormData();
-    formData.append('entry.877086558', fromInput.val());
-    formData.append('entry.665948324', toInput.val());
-    formData.append('entry.1287236081', numberOfGuestsInput.val());
-    formData.append('entry.79383842', priceInput.val());
-    formData.append('entry.1498135098', nameInput.val());
-    formData.append('entry.652505441', addressInput.val());
-    formData.append('entry.793117739', emailInput.val());
-    formData.append('entry.1455513917', phoneInput.val());
-    formData.append('entry.2606285', commentsInput.val());
-    formData.append('entry.1847943848', acceptInput.prop('checked') ? 'Accept' : '');
+      
+  </script>
   
-      // Show loading GIF
-    $('#loading').show();
-
-
-    // Send the AJAX request
-    $.ajax({
-        url: 'https://script.google.com/macros/s/AKfycbxWmWjUpNcXjyeJ06WQZIiiG9cT2Jz2JcwgJYCf9sPd-W86U5lJ6qUkQ1NO7RX8qdGUvQ/exec',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            // Hide loading GIF
-            $('#loading').hide();
-
-            // Redirect to congratulatory page
-            redirectToCongratulationsPage();
-        },
-        error: function () {
-            // Hide loading GIF
-            $('#loading').hide();
-
-            // Redirect to congratulatory page
-            redirectToCongratulationsPage();
-        }
-    });
-});
-           
-function redirectToCongratulationsPage() {
-    // Redirect to the congratulatory page
-    window.location.href = 'https://teteje.github.io/congrats.html'; // Replace with your actual page URL
-}
-    returnButton.click(function () {
-        formContainer.hide();
-        caleranContainer.show();
-    });
-    if ('1' === '1') {
-        $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (rates) {
-            $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (data) {
-
-                var caleranContainer = $('<div>').addClass('caleran-container');
-                var caleran = $("#caleranc801df7b-671c-413e-9c14-fd996d747b3e").caleran({
-                    inline: true,
-                    showHeader: false,
-                    showFooter: false,
-                    isHotelBooking: hotel,
-                    continuous: true,
-                    mobileBreakpoint: 300,
-                    isMobile: false,
-                    calendarCount: 1,
-                    minSelectedDays: 2,
-                    startEmpty: !1,
-                    locale: 'pl',
-                    dayText: rates,
-                    startOnMonday: true,
-
-                    disableDays: function (day) {
-                        return !(day.format('YYYY-MM-DD') in data) || data[day.format('YYYY-MM-DD')] == 0 ? true : false;
-                    },
-                    onbeforeselect: function (caleran, startDate, endDate) {
-                        return true; // false prevents update
-                    },
-                    onafterselect: function (caleran, startDate, endDate) {
-                        caleranContainer.hide();
-                        formContainer.show();
-                        returnButton.show();
-
-                        updateForm(startDate, endDate);
-                    },
-                });
-
-                caleranContainer.append(caleran);
-                $('body').append(caleranContainer);
-            });
-        });
-    } else {
-        $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (data) {
-            var caleranContainer = $('<div>').addClass('caleran-container');
-            var caleran = $("#caleranc801df7b-671c-413e-9c14-fd996d747b3e").caleran({
-                inline: true,
-                showHeader: false,
-                showFooter: false,
-                isHotelBooking: hotel,
-                continuous: true,
-                mobileBreakpoint: 300,
-                isMobile: false,
-                calendarCount: 1,
-                minSelectedDays: 2,
-                startEmpty: !1,
-                locale: userLanguage,
-                disableDays: function (day) {
-                    return !(day.format('YYYY-MM-DD') in data) || data[day.format('YYYY-MM-DD')] == 0 ? true : false;
-                },
-                onbeforeselect: function (caleran, startDate, endDate) {
-                    return true; // false prevents update
-                },
-                onafterselect: function (caleran, startDate, endDate) {
-                    caleranContainer.hide();
-                    formContainer.show();
-                    returnButton.show();
-
-                    updateForm(startDate, endDate);
-                },
-            });
-
-            caleranContainer.append(caleran);
-            $('body').append(caleranContainer);
-        });
-    }
-</script>
-
     </body>
 </html>

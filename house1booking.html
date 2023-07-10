@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>Swiper demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
   <!-- Link Swiper's CSS -->
@@ -478,48 +477,48 @@
 
     var submitButton = $('#submitBtn');
 
-   submitButton.on('click', function(e) {
-  e.preventDefault(); // Prevent the default form submission behavior
+    submitButton.on('click', function(e) {
+      e.preventDefault(); // Prevent the default form submission behavior
 
-  // Hide any existing error messages
-  $('.error-container').remove();
+      // Hide any existing error messages
+      $('.error-container').remove();
 
-  // Perform form validation
-  var isValid = true;
+      // Perform form validation
+      var isValid = true;
 
-  // Check if all mandatory fields are filled
-  var mandatoryFields = ['numberOfGuests', 'name', 'address', 'email', 'phone', 'accept'];
-  for (var i = 0; i < mandatoryFields.length; i++) {
-    var field = mandatoryFields[i];
-    var fieldValue = $('#' + field).val();
-    if (!fieldValue) {
-      isValid = false;
-      showErrorMessage(field, 'Please fill in all required fields.');
-    }
-  }
+      // Check if all mandatory fields are filled
+      var mandatoryFields = ['numberOfGuests', 'name', 'address', 'email', 'phone', 'accept'];
+      for (var i = 0; i < mandatoryFields.length; i++) {
+        var field = mandatoryFields[i];
+        var fieldValue = $('[name="' + field + '"]').val();
+        if (!fieldValue) {
+          isValid = false;
+          showErrorMessage(field, 'Please fill in all required fields.');
+        }
+      }
 
-  // Validate the phone number format
-  var phoneNumber = $('#phone').val();
-  var phoneRegex = /^\d+$/;
-  if (!phoneRegex.test(phoneNumber)) {
-    isValid = false;
-    showErrorMessage('phone', 'Please provide a valid phone number.');
-  }
+      // Validate the phone number format
+      var phoneNumber = $('[name="phone"]').val();
+      var phoneRegex = /^\d+$/;
+      if (!phoneRegex.test(phoneNumber)) {
+        isValid = false;
+        showErrorMessage('phone', 'Please provide a valid phone number.');
+      }
 
-  // Validate the email format
-  var email = $('#email').val();
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    isValid = false;
-    showErrorMessage('email', 'Please provide a valid email.');
-  }
+      // Validate the email format
+      var email = $('[name="email"]').val();
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        isValid = false;
+        showErrorMessage('email', 'Please provide a valid email.');
+      }
 
-  if (isValid) {
-    // Show the loading GIF
-    $('#loading').show();
+      if (isValid) {
+        // Show the loading GIF
+        $('#loading').show();
 
-    // Get form data
-    var formData = {
+        // Get form data
+        var formData = {
       checkin: checkin,
       checkout: checkout,
       numberOfGuests: numberOfGuestsSelect.val(),
@@ -568,8 +567,9 @@ function showErrorMessage(field, message) {
   var errorMessage = $('<p>').addClass('error-message').text(message);
 
   // Append the error message after the input field
-  $('#' + field).after(errorContainer.append(errorMessage));
+  $('[name="' + field + '"]').after(errorContainer.append(errorMessage));
 }
+
 
   });
 </script>

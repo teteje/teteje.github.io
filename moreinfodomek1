@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%; /* Adjust this value to match the aspect ratio of your images */
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30px;
+      font-weight: bold;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .preview-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .preview {
+      width: 50px;
+      height: 50px;
+      border: 2px solid white;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .preview.active {
+      opacity: 0.7;
+    }
+
+    .preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="slideshow-container">
+    <div class="slide active">
+      <img src="https://i.ibb.co/t4LzQD8/20221119-122332.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/cNVxyhD/living-1.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/j5fybGF/living-2.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/Tc1jXxn/living-4.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/qgtDfpF/living.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/d2Rtttd/room-2.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/NxyQz3W/room-3.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/hC6Q2Dg/room-4.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/NnzndPw/room.jpg">
+    </div>
+        <div class="slide">
+      <img src="https://i.ibb.co/T0z4bx9/kitchen-1.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/wQF5by1/kitchen-2.jpg">
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/tHDqZt9/bathroom.jpg">
+    </div>
+        <div class="slide active">
+      <img src="https://i.ibb.co/FWtkYpH/20220815-181143.jpg">
+    </div>
+
+    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+    <a class="next" onclick="changeSlide(1)">&#10095;</a>
+  </div>
+
+  <div class="preview-container">
+    <div class="preview active" onclick="changeSlide(0)">
+      <img src="https://i.ibb.co/t4LzQD8/20221119-122332.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(4)">
+      <img src="https://i.ibb.co/cNVxyhD/living-1.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(5)">
+      <img src="https://i.ibb.co/j5fybGF/living-2.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(6)">
+      <img src="https://i.ibb.co/Tc1jXxn/living-4.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(7)">
+      <img src="https://i.ibb.co/qgtDfpF/living.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(8)">
+      <img src="https://i.ibb.co/d2Rtttd/room-2.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(9)">
+      <img src="https://i.ibb.co/NxyQz3W/room-3.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(10)">
+      <img src="https://i.ibb.co/hC6Q2Dg/room-4.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(11)">
+      <img src="https://i.ibb.co/NnzndPw/room.jpg">
+    </div>
+        <div class="preview" onclick="changeSlide(2)">
+      <img src="https://i.ibb.co/T0z4bx9/kitchen-1.jpg">
+    </div>
+    <div class="preview" onclick="changeSlide(3)">
+      <img src="https://i.ibb.co/wQF5by1/kitchen-2.jpg">
+    </div>
+        <div class="preview" onclick="changeSlide(1)">
+      <img src="https://i.ibb.co/tHDqZt9/bathroom.jpg">
+    </div>
+    <div class="preview active" onclick="changeSlide(0)">
+      <img src="https://i.ibb.co/FWtkYpH/20220815-181143.jpg">
+    </div>
+  </div>
+
+  <script>
+    var slides = document.getElementsByClassName('slide');
+    var previews = document.getElementsByClassName('preview');
+    var slideIndex = 0;
+
+    showSlide(slideIndex);
+
+    function showSlide(n) {
+      if (n < 0) {
+        slideIndex = slides.length - 1;
+      } else if (n >= slides.length) {
+        slideIndex = 0;
+      }
+
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].style.display = 'none';
+      }
+
+      slides[slideIndex].style.display = 'block';
+
+      for (var j = 0; j < previews.length; j++) {
+        previews[j].classList.remove('active');
+      }
+
+      previews[slideIndex].classList.add('active');
+    }
+
+    function changeSlide(n) {
+      showSlide(slideIndex += n);
+    }
+  </script>
+</body>
+</html>

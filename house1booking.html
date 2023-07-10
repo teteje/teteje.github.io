@@ -488,24 +488,34 @@
       // Perform form validation
       var isValid = true;
 
-      // Check if all mandatory fields are filled
-      var mandatoryFields = ['numberOfGuests', 'name', 'address', 'email', 'phone', 'accept'];
-      for (var i = 0; i < mandatoryFields.length; i++) {
-        var field = mandatoryFields[i];
-        var fieldValue = $('[name="' + field + '"]').val();
-        if (!fieldValue) {
-          isValid = false;
-          showErrorMessage(field, 'Please fill in all required fields.');
-        }
-      }
+    // Check if all mandatory fields are filled
+var mandatoryFields = [
+  { name: 'numberOfGuests', message: 'Liczba gości' },
+  { name: 'name', message: 'Imię i nazwisko' },
+  { name: 'address', message: 'Adres' },
+  { name: 'email', message: 'Email' },
+  { name: 'phone', message: 'Nr kontaktowy' },
+  { name: 'accept', message: 'Akceptuj regulamin' }
+];
+
+for (var i = 0; i < mandatoryFields.length; i++) {
+  var field = mandatoryFields[i].name;
+  var fieldValue = $('[name="' + field + '"]').val();
+  if (!fieldValue) {
+    isValid = false;
+    showErrorMessage(field, 'Please fill in ' + mandatoryFields[i].message + '.');
+  }
+}
+
 
       // Validate the phone number format
-      var phoneNumber = $('[name="phone"]').val();
-      var phoneRegex = /^\d+$/;
-      if (!phoneRegex.test(phoneNumber)) {
-        isValid = false;
-        showErrorMessage('phone', 'Please provide a valid phone number.');
-      }
+var phoneNumber = $('[name="phone"]').val();
+var phoneRegex = /^\+?\d+$/; // Updated regular expression
+if (!phoneRegex.test(phoneNumber)) {
+  isValid = false;
+  showErrorMessage('phone', 'Please provide a valid phone number.');
+}
+
 
       // Validate the email format
       var email = $('[name="email"]').val();

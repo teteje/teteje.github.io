@@ -369,8 +369,9 @@
       formContainer.append(toLabel).append(toInput);
 
       var priceLabel = $('<label>').text('Cena: ');
-      var priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field').prop('disabled', true);
-formContainer.append(priceLabel).append(priceInput);
+      // Assign the priceInput element to the global variable
+        priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field').prop('disabled', true);
+        formContainer.append(priceLabel).append(priceInput);
 
 
       var numberOfGuestsLabel = $('<label>').text('Liczba gości:').addClass('required-label');

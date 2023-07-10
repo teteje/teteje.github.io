@@ -149,13 +149,17 @@
     margin: 20px 0;
   }
   .error-container {
-    margin-top: 10px;
+    margin-top: -10px;
     padding: 10px;
     color: #ff0000;
   }
-  .error-message {
-    margin-bottom: 5px;
-  }
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin: 0;
+}
+
   
   @keyframes ldio-5pc9ti1scmm {
   0% { opacity: 1 }
@@ -641,8 +645,14 @@ function showErrorMessage(field, message) {
   var errorMessage = $('<p>').addClass('error-message').text(message);
 
   // Append the error message after the input field
-  $('[name="' + field + '"]').after(errorContainer.append(errorMessage));
+  var fieldInput = $('[name="' + field + '"]');
+  fieldInput.after(errorContainer.append(errorMessage));
+
+  // Adjust the position of the error message
+  var fieldBottom = fieldInput.position().top + fieldInput.outerHeight();
+  errorContainer.css('top', fieldBottom + 'px');
 }
+
 
 
   });

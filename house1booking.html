@@ -513,6 +513,13 @@
         showErrorMessage('email', 'Please provide a valid email.');
       }
 
+        // Check if the "Accept terms and conditions" checkbox is checked
+  var acceptChecked = $('[name="accept"]').prop('checked');
+  if (!acceptChecked) {
+    isValid = false;
+    showErrorMessage('accept', 'Please accept the terms and conditions.');
+  }
+
       if (isValid) {
         // Show the loading GIF
         $('#loading').show();

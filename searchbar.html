@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Date Availability Search</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <style>
+        html,
+    body {
+      position: relative;
+      height: 100% !important;
+      width: 100% !important;
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #ea9999;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px; /* Added margin */
+    }
+
+    button:hover {
+      background-color: #fb6161;
+    }
+
+    #message {
+      margin-top: 20px;
+      padding: 10px;
+      color: #000;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #message .booking-link {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 5px 10px;
+      color: #fff;
+      background-color: #ea9999;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    #message .booking-link:hover {
+      background-color: #fb6161;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+  <script>
+    $(document).ready(function() {
+      // Function to check availability and display appropriate message
+      async function checkAvailability() {
+        var checkinDateStr = $("#checkin").val();
+        var checkoutDateStr = $("#checkout").val();
+
+        // Check if check-in or checkout dates are not selected
+        if (!checkinDateStr || !checkoutDateStr) {
+          $("#message").text("Please select check-in and checkout dates.");
+          return;
+        }
+
+        var checkinDate = new Date(checkinDateStr);
+        var checkoutDate = new Date(checkoutDateStr);
+
+        // Make sure checkin and checkout dates are valid
+        if (isNaN(checkinDate) || isNaN(checkoutDate)) {
+          $("#message").text("Invalid date format");
+          return;
+        }
+
+        // Calculate the duration in nights
+        var duration = Math.floor((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24)) + 1;
+
+        // Check minimum stay requirement
+        if (duration < 2) {
+          $("#message").html("<span class='error-message'>Minimum stay requirement is 2 nights.</span>");
+          return;
+        }
+
+        try {
+          var house1Data = await fetchAvailabilityData("https://nobeds.app/Calendar/BetaData/2452740");
+          var house2Data = await fetchAvailabilityData("https://nobeds.app/Calendar/BetaData/2452741");
+
+          var house1Availability = checkHouseAvailability(house1Data);
+          var house2Availability = checkHouseAvailability(house2Data);
+
+// Display appropriate message based on availability
+if (house1Availability && house2Availability) {
+  var bookingURL1 = "https://teteje.github.io/house1booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  var bookingURL2 = "URL of house 2 booking page?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a>.<br>House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>.");
+} else if (house1Availability) {
+  var bookingURL1 = "https://teteje.github.io/house1booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a>.");
+} else if (house2Availability) {
+  var bookingURL2 = "URL of house 2 booking page?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  $("#message").html("House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>.");
+} else {
+  var dateRange = formatDate(checkinDate) + " - " + formatDate(checkoutDate);
+  $("#message").text("No availability for the selected dates (" + dateRange + "). Please try different dates.");
+}
+
+        } catch (error) {
+          $("#message").text("An error occurred while fetching availability data. Please try again later.");
+        }
+      }
+
+      // Function to fetch availability data for a house
+      function fetchAvailabilityData(url) {
+        return new Promise(function(resolve, reject) {
+          $.getJSON(url)
+            .done(function(data) {
+              resolve(data);
+            })
+            .fail(function(jqxhr, textStatus, error) {
+              reject(error);
+            });
+        });
+      }
+
+      // Function to check availability for a particular house
+      function checkHouseAvailability(data) {
+        var checkinDateStr = $("#checkin").val();
+        var checkoutDateStr = $("#checkout").val();
+        var checkinDate = new Date(checkinDateStr);
+        var checkoutDate = new Date(checkoutDateStr);
+
+        for (var currentDate = new Date(checkinDate); currentDate <= checkoutDate; currentDate.setDate(currentDate.getDate() + 1)) {
+          var formattedDate = formatDate(currentDate);
+          if (data[formattedDate] !== 1) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // Function to format a date as "YYYY-MM-DD"
+      function formatDate(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, "0");
+        var day = String(date.getDate()).padStart(2, "0");
+        return year + "-" + month + "-" + day;
+      }
+
+      // Initialize datepicker for check-in and checkout fields
+      var currentDate = new Date();
+      $("#checkin").datepicker({
+        dateFormat: "yy-mm-dd",
+        minDate: currentDate, // Set the minimum date to the current date
+        onSelect: function(selectedDate) {
+          // Automatically set the minimum date for the checkout field based on the selected check-in date
+          var minDate = new Date(selectedDate);
+          minDate.setDate(minDate.getDate() + 2); // Minimum checkout date is 1 day after check-in
+          $("#checkout").datepicker("option", "minDate", minDate);
+
+          // Check if the current checkout date is less than the minimum date, if so, update it
+          var checkoutDate = new Date($("#checkout").val());
+          if (checkoutDate < minDate) {
+            $("#checkout").val(formatDate(minDate));
+          }
+        }
+      });
+
+      $("#checkout").datepicker({
+        dateFormat: "yy-mm-dd",
+        onSelect: function(selectedDate) {
+          checkAvailability();
+        }
+      });
+
+      // Disable manual input for check-in and checkout fields
+      $("#checkin").prop("readonly", true);
+      $("#checkout").prop("readonly", true);
+
+      // Event listener for the search button
+      $("#searchButton").click(checkAvailability);
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Date Availability Search</h1>
+    <label for="checkin">Check-in Date:</label>
+    <input type="text" id="checkin" autocomplete="off">
+    <br>
+    <label for="checkout">Checkout Date:</label>
+    <input type="text" id="checkout" autocomplete="off">
+    <br>
+    <button id="searchButton">Search</button>
+    <br>
+    <div id="message"></div>
+  </div>
+</body>
+</html>

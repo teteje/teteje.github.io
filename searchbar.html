@@ -129,13 +129,13 @@
 if (house1Availability && house2Availability) {
   var bookingURL1 = "https://teteje.github.io/house1booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
   var bookingURL2 = "URL of house 2 booking page?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a>.<br>House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>.");
+  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a><br>House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>");
 } else if (house1Availability) {
   var bookingURL1 = "https://teteje.github.io/house1booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a>.");
+  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a>");
 } else if (house2Availability) {
   var bookingURL2 = "URL of house 2 booking page?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>.");
+  $("#message").html("House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>");
 } else {
   var dateRange = formatDate(checkinDate) + " - " + formatDate(checkoutDate);
   $("#message").text("No availability for the selected dates (" + dateRange + "). Please try different dates.");

@@ -1,10 +1,10 @@
-      .calendar-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-
+.calendar-wrapper {
+  display: flex;
+  flex-direction: row; /* Update the flex direction to row */
+  justify-content: center; /* Align calendars horizontally */
+  align-items: flex-start; /* Align calendars to the top */
+  margin-bottom: 20px;
+}
 
       .calendar-title {
         text-align: center;

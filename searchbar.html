@@ -96,6 +96,41 @@
       color: red;
       margin-top: 10px;
     }
+    
+    #hiddenContainer {
+  display: none;
+  margin-top: 20px;
+  padding: 10px;
+  color: #000;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+    
+    #hiddenContainer .button {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #ea9999;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px; /* Added margin */
+}
+
+#hiddenContainer p {
+  margin-bottom: 10px;
+}
+
+#hiddenContainer {
+  display: none;
+  margin-top: 60px;
+  padding: 10px;
+  color: #000;
+  background-color: #fff; /* Add white background color */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
   </style>
   <script>
     $(document).ready(function() {
@@ -149,7 +184,9 @@ if (house1Availability && house2Availability) {
 } else {
   var dateRange = formatDate(checkinDate) + " - " + formatDate(checkoutDate);
   $("#message").text("No availability for the selected dates (" + dateRange + "). Please try different dates.");
+  $("#hiddenContainer").show(); // Show the hidden container when there is no availability
 }
+
 
         } catch (error) {
           $("#message").text("An error occurred while fetching availability data. Please try again later.");
@@ -241,5 +278,10 @@ if (house1Availability && house2Availability) {
     <br>
     <div id="message"></div>
   </div>
+  <div id="hiddenContainer" class="container">
+    <p>No available dates for the period you are looking for? Have a look into our full availability calendar:</p>
+    <a href="https://teteje.github.io/avialabilitycalendar.html" class="button">Check!</a>
+  </div>
 </body>
+
 </html>

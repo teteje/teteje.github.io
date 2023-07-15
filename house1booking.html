@@ -343,14 +343,14 @@
 <div class="card-block">
 <h4 class="card-title text-info">Domek 1</h4>
 <ul class="list-inline text-sm mb-4" align="center">
-<li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Os.</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Łazienka</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 4 Łóżka</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Guests</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Bathroom</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 4 Beds</li>
 <li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-wind"></i> Klima</li>
+<li class="list-inline-item me-3"><i class="fa-solid fa-wind"></i> AC</li>
 <li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
 </ul>
-<p align="center"><a href="https://teteje.github.io/moreinfodomek1.html" class="btn btn-info">Więcej szczegółów</a></p>
+<p align="center"><a href="https://teteje.github.io/moreinfodomek1.html" class="btn btn-info">More information</a></p>
 </div>
     <!-- Form container -->
     <div id="form-container">
@@ -423,27 +423,27 @@
       var toInput = $('<input>').attr('type', 'text').attr('name', 'to').addClass('read-only-field').attr('readonly', true);
       formContainer.append(toLabel).append(toInput);
 
-      var priceLabel = $('<label>').text('Cena: ');
+      var priceLabel = $('<label>').text('Price: ');
       // Assign the priceInput element to the global variable
         priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field').prop('disabled', true);
         formContainer.append(priceLabel).append(priceInput);
 
 
-      var numberOfGuestsLabel = $('<label>').text('Liczba gości:').addClass('required-label');
+      var numberOfGuestsLabel = $('<label>').text('Number of Guests:').addClass('required-label');
       numberOfGuestsSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
-      numberOfGuestsSelect.append('<option value="1">1 osoba</option>');
-      numberOfGuestsSelect.append('<option value="2">2 osoby</option>');
-      numberOfGuestsSelect.append('<option value="3">3 osoby</option>');
-      numberOfGuestsSelect.append('<option value="4">4 osoby</option>');
-      numberOfGuestsSelect.append('<option value="5">5 osób</option>');
-      numberOfGuestsSelect.append('<option value="6">6 osób</option>');
+      numberOfGuestsSelect.append('<option value="1">1 Guest</option>');
+      numberOfGuestsSelect.append('<option value="2">2 Guests</option>');
+      numberOfGuestsSelect.append('<option value="3">3 Guests</option>');
+      numberOfGuestsSelect.append('<option value="4">4 Guests</option>');
+      numberOfGuestsSelect.append('<option value="5">5 Guests</option>');
+      numberOfGuestsSelect.append('<option value="6">6 Guests</option>');
       formContainer.append(numberOfGuestsLabel).append(numberOfGuestsSelect);
 
-      var nameLabel = $('<label>').text('Imię i nazwisko:').addClass('required-label');
+      var nameLabel = $('<label>').text('Name and Surname:').addClass('required-label');
       nameInput = $('<input>').attr('type', 'text').attr('name', 'name').prop('required', true);
       formContainer.append(nameLabel).append(nameInput);
 
-      var addressLabel = $('<label>').text('Adres:').addClass('required-label');
+      var addressLabel = $('<label>').text('Adresse:').addClass('required-label');
       addressInput = $('<input>').attr('type', 'text').attr('name', 'address').prop('required', true);
       formContainer.append(addressLabel).append(addressInput);
 
@@ -451,18 +451,18 @@
       emailInput = $('<input>').attr('type', 'email').attr('name', 'email').prop('required', true);
       formContainer.append(emailLabel).append(emailInput);
 
-      var phoneLabel = $('<label>').text('Nr kontaktowy:').addClass('required-label');
+      var phoneLabel = $('<label>').text('Phone number:').addClass('required-label');
       phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true);
       formContainer.append(phoneLabel).append(phoneInput);
 
-      var commentsLabel = $('<label>').text('Uwagi: ');
+      var commentsLabel = $('<label>').text('Comments: ');
       commentsInput = $('<textarea>').attr('name', 'comments');
       formContainer.append(commentsLabel).append(commentsInput);
 
       var acceptContainer = $('<div>').addClass('accept-container');
-      var acceptLabel = $('<label>').text('Zapoznałem się z regulaminem obiektu:').addClass('required-label');
+      var acceptLabel = $('<label>').text('I accept the Terms & Conditions:').addClass('required-label');
       acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
-      var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu');
+      var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Terms & Condtions (PL only)');
 
       acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
       formContainer.append(acceptContainer);

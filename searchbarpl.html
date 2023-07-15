@@ -15,6 +15,7 @@
  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script src="https://teteje.github.io/datepicker-pl.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <style>
         html,
@@ -264,10 +265,7 @@ if (house1Availability && house2Availability) {
       // Event listener for the search button
       $("#searchButton").click(checkAvailability);
 
-    // Set the language for the datepicker based on user's preference
-    var userLanguage = navigator.language || navigator.userLanguage;
-    $("#checkin").datepicker("option", $.datepicker.regional[userLanguage]);
-    $("#checkout").datepicker("option", $.datepicker.regional[userLanguage]);
+
   });
   </script>
 </head>

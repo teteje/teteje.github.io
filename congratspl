@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head> 
+  <meta charset="utf-8" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <title>Swiper demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+ <!-- Demo styles -->
+  <title>Potwierdzenie rezerwacji</title>
+  <style>
+    body {
+      background-image: url('https://i.ibb.co/6JV1rDQ/20220815-180615.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+.content {
+text-align: center;
+padding: 20px;
+background-color: white;
+max-width: 600px;
+margin: 0 auto;
+}
+
+h1 {
+color: #333;
+font-size: 24px;
+font-weight: bold;
+}
+
+p {
+color: #666;
+font-size: 16px;
+line-height: 1.5;
+}
+
+.signature {
+margin-top: 30px;
+font-style: italic;
+}
+</style>
+
+</head>
+<body>
+  <div class="content">
+    <h1>Potwierdzenie rezerwacji</h1>
+    <p>Dziękujemy za dokonanie rezerwacji! Cieszymy się z wyboru naszej oferty.</p>
+    <p>W przypadku jakichkolwiek pytań lub potrzeby uzyskania dodatkowych informacji, prosimy o kontakt.</p>
+    <p>Jeszcze raz dziękujemy i do zobaczenia wkrótce!</p>
+     <p>Wysłano wiadomość e-mail z wszystkimi szczegółami, w tym sposobem płatności, na adres e-mailowy podany przez Państwa.</p>
+    <p class="signature">Z poważaniem,<br>Na Pańskiej Górze</p>
+  </div>
+</body>
+</html>

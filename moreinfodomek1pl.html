@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> 
+  <style>
+    .swiper {
+  max-width: 550px;
+  max-height: 300px;
+  width: 100%;
+  height: 100%;
+      margin-bottom: 20px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+     body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+ font-family: Caveat, Arial, sans-serif;
+  color: #274e13;
+}
+
+
+ 
+
+ul {
+  list-style-type: none;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 0;
+  text-align: center; /* Center the list */
+}
+
+li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center; /* Align the titles to the center */
+  width: 100%;
+}
+
+.separator {
+  border-top: 1px solid #000;
+  margin: 10px 0;
+}
+
+.centered {
+  text-align: center;
+}
+
+.nested-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as per your preference */
+  grid-column-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px; /* Adjust the maximum width as per your preference */
+}
+  </style>
+</head>
+<body>
+  <!-- Swiper -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/t4LzQD8/20221119-122332.jpg" alt="salon">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/cNVxyhD/living-1.jpg" alt="living room 1">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/j5fybGF/living-2.jpg" alt="living room 2">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/Tc1jXxn/living-4.jpg" alt="living room 4">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/qgtDfpF/living.jpg" alt="living room">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/d2Rtttd/room-2.jpg" alt="room 2">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/NxyQz3W/room-3.jpg" alt="room 3">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/hC6Q2Dg/room-4.jpg" alt="room 4">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/NnzndPw/room.jpg" alt="room">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/T0z4bx9/kitchen-1.jpg" alt="kitchen 1">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/wQF5by1/kitchen-2.jpg" alt="kitchen 2">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/tHDqZt9/bathroom.jpg" alt="bathroom">
+      </div>
+      <div class="swiper-slide">
+        <img class="img-fluid swiper-lazy" src="https://i.ibb.co/FWtkYpH/20220815-181143.jpg" alt="exterior">
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: "auto",
+      spaceBetween: 10,
+      pagination: {
+        el: ".swiper-pagination",
+        type: "progressbar",
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  </script>
+  <p class="centered">
+    <span style="font-family: Caveat, Arial, sans-serif; color: #274e13;">Domek 1 - Dom wakacyjny na wyłączność 60 m²</span>
+  </p>
+  <div class="separator"></div>
+  <ul>
+    <li>
+      <div class="title">W kuchni:</div>
+      <div class="separator"></div>
+      <ul class="nested-list">
+        <li>lodówka</li>
+        <li>ekspres do kawy</li>
+        <li>kuchenka mikrofalowa</li>
+        <li>przybory kuchenne</li>
+        <li>czajnik elektryczny</li>
+        <li>zmywarka</li>
+        <li>płyta kuchenna</li>
+      </ul>
+    </li>
+    <li>
+      <div class="separator"></div>
+      <div class="title">We łazience:</div>
+      <div class="separator"></div>
+      <ul class="nested-list">
+        <li>prysznic</li>
+        <li>toaleta</li>
+        <li>papier toaletowy</li>
+      </ul>
+    </li>
+    <li>
+      <div class="separator"></div>
+      <div class="title">Widok:</div>
+      <div class="separator"></div>
+      <ul class="nested-list">
+        <li>taras</li>
+        <li>widok na jezioro</li>
+        <li>widok na ogród</li>
+      </ul>
+    </li>
+    <li>
+      <div class="separator"></div>
+      <div class="title">Wyposażenie domu:</div>
+      <div class="separator"></div>
+      <ul class="nested-list">
+        <li>bezpłatne WiFi</li>
+        <li>sofa</li>
+        <li>ręczniki</li>
+        <li>część wypoczynkowa</li>
+        <li>gry planszowe / puzzle</li>
+        <li>gniazdko koło łóżka</li>
+        <li>wolnostojący</li>
+        <li>pościel</li>
+        <li>kominek</li>
+        <li>prywatne wejście</li>
+        <li>aneks kuchenny</li>
+        <li>meble ogrodowe</li>
+        <li>rozkładana sofa</li>
+        <li>ogrzewanie</li>
+        <li>pralka</li>
+        <li>szafa lub garderoba</li>
+        <li>środki czystości</li>
+        <li>moskitiera</li>
+        <li>klimatyzacja</li>
+        <li>wieszak na ubrania</li>
+      </ul>
+    </li>
+    <li>
+      <div class="separator"></div>
+      <div class="title">Dla palących:</div>
+      <div class="separator"></div>
+      Palenie zabronione
+    </li>
+  </ul>
+</body>
+</html>

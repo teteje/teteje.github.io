@@ -231,10 +231,11 @@ if (house1Availability && house2Availability) {
       }
 
       // Initialize datepicker for check-in and checkout fields
-      var currentDate = new Date();
+          var currentDate = new Date();
       $("#checkin").datepicker({
         dateFormat: "yy-mm-dd",
-        minDate: currentDate, // Set the minimum date to the current date
+        minDate: currentDate,
+        firstDay: 1, // Set Monday as the first day of the week
         onSelect: function(selectedDate) {
           // Automatically set the minimum date for the checkout field based on the selected check-in date
           var minDate = new Date(selectedDate);
@@ -249,8 +250,9 @@ if (house1Availability && house2Availability) {
         }
       });
 
-      $("#checkout").datepicker({
+        $("#checkout").datepicker({
         dateFormat: "yy-mm-dd",
+        firstDay: 1, // Set Monday as the first day of the week
         onSelect: function(selectedDate) {
           checkAvailability();
         }

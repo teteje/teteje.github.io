@@ -184,7 +184,7 @@ if (house1Availability && house2Availability) {
   $("#message").html("House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj!</a>");
 } else {
   var dateRange = formatDate(checkinDate) + " - " + formatDate(checkoutDate);
-  $("#message").text("Brak dostępności w wybranych terminach (" + dateRange + "). Proszę spróbować różnych dat.");
+  $("#message").text("Brak dostępności w wybranych terminach (" + dateRange + "). Proszę spróbować innych dat.");
   $("#hiddenContainer").show(); // Show the hidden container when there is no availability
 }
 

@@ -558,7 +558,7 @@ for (var i = 0; i < mandatoryFields.length; i++) {
   var fieldValue = $('[name="' + field + '"]').val();
   if (!fieldValue) {
     isValid = false;
-    showErrorMessage(field, 'Proszę wypełnić' + mandatoryFields[i].message + '.');
+    showErrorMessage(field, 'Proszę wypełnić ' + mandatoryFields[i].message + '.');
   }
 }
 

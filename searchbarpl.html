@@ -175,13 +175,13 @@
 if (house1Availability && house2Availability) {
   var bookingURL1 = "https://teteje.github.io/house1bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
   var bookingURL2 = "https://teteje.github.io/house2bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("Domek 1 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj!</a><br>House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj!</a>");
+  $("#message").html("Domek 1 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj!</a><br>Domek 2 dostępny <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj!</a>");
 } else if (house1Availability) {
   var bookingURL1 = "https://teteje.github.io/house1bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("Domek 2 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj!</a>");
+  $("#message").html("Domek 1 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj!</a>");
 } else if (house2Availability) {
   var bookingURL2 = "https://teteje.github.io/house2bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj!</a>");
+  $("#message").html("Domek 2 dostępny <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj!</a>");
 } else {
   var dateRange = formatDate(checkinDate) + " - " + formatDate(checkoutDate);
   $("#message").text("Brak dostępności w wybranych terminach (" + dateRange + "). Proszę spróbować innych terminów.");

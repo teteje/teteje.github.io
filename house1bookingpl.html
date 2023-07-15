@@ -350,7 +350,7 @@
 <li class="list-inline-item me-3"><i class="fa-solid fa-wind"></i> Klima</li>
 <li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
 </ul>
-<p align="center"><a href="https://teteje.github.io/moreinfodomek1.html" class="btn btn-info">Więcej szczegółów</a></p>
+<p align="center"><a href="https://teteje.github.io/moreinfodomek1pl.html" class="btn btn-info">Więcej szczegółów</a></p>
 </div>
     <!-- Form container -->
     <div id="form-container">
@@ -415,11 +415,11 @@
       var formContainer = $('#form-container');
       // Clear existing form fields
       formContainer.empty();
-      var fromLabel = $('<label>').text('Check-in:');
+      var fromLabel = $('<label>').text('Zameldowanie:');
       var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').addClass('read-only-field').attr('readonly', true);
       formContainer.append(fromLabel).append(fromInput);
 
-      var toLabel = $('<label>').text('Check-out:');
+      var toLabel = $('<label>').text('Wymeldowanie:');
       var toInput = $('<input>').attr('type', 'text').attr('name', 'to').addClass('read-only-field').attr('readonly', true);
       formContainer.append(toLabel).append(toInput);
 
@@ -471,7 +471,7 @@
       formContainer.append(separator);
 
       // Create the submit button
-      var submitButton = $('<button>').attr('type', 'submit').attr('id', 'submitBtn').text('Submit');
+      var submitButton = $('<button>').attr('type', 'submit').attr('id', 'submitBtn').text('Rezerwacja!');
       formContainer.append(submitButton);
 
       // Get the URL parameters
@@ -558,7 +558,7 @@ for (var i = 0; i < mandatoryFields.length; i++) {
   var fieldValue = $('[name="' + field + '"]').val();
   if (!fieldValue) {
     isValid = false;
-    showErrorMessage(field, 'Please fill in ' + mandatoryFields[i].message + '.');
+    showErrorMessage(field, 'Proszę wypełnić' + mandatoryFields[i].message + '.');
   }
 }
 
@@ -568,7 +568,7 @@ var phoneNumber = $('[name="phone"]').val();
 var phoneRegex = /^\+?\d+$/; // Updated regular expression
 if (!phoneRegex.test(phoneNumber)) {
   isValid = false;
-  showErrorMessage('phone', 'Please provide a valid phone number.');
+  showErrorMessage('phone', 'Proszę podać poprawny numer telefonu.');
 }
 
 
@@ -577,14 +577,14 @@ if (!phoneRegex.test(phoneNumber)) {
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         isValid = false;
-        showErrorMessage('email', 'Please provide a valid email.');
+        showErrorMessage('email', 'Proszę podać poprawny adres e-mail.');
       }
 
         // Check if the "Accept terms and conditions" checkbox is checked
   var acceptChecked = $('[name="accept"]').prop('checked');
   if (!acceptChecked) {
     isValid = false;
-    showErrorMessage('accept', 'Please accept the terms and conditions.');
+    showErrorMessage('accept', 'Proszę zaakceptować regulamin.');
   }
 
       if (isValid) {
@@ -630,7 +630,7 @@ if (!phoneRegex.test(phoneNumber)) {
 
 function redirectToCongratulationsPage() {
   // Redirect to the congratulatory page
-  window.location.href = 'https://teteje.github.io/congrats.html';
+  window.location.href = 'https://teteje.github.io/congratspl.html';
 }
 
 function showErrorMessage(field, message) {

@@ -172,24 +172,24 @@
 
 // Display appropriate message based on availability
 if (house1Availability && house2Availability) {
-  var bookingURL1 = "https://teteje.github.io/house1booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  var bookingURL2 = "https://teteje.github.io/house2booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a><br>House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>");
+  var bookingURL1 = "https://teteje.github.io/house1bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  var bookingURL2 = "https://teteje.github.io/house2bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  $("#message").html("Domek 1 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj</a><br>House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>");
 } else if (house1Availability) {
-  var bookingURL1 = "https://teteje.github.io/house1booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("House 1 available, book <a href='" + bookingURL1 + "' class='booking-link'>here</a>");
+  var bookingURL1 = "https://teteje.github.io/house1bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  $("#message").html("Domek 2 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj</a>");
 } else if (house2Availability) {
-  var bookingURL2 = "https://teteje.github.io/house2booking.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>here</a>");
+  var bookingURL2 = "https://teteje.github.io/house2bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
+  $("#message").html("House 2 available, book <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj</a>");
 } else {
   var dateRange = formatDate(checkinDate) + " - " + formatDate(checkoutDate);
-  $("#message").text("No availability for the selected dates (" + dateRange + "). Please try different dates.");
+  $("#message").text("Brak dostępności w wybranych terminach (" + dateRange + "). Proszę spróbować różnych dat.");
   $("#hiddenContainer").show(); // Show the hidden container when there is no availability
 }
 
 
         } catch (error) {
-          $("#message").text("An error occurred while fetching availability data. Please try again later.");
+          $("#message").text("Wystąpił błąd podczas pobierania danych o dostępności. Spróbuj ponownie później.");
         }
       }
 
@@ -268,19 +268,19 @@ if (house1Availability && house2Availability) {
 <body>
   <div class="container">
     <h1>Date Availability Search</h1>
-    <label for="checkin">Check-in Date:</label>
+    <label for="checkin">Zameldowanie:</label>
     <input type="text" id="checkin" autocomplete="off">
     <br>
-    <label for="checkout">Checkout Date:</label>
+    <label for="checkout">Wymeldowanie:</label>
     <input type="text" id="checkout" autocomplete="off">
     <br>
-    <button id="searchButton">Search</button>
+    <button id="searchButton">Szukaj</button>
     <br>
     <div id="message"></div>
   </div>
   <div id="hiddenContainer" class="container">
-    <p>No available dates for the period you are looking for? Have a look into our full availability calendar:</p>
-    <a href="https://teteje.github.io/avialabilitycalendar.html" class="button">Check!</a>
+    <p>Brak dostępnych terminów w okresie, którego szukasz? Zajrzyj do naszego pełnego kalendarza dostępności:</p>
+    <a href="https://teteje.github.io/avialabilitycalendar.html" class="button">Sprawdź!</a>
   </div>
 </body>
 

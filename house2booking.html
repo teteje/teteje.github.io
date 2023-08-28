@@ -304,6 +304,15 @@
   max-height: 100%;
   object-fit: contain;
 }
+  .loading-icon {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    width: 16px; /* Adjust width as needed */
+  height: 16px; /* Adjust height as needed */
+}
 </style>
 </head>
 <body>
@@ -479,8 +488,15 @@
       formContainer.append(separator);
 
       // Create the submit button
-      var submitButton = $('<button>').attr('type', 'submit').attr('id', 'submitBtn').text('Submit');
-      formContainer.append(submitButton);
+var submitButton = $('<button>')
+  .attr('type', 'submit')
+  .attr('id', 'submitBtn')
+  .addClass('submit-button') // Add this class for styling
+  .text('Rezerwacja!')
+  .append('<img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" class="loading-icon" alt="Loading..." />');
+
+formContainer.append(submitButton);
+
 
       // Get the URL parameters
       const urlParams = new URLSearchParams(window.location.search);
@@ -598,6 +614,8 @@ if (!phoneRegex.test(phoneNumber)) {
       if (isValid) {
         // Show the loading GIF
         $('#loading').show();
+                 submitButton.find('.button-text').hide();
+    submitButton.find('.loading-icon').show();
 
         // Get form data
         var formData = {
@@ -621,6 +639,8 @@ if (!phoneRegex.test(phoneNumber)) {
       success: function(response) {
         // Hide loading GIF
         $('#loading').hide();
+             submitButton.find('.loading-icon').hide();
+        submitButton.find('.button-text').hide();
 
         // Redirect to congratulatory page
         redirectToCongratulationsPage();
@@ -628,7 +648,9 @@ if (!phoneRegex.test(phoneNumber)) {
       error: function() {
         // Hide loading GIF
         $('#loading').hide();
-
+     submitButton.find('.loading-icon').hide();
+        submitButton.find('.button-text').hide();
+        
         // Redirect to congratulatory page
         redirectToCongratulationsPage();
       }

@@ -396,11 +396,11 @@
         additionalPrice = 70;
       }
 
-      var numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+// Subtract 1 from numberOfNights to exclude the checkout day
+      var numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) - 1;
       var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
       return totalPrice;
     }
-
     var checkin;
     var checkout;
     var numberOfGuestsSelect;

@@ -377,11 +377,17 @@
         additionalPrice = 70;
       }
 
-           var numberOfNights = Math.ceil(endDate - startDate);
+      // Calculate the number of nights from 5AM of the start day to 5AM of the end day
+      var startPlus5AM = new Date(startDate);
+      startPlus5AM.setHours(5, 0, 0, 0);
+      var endPlus5AM = new Date(endDate);
+      endPlus5AM.setHours(5, 0, 0, 0);
+
+      var numberOfNights = Math.ceil((endPlus5AM - startPlus5AM) / (1000 * 60 * 60 * 24));
       var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
       return totalPrice;
     }
-
+});
     var checkin;
     var checkout;
     var numberOfGuestsSelect;

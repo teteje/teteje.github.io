@@ -311,6 +311,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+    width: 16px; /* Adjust width as needed */
+  height: 16px; /* Adjust height as needed */
 }
   .submit-button {
   position: relative;
@@ -644,6 +646,8 @@ if (!phoneRegex.test(phoneNumber)) {
       success: function(response) {
         // Hide loading GIF
         $('#loading').hide();
+                submitButton.find('.loading-icon').hide();
+        submitButton.find('.button-text').hide();
 
         // Redirect to congratulatory page
         redirectToCongratulationsPage();
@@ -651,6 +655,8 @@ if (!phoneRegex.test(phoneNumber)) {
       error: function() {
         // Hide loading GIF
         $('#loading').hide();
+                submitButton.find('.loading-icon').hide();
+        submitButton.find('.button-text').hide();
 
         // Redirect to congratulatory page
         redirectToCongratulationsPage();

@@ -397,6 +397,8 @@
         additionalPrice = 70;
       }
 
+      var startDateObject = new Date(startDate);
+      var endDateObject = new Date(endDate);
       var numberOfNights = differenceInCalendarDays(endDate, startDate); // Use date-fns function
       var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
       return totalPrice;

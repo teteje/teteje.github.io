@@ -367,6 +367,7 @@
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <!-- jQuery -->
+   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div id="loading" class="loadingio-spinner-spinner-7646pt8rie"><p>Może to potrwać do 15 sekund...</p><div class="ldio-5pc9ti1scmm">
 <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
@@ -399,11 +400,16 @@
         additionalPrice = 70;
       }
 
-// Subtract 1 from numberOfNights to exclude the checkout day
-      var numberOfNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) - 1;
-      var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
-      return totalPrice;
-    }
+  // Calculate the number of nights considering daylight saving time changes
+     var startPlus5AM = dayjs(startDate).hour(5).minute(0).second(0);
+     var endPlus5AM = dayjs(endDate).hour(5).minute(0).second(0);
+
+     var numberOfNights = Math.ceil(endPlus5AM.diff(startPlus5AM, 'day'));
+     var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
+     return totalPrice;
+   }
+
+
 
     var checkin;
     var checkout;

@@ -477,20 +477,22 @@
       formContainer.append(submitButton);
 
       // Get the URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
-      checkin = urlParams.get('checkin');
-      checkout = urlParams.get('checkout');
+        const urlParams = new URLSearchParams(window.location.search);
+        checkin = urlParams.get('checkin');
+        checkout = urlParams.get('checkout');
 
-      // Set the values of the fromInput and toInput fields
-      fromInput.val(checkin);
-      toInput.val(checkout);
+        // Parse the dates using the moment library
+        var checkinDate = moment(checkin, 'YYYY-MM-DD');
+        var checkoutDate = moment(checkout, 'YYYY-MM-DD');
 
-      // Calculate and set the initial price
-      var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-      var startDate = moment(checkin);
-      var endDate = moment(checkout);
-      var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-      priceInput.val(totalPrice);
+        // Set the values of the fromInput and toInput fields
+        fromInput.val(checkinDate.format('YYYY-MM-DD'));
+        toInput.val(checkoutDate.format('YYYY-MM-DD'));
+
+        // Calculate and set the initial price
+        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
+        var totalPrice = calculateTotalPrice(checkinDate, checkoutDate, numberOfGuests);
+        priceInput.val(totalPrice);
 
       // Update the price when the number of guests or check-in date changes
       numberOfGuestsSelect.on('change', function() {

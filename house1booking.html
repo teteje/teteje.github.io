@@ -397,14 +397,14 @@
         additionalPrice = 70;
       }
 
-  // Calculate the number of nights considering daylight saving time changes
-  var startUTC = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 5, 0, 0);
-  var endUTC = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 5, 0, 0);
+     // Calculate the number of nights considering daylight saving time changes
+     var startPlus5AM = dayjs(startDate).hour(5).minute(0).second(0);
+     var endPlus5AM = dayjs(endDate).hour(5).minute(0).second(0);
 
-  var numberOfNights = Math.ceil((endUTC - startUTC) / (1000 * 60 * 60 * 24));
-  var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
-  return totalPrice;
-}
+     var numberOfNights = Math.ceil(endPlus5AM.diff(startPlus5AM, 'day'));
+     var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
+     return totalPrice;
+   }
     
     var checkin;
     var checkout;

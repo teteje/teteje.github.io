@@ -397,12 +397,48 @@
         additionalPrice = 70;
       }
 
-      var startDateObject = new Date(startDate);
-      var endDateObject = new Date(endDate);
-      var numberOfNights = differenceInCalendarDays(endDate, startDate); // Use date-fns function
-      var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
-      return totalPrice;
+function calculateTotalPrice(startDate, endDate, numberOfGuests) {
+    var oneNightPrice = normalDayPrice;
+    var startDateFormatted = formatDate(startDate, 'MM-DD');
+
+    if (startDateFormatted in specialDayPrices) {
+        oneNightPrice = specialDayPrices[startDateFormatted];
     }
+
+    if (numberOfGuests === 3) {
+        additionalPrice = 20;
+    } else if (numberOfGuests === 4) {
+        additionalPrice = 35;
+    } else if (numberOfGuests >= 5) {
+        additionalPrice = 70;
+    }
+
+    var numberOfNights = calculateNumberOfNights(startDate, endDate);
+    var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
+    return totalPrice;
+}
+
+function calculateNumberOfNights(startDate, endDate) {
+    // Calculate the difference in days between start and end dates
+    var oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+    var startTime = startDate.getTime();
+    var endTime = endDate.getTime();
+    var daysDifference = Math.round((endTime - startTime) / oneDay);
+
+    // Adjust for daylight saving time changes
+    var startUTC = startDate.getTimezoneOffset();
+    var endUTC = endDate.getTimezoneOffset();
+
+    if (startUTC !== endUTC) {
+        if (startUTC > endUTC) {
+            daysDifference++;
+        } else {
+            daysDifference--;
+        }
+    }
+
+    return daysDifference;
+}
     var checkin;
     var checkout;
     var numberOfGuestsSelect;

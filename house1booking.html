@@ -368,6 +368,7 @@
 <div id="loading" class="loadingio-spinner-spinner-7646pt8rie"><p>This may take up to 15 seconds...</p><div class="ldio-5pc9ti1scmm">
 <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
 </div></div>
+  <script src="https://cdn.jsdelivr.net/npm/date-fns@2.25.0/fns.min.js"></script>
 <script>
   $(document).ready(function() {
     // Pricing logic
@@ -396,8 +397,7 @@
         additionalPrice = 70;
       }
 
-      // Use the Date object for accurate date calculations
-      var numberOfNights = Math.ceil((endDate - startDate) / (24 * 60 * 60 * 1000));
+ var numberOfNights = differenceInDays(endDate, startDate); // Use date-fns function
       var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
       return totalPrice;
     }

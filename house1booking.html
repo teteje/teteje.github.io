@@ -381,40 +381,52 @@
 </div></div>
 <script>
   $(document).ready(function() {
-    // Pricing logic
-    var specialDayPrices = {
-      '12-25': 400, // Christmas: December 25
-      '12-26': 400, // Christmas: December 26
-      '12-27': 400, // Christmas: December 27
-    };
+   // Pricing logic
+var specialDayPrices = {
+  '2024-12-25': 400, // Christmas: December 25, 2024
+  '2024-12-26': 400, // Christmas: December 26, 2024
+  '2024-12-27': 400, // Christmas: December 27, 2024
+};
 
-    var normalDayPrice = 360;
-    var additionalPrice = 0;
+var normalDayPriceUntil2023 = 360;
+var normalDayPriceFrom2024 = 400;
 
-    function calculateTotalPrice(startDate, endDate, numberOfGuests) {
-      var oneNightPrice = normalDayPrice;
-      var startDateFormatted = startDate.format('MM-DD');
+var additionalPrice = 0;
 
-      if (startDateFormatted in specialDayPrices) {
-        oneNightPrice = specialDayPrices[startDateFormatted];
-      }
+function calculateTotalPrice(startDate, endDate, numberOfGuests) {
+  var oneNightPrice;
 
-      if (numberOfGuests === 3) {
-        additionalPrice = 20;
-      } else if (numberOfGuests === 4) {
-        additionalPrice = 35;
-      } else if (numberOfGuests >= 5) {
-        additionalPrice = 70;
-      }
+  // Assuming startDate is in the format 'YYYY-MM-DD'
+  var startDateFormatted = dayjs(startDate).format('YYYY-MM-DD');
+  var currentYear = dayjs(startDate).year();
 
-    // Calculate the number of nights considering daylight saving time changes
-    var startPlus5AM = dayjs(startDate).startOf('day').add(5, 'hours');
-    var endPlus5AM = dayjs(endDate).startOf('day').add(5, 'hours');
-
-    var numberOfNights = endPlus5AM.diff(startPlus5AM, 'day');
-    var totalPrice = oneNightPrice * numberOfNights + additionalPrice * numberOfNights;
-    return totalPrice;
+  if (currentYear <= 2023) {
+    // Pricing until the end of 2023
+    oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceUntil2023;
+  } else {
+    // Pricing from 2024 onward
+    oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceFrom2024;
   }
+
+  // Additional pricing based on the number of guests
+  if (numberOfGuests === 3) {
+    additionalPrice = 20;
+  } else if (numberOfGuests === 4) {
+    additionalPrice = 35;
+  } else if (numberOfGuests >= 5) {
+    additionalPrice = 70;
+  }
+
+  // Calculate the number of nights considering daylight saving time changes
+  var startPlus5AM = dayjs(startDate).hour(5).minute(0).second(0);
+  var endPlus5AM = dayjs(endDate).hour(5).minute(0).second(0);
+  var numberOfNights = Math.ceil(endPlus5AM.diff(startPlus5AM, 'day'));
+
+  var totalPrice = (oneNightPrice + additionalPrice) * numberOfNights;
+
+  return totalPrice;
+}
+
     
     var checkin;
     var checkout;

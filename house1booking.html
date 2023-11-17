@@ -394,55 +394,58 @@ var additionalPrice = 0;
 
 function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   var oneNightPrice;
+  var isBetweenSpecialDays = false;
   var isSpecialDay = false;
+  var totalPrice = 0;
 
   // Assuming startDate is in the format 'YYYY-MM-DD'
   var startDateFormatted = dayjs(startDate).format('YYYY-MM-DD');
   var currentYear = dayjs(startDate).year();
 
-  // Check if the start date is a special day
-  if (specialDayPrices[startDateFormatted]) {
-    isSpecialDay = true;
-  }
+  // Iterate through each date in the stay
+  var currentDate = dayjs(startDate);
+  while (currentDate <= dayjs(endDate)) {
+    isSpecialDay = false;
+    isBetweenSpecialDays = false;
 
-  // Check if the start date is between two special days
-  var specialDays = Object.keys(specialDayPrices);
-  var isBetweenSpecialDays = specialDays.some((specialDayDate, index) => {
-    if (index < specialDays.length - 1) {
-      return (
-        dayjs(startDate).isAfter(dayjs(specialDayDate).subtract(1, 'day')) &&
-        dayjs(startDate).isBefore(dayjs(specialDays[index + 1]).add(1, 'day'))
-      );
+    // Check if the current date is a special day
+    if (specialDayPrices[dayjs(currentDate).format('YYYY-MM-DD')]) {
+      isSpecialDay = true;
     }
-    return false;
-  });
 
-  if (currentYear <= 2023 && !isSpecialDay) {
-    // Pricing until the end of 2023
-    oneNightPrice = normalDayPriceUntil2023;
-  } else if (isSpecialDay || isBetweenSpecialDays) {
-    // Pricing for special days and dates in between special days
-    oneNightPrice = 400;
-  } else {
-    // Pricing from 2024 onward for normal days
-    oneNightPrice = normalDayPriceFrom2024;
+    // Check if the current date is between two special days
+    for (const specialDayDate in specialDayPrices) {
+      if (dayjs(currentDate).isAfter(dayjs(specialDayDate).subtract(1, 'day')) &&
+        dayjs(currentDate).isBefore(dayjs(specialDayDate).add(1, 'day'))) {
+        isBetweenSpecialDays = true;
+        break;
+      }
+    }
+
+    // Calculate the one-night price for the current date
+    if (currentYear <= 2023 && !isSpecialDay) {
+      oneNightPrice = normalDayPriceUntil2023;
+    } else if (isBetweenSpecialDays || isSpecialDay) {
+      oneNightPrice = 400;
+    } else {
+      oneNightPrice = normalDayPriceFrom2024;
+    }
+
+    // Calculate the additional price for the current date based on the number of guests
+    if (numberOfGuests === 3) {
+      additionalPrice = 20;
+    } else if (numberOfGuests === 4) {
+      additionalPrice = 35;
+    } else if (numberOfGuests >= 5) {
+      additionalPrice = 70;
+    }
+
+    // Add the one-night price and additional price to the total price
+    totalPrice += oneNightPrice + additionalPrice;
+
+    // Increment the current date
+    currentDate = currentDate.add(1, 'day');
   }
-
-  // Additional pricing based on the number of guests
-  if (numberOfGuests === 3) {
-    additionalPrice = 20;
-  } else if (numberOfGuests === 4) {
-    additionalPrice = 35;
-  } else if (numberOfGuests >= 5) {
-    additionalPrice = 70;
-  }
-
-  // Calculate the number of nights considering daylight saving time changes
-  var startPlus5AM = dayjs(startDate).hour(5).minute(0).second(0);
-  var endPlus5AM = dayjs(endDate).hour(5).minute(0).second(0);
-  var numberOfNights = Math.ceil(endPlus5AM.diff(startPlus5AM, 'day'));
-
-  var totalPrice = (oneNightPrice + additionalPrice) * numberOfNights;
 
   return totalPrice;
 }

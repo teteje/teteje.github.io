@@ -383,10 +383,9 @@
   $(document).ready(function() {
 // Pricing logic
 var specialDayPrices = {
-  '2023-12-25': 400, // Christmas: December 25, 2023
-  '2023-12-26': 400, // Christmas: December 26, 2023
-  '2023-12-31': 400, // New Year's Eve: December 31, 2023
-  '2024-01-01': 400, // New Year's Day: January 1, 2024
+  '2024-12-25': 400, // Christmas: December 25, 2024
+  '2024-12-26': 400, // Date in between special days: December 26, 2024
+  '2024-12-27': 400, // Christmas: December 27, 2024
 };
 
 var normalDayPriceUntil2023 = 360;
@@ -397,10 +396,19 @@ var additionalPrice = 0;
 function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   var oneNightPrice;
   var isBetweenSpecialDays = false;
+  var isSpecialDay = false;
 
   // Assuming startDate is in the format 'YYYY-MM-DD'
   var startDateFormatted = dayjs(startDate).format('YYYY-MM-DD');
   var currentYear = dayjs(startDate).year();
+
+  // Check if the start date is a special day
+  for (const specialDayDate in specialDayPrices) {
+    if (dayjs(startDateFormatted).isSame(specialDayDate)) {
+      isSpecialDay = true;
+      break;
+    }
+  }
 
   // Check if the start date is between two special days
   for (const specialDayDate in specialDayPrices) {
@@ -411,12 +419,15 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
     }
   }
 
-  if (currentYear <= 2023 && !isBetweenSpecialDays) {
+  if (currentYear <= 2023 && !isSpecialDay) {
     // Pricing until the end of 2023
     oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceUntil2023;
   } else if (isBetweenSpecialDays) {
     // Pricing for dates in between special days
-    oneNightPrice = 400; // Special price for dates in between special days
+    oneNightPrice = 400;
+  } else if (isSpecialDay) {
+    // Pricing for special days
+    oneNightPrice = 400;
   } else {
     // Pricing from 2024 onward
     oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceFrom2024;
@@ -440,7 +451,6 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
 
   return totalPrice;
 }
-
 
 
     

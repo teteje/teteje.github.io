@@ -404,10 +404,10 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
 
   if (currentYear <= 2023) {
     // Pricing until the end of 2023
-    oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceUntil2023;
+    oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceUntil2023[startDateFormatted];
   } else {
     // Pricing from 2024 onward
-    oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceFrom2024;
+    oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceFrom2024[startDateFormatted];
   }
 
   // Additional pricing based on the number of guests

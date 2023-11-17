@@ -381,7 +381,7 @@
 </div></div>
 <script>
   $(document).ready(function() {
-  // Pricing logic
+ // Pricing logic
 var specialDayPrices = {
   '2024-12-25': 400, // Christmas: December 25, 2024
   '2024-12-26': 400, // Christmas: December 26, 2024
@@ -424,10 +424,11 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   }
 
   // Calculate the total price for all nights
-  totalPrice = (totalPrice + additionalPrice) * numberOfNights;
+  totalPrice = (totalPrice + additionalPrice) * ((dayjs(endDate).diff(dayjs(startDate), 'day')) + 1);
 
   return totalPrice;
 }
+
 
 
     

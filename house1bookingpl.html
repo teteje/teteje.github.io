@@ -385,10 +385,10 @@
 </div></div>
 <script>
   $(document).ready(function() {
-   // Pricing logic
+// Pricing logic
 var specialDayPrices = {
   '2024-12-25': 400, // Christmas: December 25, 2024
-  '2024-12-26': 400, // Christmas: December 26, 2024
+  '2024-12-26': 400, // Date in between special days: December 26, 2024
   '2024-12-27': 400, // Christmas: December 27, 2024
 };
 
@@ -399,14 +399,39 @@ var additionalPrice = 0;
 
 function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   var oneNightPrice;
+  var isBetweenSpecialDays = false;
+  var isSpecialDay = false;
 
   // Assuming startDate is in the format 'YYYY-MM-DD'
   var startDateFormatted = dayjs(startDate).format('YYYY-MM-DD');
   var currentYear = dayjs(startDate).year();
 
-  if (currentYear <= 2023) {
+  // Check if the start date is a special day
+  for (const specialDayDate in specialDayPrices) {
+    if (dayjs(startDateFormatted).isSame(specialDayDate)) {
+      isSpecialDay = true;
+      break;
+    }
+  }
+
+  // Check if the start date is between two special days
+  for (const specialDayDate in specialDayPrices) {
+    if (dayjs(startDate).isAfter(dayjs(specialDayDate).subtract(1, 'day')) &&
+      dayjs(startDate).isBefore(dayjs(specialDayDate).add(1, 'day'))) {
+      isBetweenSpecialDays = true;
+      break;
+    }
+  }
+
+  if (currentYear <= 2023 && !isSpecialDay) {
     // Pricing until the end of 2023
     oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceUntil2023;
+  } else if (isBetweenSpecialDays) {
+    // Pricing for dates in between special days
+    oneNightPrice = 400;
+  } else if (isSpecialDay) {
+    // Pricing for special days
+    oneNightPrice = 400;
   } else {
     // Pricing from 2024 onward
     oneNightPrice = specialDayPrices[startDateFormatted] || normalDayPriceFrom2024;

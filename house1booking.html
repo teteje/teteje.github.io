@@ -406,7 +406,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
 
   // Iterate through each date in the stay
   var currentDate = dayjs(startDate);
-  while (currentDate <= dayjs(endDate)) {
+  while (currentDate < dayjs(endDate)) { // Check if less than end date to avoid adding an extra night
     isSpecialDay = false;
     isBetweenSpecialDays = false;
 
@@ -449,7 +449,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
     // Add the one-night price and additional price to the total price
     totalPrice += oneNightPrice + additionalPrice;
 
-    // Increment the current date
+    // Increment the current date before adding to the total price
     currentDate = currentDate.add(1, 'day');
   }
 

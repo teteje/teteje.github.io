@@ -383,10 +383,9 @@
   $(document).ready(function() {
 // Pricing logic
 var specialDayPrices = {
-  '2023-12-25': 400, // Christmas: December 25, 2023
-  '2023-12-26': 400, // Christmas: December 26, 2023
-  '2023-12-31': 400, // New Year's Eve: December 31, 2023
-  '2024-01-01': 400, // New Year's Day: January 1, 2024
+  '2024-12-25': 400, // Christmas: December 25, 2024
+  '2024-12-26': 400, // Date in between special days: December 26, 2024
+  '2024-12-27': 400, // Christmas: December 27, 2024
 };
 
 var normalDayPriceUntil2023 = 360;
@@ -395,7 +394,7 @@ var normalDayPriceFrom2024 = 375;
 var additionalPrice = 0;
 
 function calculateTotalPrice(startDate, endDate, numberOfGuests) {
-  var oneNightPrice = normalDayPriceUntil2023; // Default to normal price
+  var oneNightPrice;
   var isBetweenSpecialDays = false;
   var isSpecialDay = false;
   var totalPrice = 0;
@@ -406,7 +405,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
 
   // Iterate through each date in the stay
   var currentDate = dayjs(startDate);
-  while (currentDate < dayjs(endDate)) { // Check if less than end date to avoid adding an extra night
+  while (currentDate <= dayjs(endDate)) {
     isSpecialDay = false;
     isBetweenSpecialDays = false;
 
@@ -433,8 +432,12 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
     } else if (isBetweenSpecialDays) {
       oneNightPrice = 400;
     } else {
-      // Reset `oneNightPrice` to normal price after processing special days
-      oneNightPrice = normalDayPriceUntil2023;
+      oneNightPrice = specialDayPrices[currentDate] || normalDayPriceFrom2024;
+    }
+
+    // Apply special day price only to the special day itself, not the checkout date
+    if (isSpecialDay && currentDate.isSame(dayjs(endDate))) {
+      oneNightPrice = normalDayPriceFrom2024; // Apply normal price to checkout date
     }
 
     // Calculate the additional price for the current date based on the number of guests
@@ -449,7 +452,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
     // Add the one-night price and additional price to the total price
     totalPrice += oneNightPrice + additionalPrice;
 
-    // Increment the current date before adding to the total price
+    // Increment the current date
     currentDate = currentDate.add(1, 'day');
   }
 

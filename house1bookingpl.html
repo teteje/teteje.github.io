@@ -387,19 +387,17 @@
   $(document).ready(function() {
 // Pricing logic
 var specialDayPrices = {
-  '2024-12-25': 450, // Christmas 2024
-  '2024-12-26': 450, // Christmas 2024
-  '2024-12-27': 450, // Christmas 2024
-  '2024-05-01': 450, // May 1st and May 3rd 2024
-  '2024-05-02': 450, // May 1st and May 3rd 2024
-  '2024-05-03': 450, // May 1st and May 3rd 2024
-  '2024-05-04': 450, // May 1st and May 3rd 2024
+  '2024-12-25': 475, // Christmas: December 25, 2024
+  '2024-12-26': 475, // Date in between special days: December 26, 2024
+  '2024-12-27': 475, // Christmas: December 27, 2024
+  '2024-05-01': 475, // May 1st and May 3rd 2024
+  '2024-05-02': 475, // May 1st and May 3rd 2024
+  '2024-05-03': 475, // May 1st and May 3rd 2024
+  '2024-05-04': 475, // May 1st and May 3rd 2024
 };
 
 var normalDayPriceUntil2023 = 360;
 var normalDayPriceFrom2024 = 375;
-
-var additionalPrice = 0;
 
 function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   // Assuming startDate and endDate are in the format 'YYYY-MM-DD'
@@ -407,7 +405,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   var end = dayjs(endDate);
 
   // Calculate the number of nights
-  var numberOfNights = end.diff(start, 'day') ; // not Include the end date
+  var numberOfNights = end.diff(start, 'day'); // not Include the end date
 
   var totalPrice = 0;
 
@@ -415,34 +413,68 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   for (var i = 0; i < numberOfNights; i++) {
     var currentDate = start.add(i, 'day').format('YYYY-MM-DD');
     var isSpecialDay = specialDayPrices[currentDate] !== undefined;
-    
-    if (start.year() <= 2023 && !isSpecialDay) {
+
+    // Adjust special day price based on the number of guests
+    if (isSpecialDay) {
+      switch (numberOfGuests) {
+        case 1:
+        case 2:
+          totalPrice += 375; // Special day price for 1 or 2 guests
+          break;
+        case 3:
+          totalPrice += 400; // Special day price for 3 guests
+          break;
+        case 4:
+          totalPrice += 425; // Special day price for 4 guests
+          break;
+        case 5:
+        case 6:
+          totalPrice += 475; // Special day price for 5 or 6 guests
+          break;
+        default:
+          totalPrice += specialDayPrices[currentDate]; // Use the original special day price for other guest counts
+      }
+    } else if (start.year() <= 2023) {
       // Pricing until the end of 2023
-      totalPrice += normalDayPriceUntil2023;
-    } else if (isSpecialDay) {
-      // Pricing for special days
-      totalPrice += specialDayPrices[currentDate];
+      switch (numberOfGuests) {
+        case 1:
+        case 2:
+          totalPrice += normalDayPriceUntil2023; // Normal day price for 1 or 2 guests
+          break;
+        case 3:
+          totalPrice += 380; // Normal day price for 3 guests
+          break;
+        case 4:
+          totalPrice += 395; // Normal day price for 4 guests
+          break;
+        case 5:
+        case 6:
+          totalPrice += 430; // Normal day price for 5 or 6 guests
+          break;
+      }
     } else {
       // Pricing from 2024 onward
-      totalPrice += normalDayPriceFrom2024;
+      switch (numberOfGuests) {
+        case 1:
+        case 2:
+          totalPrice += normalDayPriceFrom2024; // Normal day price from 2024 onward for 1 or 2 guests
+          break;
+        case 3:
+          totalPrice += 395; // Normal day price from 2024 onward for 3 guests
+          break;
+        case 4:
+          totalPrice += 410; // Normal day price from 2024 onward for 4 guests
+          break;
+        case 5:
+        case 6:
+          totalPrice += 445; // Normal day price from 2024 onward for 5 or 6 guests
+          break;
+      }
     }
   }
 
-  // Additional pricing based on the number of guests
-  if (numberOfGuests === 3) {
-    additionalPrice = 20;
-  } else if (numberOfGuests === 4) {
-    additionalPrice = 35;
-  } else if (numberOfGuests >= 5) {
-    additionalPrice = 70;
-  }
-
-  // Add additional pricing to the total
-  totalPrice += additionalPrice;
-
   return totalPrice;
 }
-
     var checkin;
     var checkout;
     var numberOfGuestsSelect;

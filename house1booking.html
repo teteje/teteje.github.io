@@ -403,7 +403,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   var end = dayjs(endDate);
 
   // Calculate the number of nights
-  var numberOfNights = end.diff(start, 'day') ; // not Include the end date
+  var numberOfNights = end.diff(start, 'day'); // not Include the end date
 
   var totalPrice = 0;
 
@@ -411,13 +411,15 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   for (var i = 0; i < numberOfNights; i++) {
     var currentDate = start.add(i, 'day').format('YYYY-MM-DD');
     var isSpecialDay = specialDayPrices[currentDate] !== undefined;
-    
-    if (start.year() <= 2023 && !isSpecialDay) {
+
+    // Adjust special day price based on the number of guests
+    if (isSpecialDay && numberOfGuests <= 4) {
+      totalPrice += 420; // Special day price for 1 to 4 guests
+    } else if (isSpecialDay) {
+      totalPrice += specialDayPrices[currentDate]; // Use the original special day price
+    } else if (start.year() <= 2023) {
       // Pricing until the end of 2023
       totalPrice += normalDayPriceUntil2023;
-    } else if (isSpecialDay) {
-      // Pricing for special days
-      totalPrice += specialDayPrices[currentDate];
     } else {
       // Pricing from 2024 onward
       totalPrice += normalDayPriceFrom2024;

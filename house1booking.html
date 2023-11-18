@@ -395,8 +395,6 @@ var specialDayPrices = {
 var normalDayPriceUntil2023 = 360;
 var normalDayPriceFrom2024 = 375;
 
-var additionalPrice = 0;
-
 function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   // Assuming startDate and endDate are in the format 'YYYY-MM-DD'
   var start = dayjs(startDate);
@@ -435,23 +433,25 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
     } else if (start.year() <= 2023) {
       // Pricing until the end of 2023
       totalPrice += normalDayPriceUntil2023;
+
+      // Additional pricing based on the number of guests for normal days
+      switch (numberOfGuests) {
+        case 3:
+          totalPrice += 20;
+          break;
+        case 4:
+          totalPrice += 35;
+          break;
+        case 5:
+        case 6:
+          totalPrice += 70;
+          break;
+      }
     } else {
       // Pricing from 2024 onward
       totalPrice += normalDayPriceFrom2024;
     }
   }
-
-  // Additional pricing based on the number of guests
-  if (numberOfGuests === 3) {
-    additionalPrice = 20;
-  } else if (numberOfGuests === 4) {
-    additionalPrice = 35;
-  } else if (numberOfGuests >= 5) {
-    additionalPrice = 70;
-  }
-
-  // Add additional pricing to the total
-  totalPrice += additionalPrice;
 
   return totalPrice;
 }

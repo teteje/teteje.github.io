@@ -388,7 +388,7 @@
 </div></div>
 <script>
   $(document).ready(function() {
- // Pricing logic
+// Pricing logic
 var specialDayPrices = {
   '2024-12-25': 475, // Christmas: December 25, 2024
   '2024-12-26': 475, // Date in between special days: December 26, 2024
@@ -422,13 +422,13 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
       switch (numberOfGuests) {
         case 1:
         case 2:
-          totalPrice += 375; // Special day price for 1 or 2 guests
+          totalPrice += 385; // Special day price for 1 or 2 guests
           break;
         case 3:
-          totalPrice += 400; // Special day price for 3 guests
+          totalPrice += 405; // Special day price for 3 guests
           break;
         case 4:
-          totalPrice += 425; // Special day price for 4 guests
+          totalPrice += 430; // Special day price for 4 guests
           break;
         case 5:
         case 6:
@@ -466,11 +466,11 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
           totalPrice += 395; // Normal day price from 2024 onward for 3 guests
           break;
         case 4:
-          totalPrice += 410; // Normal day price from 2024 onward for 4 guests
+          totalPrice += 420; // Normal day price from 2024 onward for 4 guests
           break;
         case 5:
         case 6:
-          totalPrice += 445; // Normal day price from 2024 onward for 5 or 6 guests
+          totalPrice += 450; // Normal day price from 2024 onward for 5 or 6 guests
           break;
       }
     }
@@ -478,6 +478,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
 
   return totalPrice;
 }
+
 
 
     var checkin;

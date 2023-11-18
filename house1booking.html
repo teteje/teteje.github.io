@@ -418,43 +418,60 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
           totalPrice += 375; // Special day price for 1 or 2 guests
           break;
         case 3:
-          totalPrice += 400; // Special day price for 3 guests
+          totalPrice += 395; // Special day price for 3 guests
           break;
         case 4:
-          totalPrice += 425; // Special day price for 4 guests
+          totalPrice += 410; // Special day price for 4 guests
           break;
         case 5:
         case 6:
-          totalPrice += 475; // Special day price for 5 or 6 guests
+          totalPrice += 445; // Special day price for 5 or 6 guests
           break;
         default:
           totalPrice += specialDayPrices[currentDate]; // Use the original special day price for other guest counts
       }
     } else if (start.year() <= 2023) {
       // Pricing until the end of 2023
-      totalPrice += normalDayPriceUntil2023;
-
-      // Additional pricing based on the number of guests for normal days
       switch (numberOfGuests) {
+        case 1:
+        case 2:
+          totalPrice += normalDayPriceUntil2023; // Normal day price for 1 or 2 guests
+          break;
         case 3:
-          totalPrice += 20;
+          totalPrice += 380; // Normal day price for 3 guests
           break;
         case 4:
-          totalPrice += 35;
+          totalPrice += 395; // Normal day price for 4 guests
           break;
         case 5:
         case 6:
-          totalPrice += 70;
+          totalPrice += 430; // Normal day price for 5 or 6 guests
           break;
       }
     } else {
       // Pricing from 2024 onward
-      totalPrice += normalDayPriceFrom2024;
+      switch (numberOfGuests) {
+        case 1:
+        case 2:
+          totalPrice += normalDayPriceFrom2024; // Normal day price from 2024 onward for 1 or 2 guests
+          break;
+        case 3:
+          totalPrice += 395; // Normal day price from 2024 onward for 3 guests
+          break;
+        case 4:
+          totalPrice += 410; // Normal day price from 2024 onward for 4 guests
+          break;
+        case 5:
+        case 6:
+          totalPrice += 445; // Normal day price from 2024 onward for 5 or 6 guests
+          break;
+      }
     }
   }
 
   return totalPrice;
 }
+
 
 
 

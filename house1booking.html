@@ -399,7 +399,7 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
   var end = dayjs(endDate);
 
   // Calculate the number of nights
-  var numberOfNights = end.diff(start, 'day') + 1; // Include the end date
+  var numberOfNights = end.diff(start, 'day') ; // not Include the end date
 
   var totalPrice = 0;
 

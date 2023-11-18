@@ -383,13 +383,13 @@
   $(document).ready(function() {
 // Pricing logic
 var specialDayPrices = {
-  '2024-12-25': 450, // Christmas: December 25, 2024
-  '2024-12-26': 450, // Date in between special days: December 26, 2024
-  '2024-12-27': 450, // Christmas: December 27, 2024
-  '2024-05-01': 450, // May 1st and May 3rd 2024
-  '2024-05-02': 450, // May 1st and May 3rd 2024
-  '2024-05-03': 450, // May 1st and May 3rd 2024
-  '2024-05-04': 450, // May 1st and May 3rd 2024
+  '2024-12-25': 475, // Christmas: December 25, 2024
+  '2024-12-26': 475, // Date in between special days: December 26, 2024
+  '2024-12-27': 475, // Christmas: December 27, 2024
+  '2024-05-01': 475, // May 1st and May 3rd 2024
+  '2024-05-02': 475, // May 1st and May 3rd 2024
+  '2024-05-03': 475, // May 1st and May 3rd 2024
+  '2024-05-04': 475, // May 1st and May 3rd 2024
 };
 
 var normalDayPriceUntil2023 = 360;
@@ -413,10 +413,25 @@ function calculateTotalPrice(startDate, endDate, numberOfGuests) {
     var isSpecialDay = specialDayPrices[currentDate] !== undefined;
 
     // Adjust special day price based on the number of guests
-    if (isSpecialDay && numberOfGuests <= 4) {
-      totalPrice += 420; // Special day price for 1 to 4 guests
-    } else if (isSpecialDay) {
-      totalPrice += specialDayPrices[currentDate]; // Use the original special day price
+    if (isSpecialDay) {
+      switch (numberOfGuests) {
+        case 1:
+        case 2:
+          totalPrice += 375; // Special day price for 1 or 2 guests
+          break;
+        case 3:
+          totalPrice += 400; // Special day price for 3 guests
+          break;
+        case 4:
+          totalPrice += 425; // Special day price for 4 guests
+          break;
+        case 5:
+        case 6:
+          totalPrice += 475; // Special day price for 5 or 6 guests
+          break;
+        default:
+          totalPrice += specialDayPrices[currentDate]; // Use the original special day price for other guest counts
+      }
     } else if (start.year() <= 2023) {
       // Pricing until the end of 2023
       totalPrice += normalDayPriceUntil2023;

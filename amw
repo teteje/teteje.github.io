@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Glossary</title>
+    <style>
+/* General Reset and Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Container Styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    color: #2c3e50;
+}
+
+/* Select Dropdown Styling */
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    background: #fff;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: #f4f4f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td[contenteditable] {
+    background-color: #eaf2f8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #2980b9;
+    color: white;
+}
+
+/* Add New Row Button */
+#addNewRowButton {
+    background-color: #27ae60;
+    color: white;
+}
+
+#addNewRowButton:hover {
+    background-color: #2ecc71;
+}
+
+/* Save Button */
+#saveButton {
+    background-color: #e67e22;
+    color: white;
+}
+
+#saveButton:hover {
+    background-color: #d35400;
+      
+/* Master and Language Column Styling */
+#masterCol, #langCol {
+    width: 50%;
+    text-align: center;
+}
+
+th, td {
+    text-align: center;
+}
+
+td {
+    background-color: #f8f9fa;
+    font-size: 1.1em;
+}
+}
+    </style>
+<body>
+    <div class="container">
+        <h1>Language Display</h1>
+        <select id="languageSelector" onchange="updateLanguageColumn()">
+            <option value="EN">English</option>
+            <option value="PL">Polish</option>
+            <option value="RU">Russian</option>
+            <!-- More options -->
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>English</th>
+                    <th id="selectedLang">Selected Language</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="masterCol"></td>
+                    <td id="langCol"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbyb_CovlIJ7Oulp8XlkfW4l8LaM8LRvkKOcor3ikl872oxJpzWh-zHljq8ziYPv2He5/exec";
+
+        async function fetchData() {
+            try {
+                const response = await fetch(webAppUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                const data = await response.json();
+                renderTable(data);
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        function renderTable(data) {
+            const masterCol = data.map(row => `<tr><td>${row[0]}</td></tr>`).join('');
+            document.getElementById('masterCol').innerHTML = masterCol;
+            updateLanguageColumn(); // Initialize language column display
+        }
+
+        function updateLanguageColumn() {
+            const selectedLang = document.getElementById('languageSelector').value;
+            fetchData().then(data => {
+                const headerRow = data[0];
+                const langIndex = headerRow.indexOf(selectedLang);
+                if (langIndex === -1) {
+                    console.error('Language column not found.');
+                    return;
+                }
+                const langCol = data.slice(1).map(row => `<tr><td>${row[langIndex]}</td></tr>`).join('');
+                document.getElementById('langCol').innerHTML = langCol;
+                document.getElementById('selectedLang').textContent = selectedLang; // Update header
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>

@@ -4,12 +4,27 @@
   <meta charset="UTF-8">
   <title>House 1 Calendar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <style>
     body {
       padding: 2rem;
       background: #f7f7f7;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .calendar-header button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      padding: 0 1rem;
+      cursor: pointer;
     }
     .calendar {
       display: grid;
@@ -34,19 +49,29 @@
       background: #e06666;
       color: white;
     }
+    .faded {
+      opacity: 0.4;
+    }
+    .today {
+      border: 3px solid #007bff;
+    }
   </style>
 </head>
 <body>
-  <h2 class="text-center">House 1 – Availability Calendar</h2>
-  <div class="form-row justify-content-center mb-3">
-    <select id="monthSelect" class="form-control w-auto mx-2"></select>
-    <select id="yearSelect" class="form-control w-auto mx-2"></select>
+  <h2 class="text-center mb-4">House 1 – Availability Calendar</h2>
+
+  <div class="calendar-header">
+    <button id="prevBtn">&lt;</button>
+    <span id="monthYear"></span>
+    <button id="nextBtn">&gt;</button>
   </div>
+
   <div class="calendar" id="calendar"></div>
 
   <script>
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbwOhEGvTgR-kPxjk6dXzhcL4s4LwOV-nailRlYP7P2YOfME7gxexJnz-50g50KAZMxS/exec'; // <- Replace with your actual URL
+    const webAppUrl = 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec';
     let sheetData = [];
+    let currentDate = new Date();
 
     function fetchCalendarData(callback) {
       fetch(webAppUrl)
@@ -60,28 +85,17 @@
         });
     }
 
-    function buildDropdowns() {
-      const monthSel = document.getElementById('monthSelect');
-      const yearSel = document.getElementById('yearSelect');
-      for (let m = 0; m < 12; m++) {
-        const opt = new Option(new Date(0, m).toLocaleString('default', { month: 'long' }), m);
-        if (m === new Date().getMonth()) opt.selected = true;
-        monthSel.add(opt);
-      }
-      for (let y = 2020; y <= 2030; y++) {
-        const opt = new Option(y, y);
-        if (y === new Date().getFullYear()) opt.selected = true;
-        yearSel.add(opt);
-      }
-      monthSel.onchange = () => renderCalendar(+yearSel.value, +monthSel.value);
-      yearSel.onchange = () => renderCalendar(+yearSel.value, +monthSel.value);
-    }
-
     function renderCalendar(year, month) {
       const calendar = document.getElementById('calendar');
       calendar.innerHTML = '';
 
-      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const header = document.getElementById('monthYear');
+      const locale = navigator.language || 'en-US';
+      header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long' })} ${year}`;
+
+      const dayNames = Array.from({ length: 7 }, (_, i) =>
+        new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
+      );
       dayNames.forEach(name => {
         const el = document.createElement('div');
         el.className = 'day-name';
@@ -91,40 +105,61 @@
 
       const firstDay = new Date(year, month, 1);
       const totalDays = new Date(year, month + 1, 0).getDate();
-      const offset = firstDay.getDay();
+      const startOffset = firstDay.getDay();
+      const totalCells = Math.ceil((startOffset + totalDays) / 7) * 7;
 
-      for (let i = 0; i < offset; i++) {
-        calendar.appendChild(document.createElement('div'));
-      }
+      for (let i = 0; i < totalCells; i++) {
+        const cellDate = new Date(year, month, i - startOffset + 1);
+        const isCurrentMonth = cellDate.getMonth() === month;
+        const dateStr = cellDate.toISOString().slice(0, 10);
 
-      for (let day = 1; day <= totalDays; day++) {
-        const currentDate = new Date(year, month, day);
-        const dateStr = currentDate.toISOString().split('T')[0]; // "YYYY-MM-DD"
+        const row = sheetData.find(r => {
+          const rowDateStr = new Date(r['Date']).toISOString().slice(0, 10);
+          return rowDateStr === dateStr;
+        });
 
-        const row = sheetData.find(r => r['Date'] === dateStr);
         let status = row ? row['Reservation Status'] : 'Unknown';
-
         status = status ? status.trim().toLowerCase() : 'unknown';
 
         const div = document.createElement('div');
         div.className = 'day';
-        div.textContent = day;
+        div.textContent = cellDate.getDate();
+
+        // Mark today
+        const today = new Date();
+        if (
+          cellDate.getFullYear() === today.getFullYear() &&
+          cellDate.getMonth() === today.getMonth() &&
+          cellDate.getDate() === today.getDate()
+        ) {
+          div.classList.add('today');
+        }
 
         if (status === 'available') {
           div.classList.add('available');
-          div.title = 'Available';
         } else {
           div.classList.add('reserved');
-          div.title = row ? row['Reservation Status'] : 'Reserved';
         }
 
+        if (!isCurrentMonth) {
+          div.classList.add('faded');
+        }
+
+        div.title = row ? row['Reservation Status'] : 'No Data';
         calendar.appendChild(div);
       }
     }
 
+    function changeMonth(delta) {
+      currentDate.setMonth(currentDate.getMonth() + delta);
+      renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    }
+
+    document.getElementById('prevBtn').onclick = () => changeMonth(-1);
+    document.getElementById('nextBtn').onclick = () => changeMonth(1);
+
     fetchCalendarData(() => {
-      buildDropdowns();
-      renderCalendar(new Date().getFullYear(), new Date().getMonth());
+      renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
     });
   </script>
 </body>

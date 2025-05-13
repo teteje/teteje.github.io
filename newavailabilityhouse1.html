@@ -11,7 +11,7 @@
       padding: 2rem;
       background: #f7f7f7;
     }
-    .calendar-wrapper {
+    .calendar-container {
       margin-bottom: 4rem;
     }
     .calendar-header {
@@ -58,151 +58,223 @@
     .today {
       border: 3px solid #007bff;
     }
+    /* Make the loader cover the entire calendar space */
+    .loader-container {
+      position: relative;
+      width: 20%;
+      height: 20%;
+    }
+    #loader-house1, #loader-house2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20%;
+      height: 20%;
+    }
+    /* Hide the arrows during loading */
+    .calendar-header button {
+      display: none;
+    }
+    .calendar-header.loaded button {
+      display: inline-block;
+    }
+    .past-date {
+  background: #d3d3d3;  /* Light grey */
+}
+
   </style>
 </head>
 <body>
 
   <!-- House 1 -->
-  <div class="calendar-wrapper">
-    <h2 class="text-center mb-4">House 1 – Availability Calendar</h2>
-    <div class="calendar-header">
-      <button id="prevBtn1">&lt;</button>
+  <div class="calendar-container">
+    <h2 class="text-center mb-2">House 1 – Availability Calendar</h2>
+    <div class="text-center mb-2 loader-container" id="loader-house1" style="display:none;">
+      <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." width="100%">
+    </div>
+    <div class="calendar-header" id="header-house1">
+      <button onclick="changeMonth1(-1)">&lt;</button>
       <span id="monthYear1"></span>
-      <button id="nextBtn1">&gt;</button>
+      <button onclick="changeMonth1(1)">&gt;</button>
     </div>
     <div class="calendar" id="calendar1"></div>
   </div>
 
   <!-- House 2 -->
-  <div class="calendar-wrapper">
-    <h2 class="text-center mb-4">House 2 – Availability Calendar</h2>
-    <div class="calendar-header">
-      <button id="prevBtn2">&lt;</button>
+  <div class="calendar-container">
+    <h2 class="text-center mb-2">House 2 – Availability Calendar</h2>
+    <div class="text-center mb-2 loader-container" id="loader-house2" style="display:none;">
+      <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." width="100%">
+    </div>
+    <div class="calendar-header" id="header-house2">
+      <button onclick="changeMonth2(-1)">&lt;</button>
       <span id="monthYear2"></span>
-      <button id="nextBtn2">&gt;</button>
+      <button onclick="changeMonth2(1)">&gt;</button>
     </div>
     <div class="calendar" id="calendar2"></div>
   </div>
 
   <script>
-    function createCalendar(config) {
-      const {
-        calendarId,
-        monthYearId,
-        prevBtnId,
-        nextBtnId,
-        webAppUrl
-      } = config;
+    const locale = navigator.language || 'en-US';
 
-      let sheetData = [];
-      let currentDate = new Date();
+    // ---- HOUSE 1 ----
+    const url1 = 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec';
+    let data1 = [];
+    let date1 = new Date();
 
-      function fetchCalendarData(callback) {
-        fetch(webAppUrl)
-          .then(response => response.json())
-          .then(data => {
-            sheetData = data;
-            callback();
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }
-
-      function renderCalendar(year, month) {
-        const calendar = document.getElementById(calendarId);
-        calendar.innerHTML = '';
-
-        const header = document.getElementById(monthYearId);
-        const locale = navigator.language || 'en-US';
-        header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long' })} ${year}`;
-
-        const dayNames = Array.from({ length: 7 }, (_, i) =>
-          new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
-        );
-        dayNames.forEach(name => {
-          const el = document.createElement('div');
-          el.className = 'day-name';
-          el.textContent = name;
-          calendar.appendChild(el);
+    function fetchCalendarData1(callback) {
+      document.getElementById('loader-house1').style.display = 'block';
+      document.getElementById('header-house1').classList.remove('loaded');
+      fetch(url1)
+        .then(res => res.json())
+        .then(json => {
+          data1 = json;
+          callback();
+          document.getElementById('loader-house1').style.display = 'none';
+          document.getElementById('header-house1').classList.add('loaded');
+        }).catch(err => {
+          console.error(err);
+          document.getElementById('loader-house1').style.display = 'none';
+          document.getElementById('header-house1').classList.add('loaded');
         });
-
-        const firstDay = new Date(year, month, 1);
-        const totalDays = new Date(year, month + 1, 0).getDate();
-        const startOffset = firstDay.getDay();
-        const totalCells = Math.ceil((startOffset + totalDays) / 7) * 7;
-
-        for (let i = 0; i < totalCells; i++) {
-          const cellDate = new Date(year, month, i - startOffset + 1);
-          const isCurrentMonth = cellDate.getMonth() === month;
-          const dateStr = cellDate.toISOString().slice(0, 10);
-
-          const row = sheetData.find(r => {
-            const rowDateStr = new Date(r['Date']).toISOString().slice(0, 10);
-            return rowDateStr === dateStr;
-          });
-
-          let status = row ? row['Reservation Status'] : 'Unknown';
-          status = status ? status.trim().toLowerCase() : 'unknown';
-
-          const div = document.createElement('div');
-          div.className = 'day';
-          div.textContent = cellDate.getDate();
-
-          // Highlight today
-          const today = new Date();
-          if (
-            cellDate.getFullYear() === today.getFullYear() &&
-            cellDate.getMonth() === today.getMonth() &&
-            cellDate.getDate() === today.getDate()
-          ) {
-            div.classList.add('today');
-          }
-
-          if (status === 'available') {
-            div.classList.add('available');
-          } else {
-            div.classList.add('reserved');
-          }
-
-          if (!isCurrentMonth) {
-            div.classList.add('faded');
-          }
-
-          div.title = row ? row['Reservation Status'] : 'No Data';
-          calendar.appendChild(div);
-        }
-      }
-
-      function changeMonth(delta) {
-        currentDate.setMonth(currentDate.getMonth() + delta);
-        renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
-      }
-
-      document.getElementById(prevBtnId).onclick = () => changeMonth(-1);
-      document.getElementById(nextBtnId).onclick = () => changeMonth(1);
-
-      fetchCalendarData(() => {
-        renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
-      });
     }
 
-    // Initialize both calendars
-    createCalendar({
-      calendarId: 'calendar1',
-      monthYearId: 'monthYear1',
-      prevBtnId: 'prevBtn1',
-      nextBtnId: 'nextBtn1',
-      webAppUrl: 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec'
-    });
+    function renderCalendar1(year, month) {
+  const cal = document.getElementById('calendar1');
+  const header = document.getElementById('monthYear1');
+  cal.innerHTML = '';
+  header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long', year: 'numeric' })}`;
 
-    createCalendar({
-      calendarId: 'calendar2',
-      monthYearId: 'monthYear2',
-      prevBtnId: 'prevBtn2',
-      nextBtnId: 'nextBtn2',
-      webAppUrl: 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec'
-    });
+  const days = Array.from({ length: 7 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
+  );
+  days.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'day-name';
+    el.textContent = d;
+    cal.appendChild(el);
+  });
+
+  const firstDay = new Date(year, month, 1);
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  const offset = firstDay.getDay();
+  const totalCells = Math.ceil((offset + totalDays) / 7) * 7;
+
+  const today = new Date();
+  // Set time to midnight for a proper comparison
+  today.setHours(0, 0, 0, 0);
+
+  for (let i = 0; i < totalCells; i++) {
+    const d = new Date(year, month, i - offset + 1);
+    const currentMonth = d.getMonth() === month;
+    const dayStr = d.toISOString().slice(0, 10);
+    const matched = data1.find(r => new Date(r['Date']).toISOString().slice(0, 10) === dayStr);
+    const status = matched ? (matched['Reservation Status'] || 'unknown').trim().toLowerCase() : 'unknown';
+
+    const el = document.createElement('div');
+    el.className = 'day';
+    el.textContent = d.getDate();
+
+    if (d.toDateString() === today.toDateString()) el.classList.add('today');
+    
+    // Add the grey background if the date is in the past, but not today
+    if (d < today) {
+      el.classList.add('past-date');
+    }
+
+    el.classList.add(status === 'available' ? 'available' : 'reserved');
+    if (!currentMonth) el.classList.add('faded');
+    el.title = matched ? matched['Reservation Status'] : 'No data';
+    cal.appendChild(el);
+  }
+}
+
+
+    function changeMonth1(delta) {
+      date1.setMonth(date1.getMonth() + delta);
+      renderCalendar1(date1.getFullYear(), date1.getMonth());
+    }
+
+    fetchCalendarData1(() => renderCalendar1(date1.getFullYear(), date1.getMonth()));
+
+    // ---- HOUSE 2 ----
+    const url2 = 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec';
+    let data2 = [];
+    let date2 = new Date();
+
+    function fetchCalendarData2(callback) {
+      document.getElementById('loader-house2').style.display = 'block';
+      document.getElementById('header-house2').classList.remove('loaded');
+      fetch(url2)
+        .then(res => res.json())
+        .then(json => {
+          data2 = json;
+          callback();
+          document.getElementById('loader-house2').style.display = 'none';
+          document.getElementById('header-house2').classList.add('loaded');
+        }).catch(err => {
+          console.error(err);
+          document.getElementById('loader-house2').style.display = 'none';
+          document.getElementById('header-house2').classList.add('loaded');
+        });
+    }
+
+   function renderCalendar2(year, month) {
+  const cal = document.getElementById('calendar2');
+  const header = document.getElementById('monthYear2');
+  cal.innerHTML = '';
+  header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long', year: 'numeric' })}`;
+
+  const days = Array.from({ length: 7 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
+  );
+  days.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'day-name';
+    el.textContent = d;
+    cal.appendChild(el);
+  });
+
+  const firstDay = new Date(year, month, 1);
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  const offset = firstDay.getDay();
+  const totalCells = Math.ceil((offset + totalDays) / 7) * 7;
+
+  const today = new Date();
+  // Set time to midnight for a proper comparison
+  today.setHours(0, 0, 0, 0);
+
+  for (let i = 0; i < totalCells; i++) {
+    const d = new Date(year, month, i - offset + 1);
+    const currentMonth = d.getMonth() === month;
+    const dayStr = d.toISOString().slice(0, 10);
+    const matched = data2.find(r => new Date(r['Date']).toISOString().slice(0, 10) === dayStr);
+    const status = matched ? (matched['Reservation Status'] || 'unknown').trim().toLowerCase() : 'unknown';
+
+    const el = document.createElement('div');
+    el.className = 'day';
+    el.textContent = d.getDate();
+
+    if (d.toDateString() === today.toDateString()) el.classList.add('today');
+    
+    // Add the grey background if the date is in the past, but not today
+    if (d < today) {
+      el.classList.add('past-date');
+    }
+
+    el.classList.add(status === 'available' ? 'available' : 'reserved');
+    if (!currentMonth) el.classList.add('faded');
+    el.title = matched ? matched['Reservation Status'] : 'No data';
+    cal.appendChild(el);
+  }
+}
+    function changeMonth2(delta) {
+      date2.setMonth(date2.getMonth() + delta);
+      renderCalendar2(date2.getFullYear(), date2.getMonth());
+    }
+
+    fetchCalendarData2(() => renderCalendar2(date2.getFullYear(), date2.getMonth()));
   </script>
 </body>
 </html>

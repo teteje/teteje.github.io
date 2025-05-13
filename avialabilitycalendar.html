@@ -1,150 +1,280 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Swiper demo</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
-    />     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<head>
+  <meta charset="UTF-8">
+  <title>House Calendars</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <style>
+    body {
+      padding: 2rem;
+      background: #f7f7f7;
+    }
+    .calendar-container {
+      margin-bottom: 4rem;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .calendar-header button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      padding: 0 1rem;
+      cursor: pointer;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      max-width: 700px;
+      margin: auto;
+    }
+    .day, .day-name {
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .day-name {
+      background: #ccc;
+    }
+    .available {
+      background: #b6d7a8;
+    }
+    .reserved {
+      background: #e06666;
+      color: white;
+    }
+    .faded {
+      opacity: 0.4;
+    }
+    .today {
+      border: 3px solid #007bff;
+    }
+    /* Make the loader cover the entire calendar space */
+    .loader-container {
+      position: relative;
+      width: 20%;
+      height: 20%;
+    }
+    #loader-house1, #loader-house2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20%;
+      height: 20%;
+    }
+    /* Hide the arrows during loading */
+    .calendar-header button {
+      display: none;
+    }
+    .calendar-header.loaded button {
+      display: inline-block;
+    }
+    .past-date {
+  background: #d3d3d3;  /* Light grey */
+}
 
-    <style>
-      html,
-      body {
-        position: relative;
-        height: 100% !important;
-        width: 100% !important;
-        background: #eee;
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color: #000;
-        margin: 0;
-        padding: 0;
-      }
-      
-      .return-button {
-        padding: 10px 20px;
-        font-size: 14px;
-        color: #fff;
-        background-color: #ea9999;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 10px;
-         z-index: 9999; /* Set a higher z-index value */
-      }
-      
-    </style>
-  </head>
-    
-          
-    
-    <!-- Link -->
-   
-   <link href="https://teteje.github.io/calendarstyle.css" rel="stylesheet" type="text/css">
-    <script src="https://nobeds.app/src3/plugins.bundle.js"></script>
-    <script src="https://nobeds.app/src3/caleran.min.js"></script>
-    
-    <div class="calendar-wrapper"> <div style="position: relative; top: 10px; left: 10px; padding-bottom: 30px;">
-      <button onclick="window.location.href = 'https://teteje.github.io/searchbar.html';" class="return-button">Return to the booking page</button>
+  </style>
+</head>
+<body>
+
+  <!-- House 1 -->
+  <div class="calendar-container">
+    <h2 class="text-center mb-2">House 1 – Availability Calendar</h2>
+    <div class="text-center mb-2 loader-container" id="loader-house1" style="display:none;">
+      <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." width="100%">
     </div>
-      <h2 class="calendar-title">House 1 - Availability</h2>
-      <input id="calendar1" class="caleran-container" readonly>
+    <div class="calendar-header" id="header-house1">
+      <button onclick="changeMonth1(-1)">&lt;</button>
+      <span id="monthYear1"></span>
+      <button onclick="changeMonth1(1)">&gt;</button>
     </div>
+    <div class="calendar" id="calendar1"></div>
+  </div>
 
-    <div class="calendar-wrapper">
-      <h2 class="calendar-title">House 2 - Availability</h2>
-      <input id="calendar2" class="caleran-container" readonly>
+  <!-- House 2 -->
+  <div class="calendar-container">
+    <h2 class="text-center mb-2">House 2 – Availability Calendar</h2>
+    <div class="text-center mb-2 loader-container" id="loader-house2" style="display:none;">
+      <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." width="100%">
     </div>
+    <div class="calendar-header" id="header-house2">
+      <button onclick="changeMonth2(-1)">&lt;</button>
+      <span id="monthYear2"></span>
+      <button onclick="changeMonth2(1)">&gt;</button>
+    </div>
+    <div class="calendar" id="calendar2"></div>
+  </div>
 
-    <script>
-      var userLanguage = 'navigator.userLanguage' || navigator.userLanguage || navigator.language;
-      var hotel = false;
+  <script>
+    const locale = navigator.language || 'en-US';
 
-      if ('1' === '1') {
-        $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (rates) {
-          $.getJSON('https://nobeds.app/Calendar/BetaData/2452740', function (data) {
+    // ---- HOUSE 1 ----
+    const url1 = 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec';
+    let data1 = [];
+    let date1 = new Date();
 
-            var caleranContainer1 = $('<div>').addClass('caleran-container');
-            var caleran1 = $("#calendar1").caleran({
-              inline: true,
-              showHeader: false,
-              showFooter: false,
-              isHotelBooking: hotel,
-              continuous: true,
-              mobileBreakpoint: 300,
-              isMobile: false,
-              calendarCount: 1,
-              minSelectedDays: 2,
-              startEmpty: !1,
-              locale: 'navigator.userLanguage',
-              dayText: rates,
-              startOnMonday: true,
-
-              disableDays: function (day) {
-                  return !(day.format('YYYY-MM-DD') in data) || data[day.format('YYYY-MM-DD')] == 0 ? true : false;
-              },
-              onbeforeselect: function (caleran, startDate, endDate) {
-                  return true; // false prevents update
-              },
-              onafterselect: function (caleran, startDate, endDate) {
-                  caleranContainer1.hide();
-                  formContainer.show();
-                  returnButton.show();
-
-                  updateForm(startDate, endDate);
-              },
-           });
-
-            caleranContainer1.append(caleran1);
-            $('#calendar1').append(caleranContainer1);
-          });
+    function fetchCalendarData1(callback) {
+      document.getElementById('loader-house1').style.display = 'block';
+      document.getElementById('header-house1').classList.remove('loaded');
+      fetch(url1)
+        .then(res => res.json())
+        .then(json => {
+          data1 = json;
+          callback();
+          document.getElementById('loader-house1').style.display = 'none';
+          document.getElementById('header-house1').classList.add('loaded');
+        }).catch(err => {
+          console.error(err);
+          document.getElementById('loader-house1').style.display = 'none';
+          document.getElementById('header-house1').classList.add('loaded');
         });
-      }
-    </script>
-    <script>
-      if ('1' === '1') {
-        $.getJSON('https://nobeds.app/Calendar/BetaData/2452741', function (rates) {
-          $.getJSON('https://nobeds.app/Calendar/BetaData/2452741', function (data) {
+    }
 
-            var caleranContainer2 = $('<div>').addClass('caleran-container');
-            var caleran2 = $("#calendar2").caleran({
-              inline: true,
-              showHeader: false,
-              showFooter: false,
-              isHotelBooking: hotel,
-              continuous: true,
-              mobileBreakpoint: 300,
-              isMobile: false,
-              calendarCount: 1,
-              minSelectedDays: 2,
-              startEmpty: !1,
-              locale: 'navigator.userLanguage',
-              dayText: rates,
-              startOnMonday: true,
-              
+    function renderCalendar1(year, month) {
+  const cal = document.getElementById('calendar1');
+  const header = document.getElementById('monthYear1');
+  cal.innerHTML = '';
+  header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long', year: 'numeric' })}`;
 
-              disableDays: function (day) {
-                  return !(day.format('YYYY-MM-DD') in data) || data[day.format('YYYY-MM-DD')] == 0 ? true : false;
-              },
-              onbeforeselect: function (caleran, startDate, endDate) {
-                  return true; // false prevents update
-              },
-              onafterselect: function (caleran, startDate, endDate) {
-                  caleranContainer2.hide();
-                  formContainer.show();
-                  returnButton.show();
+  const days = Array.from({ length: 7 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
+  );
+  days.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'day-name';
+    el.textContent = d;
+    cal.appendChild(el);
+  });
 
-                  updateForm(startDate, endDate);
-              },
-           });
+  const firstDay = new Date(year, month, 1);
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  const offset = firstDay.getDay();
+  const totalCells = Math.ceil((offset + totalDays) / 7) * 7;
 
-            caleranContainer2.append(caleran2);
-            $('#calendar2').append(caleranContainer2);
-          });
+  const today = new Date();
+  // Set time to midnight for a proper comparison
+  today.setHours(0, 0, 0, 0);
+
+  for (let i = 0; i < totalCells; i++) {
+    const d = new Date(year, month, i - offset + 1);
+    const currentMonth = d.getMonth() === month;
+    const dayStr = d.toISOString().slice(0, 10);
+    const matched = data1.find(r => new Date(r['Date']).toISOString().slice(0, 10) === dayStr);
+    const status = matched ? (matched['Reservation Status'] || 'unknown').trim().toLowerCase() : 'unknown';
+
+    const el = document.createElement('div');
+    el.className = 'day';
+    el.textContent = d.getDate();
+
+    if (d.toDateString() === today.toDateString()) el.classList.add('today');
+    
+    // Add the grey background if the date is in the past, but not today
+    if (d < today) {
+      el.classList.add('past-date');
+    }
+
+    el.classList.add(status === 'available' ? 'available' : 'reserved');
+    if (!currentMonth) el.classList.add('faded');
+    el.title = matched ? matched['Reservation Status'] : 'No data';
+    cal.appendChild(el);
+  }
+}
+
+
+    function changeMonth1(delta) {
+      date1.setMonth(date1.getMonth() + delta);
+      renderCalendar1(date1.getFullYear(), date1.getMonth());
+    }
+
+    fetchCalendarData1(() => renderCalendar1(date1.getFullYear(), date1.getMonth()));
+
+    // ---- HOUSE 2 ----
+    const url2 = 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec';
+    let data2 = [];
+    let date2 = new Date();
+
+    function fetchCalendarData2(callback) {
+      document.getElementById('loader-house2').style.display = 'block';
+      document.getElementById('header-house2').classList.remove('loaded');
+      fetch(url2)
+        .then(res => res.json())
+        .then(json => {
+          data2 = json;
+          callback();
+          document.getElementById('loader-house2').style.display = 'none';
+          document.getElementById('header-house2').classList.add('loaded');
+        }).catch(err => {
+          console.error(err);
+          document.getElementById('loader-house2').style.display = 'none';
+          document.getElementById('header-house2').classList.add('loaded');
         });
-      }
-    </script>
+    }
 
-  </body>
+   function renderCalendar2(year, month) {
+  const cal = document.getElementById('calendar2');
+  const header = document.getElementById('monthYear2');
+  cal.innerHTML = '';
+  header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long', year: 'numeric' })}`;
+
+  const days = Array.from({ length: 7 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
+  );
+  days.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'day-name';
+    el.textContent = d;
+    cal.appendChild(el);
+  });
+
+  const firstDay = new Date(year, month, 1);
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  const offset = firstDay.getDay();
+  const totalCells = Math.ceil((offset + totalDays) / 7) * 7;
+
+  const today = new Date();
+  // Set time to midnight for a proper comparison
+  today.setHours(0, 0, 0, 0);
+
+  for (let i = 0; i < totalCells; i++) {
+    const d = new Date(year, month, i - offset + 1);
+    const currentMonth = d.getMonth() === month;
+    const dayStr = d.toISOString().slice(0, 10);
+    const matched = data2.find(r => new Date(r['Date']).toISOString().slice(0, 10) === dayStr);
+    const status = matched ? (matched['Reservation Status'] || 'unknown').trim().toLowerCase() : 'unknown';
+
+    const el = document.createElement('div');
+    el.className = 'day';
+    el.textContent = d.getDate();
+
+    if (d.toDateString() === today.toDateString()) el.classList.add('today');
+    
+    // Add the grey background if the date is in the past, but not today
+    if (d < today) {
+      el.classList.add('past-date');
+    }
+
+    el.classList.add(status === 'available' ? 'available' : 'reserved');
+    if (!currentMonth) el.classList.add('faded');
+    el.title = matched ? matched['Reservation Status'] : 'No data';
+    cal.appendChild(el);
+  }
+}
+    function changeMonth2(delta) {
+      date2.setMonth(date2.getMonth() + delta);
+      renderCalendar2(date2.getFullYear(), date2.getMonth());
+    }
+
+    fetchCalendarData2(() => renderCalendar2(date2.getFullYear(), date2.getMonth()));
+  </script>
+</body>
 </html>

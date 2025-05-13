@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>House 1 Calendar</title>
+  <title>House Calendars</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -10,6 +10,9 @@
     body {
       padding: 2rem;
       background: #f7f7f7;
+    }
+    .calendar-wrapper {
+      margin-bottom: 4rem;
     }
     .calendar-header {
       display: flex;
@@ -58,276 +61,148 @@
   </style>
 </head>
 <body>
-  <h2 class="text-center mb-4">House 1 – Availability Calendar</h2>
 
-  <div class="calendar-header">
-    <button id="prevBtn">&lt;</button>
-    <span id="monthYear"></span>
-    <button id="nextBtn">&gt;</button>
+  <!-- House 1 -->
+  <div class="calendar-wrapper">
+    <h2 class="text-center mb-4">House 1 – Availability Calendar</h2>
+    <div class="calendar-header">
+      <button id="prevBtn1">&lt;</button>
+      <span id="monthYear1"></span>
+      <button id="nextBtn1">&gt;</button>
+    </div>
+    <div class="calendar" id="calendar1"></div>
   </div>
 
-  <div class="calendar" id="calendar"></div>
+  <!-- House 2 -->
+  <div class="calendar-wrapper">
+    <h2 class="text-center mb-4">House 2 – Availability Calendar</h2>
+    <div class="calendar-header">
+      <button id="prevBtn2">&lt;</button>
+      <span id="monthYear2"></span>
+      <button id="nextBtn2">&gt;</button>
+    </div>
+    <div class="calendar" id="calendar2"></div>
+  </div>
 
   <script>
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec';
-    let sheetData = [];
-    let currentDate = new Date();
+    function createCalendar(config) {
+      const {
+        calendarId,
+        monthYearId,
+        prevBtnId,
+        nextBtnId,
+        webAppUrl
+      } = config;
 
-    function fetchCalendarData(callback) {
-      fetch(webAppUrl)
-        .then(response => response.json())
-        .then(data => {
-          sheetData = data;
-          callback();
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
+      let sheetData = [];
+      let currentDate = new Date();
 
-    function renderCalendar(year, month) {
-      const calendar = document.getElementById('calendar');
-      calendar.innerHTML = '';
-
-      const header = document.getElementById('monthYear');
-      const locale = navigator.language || 'en-US';
-      header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long' })} ${year}`;
-
-      const dayNames = Array.from({ length: 7 }, (_, i) =>
-        new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
-      );
-      dayNames.forEach(name => {
-        const el = document.createElement('div');
-        el.className = 'day-name';
-        el.textContent = name;
-        calendar.appendChild(el);
-      });
-
-      const firstDay = new Date(year, month, 1);
-      const totalDays = new Date(year, month + 1, 0).getDate();
-      const startOffset = firstDay.getDay();
-      const totalCells = Math.ceil((startOffset + totalDays) / 7) * 7;
-
-      for (let i = 0; i < totalCells; i++) {
-        const cellDate = new Date(year, month, i - startOffset + 1);
-        const isCurrentMonth = cellDate.getMonth() === month;
-        const dateStr = cellDate.toISOString().slice(0, 10);
-
-        const row = sheetData.find(r => {
-          const rowDateStr = new Date(r['Date']).toISOString().slice(0, 10);
-          return rowDateStr === dateStr;
-        });
-
-        let status = row ? row['Reservation Status'] : 'Unknown';
-        status = status ? status.trim().toLowerCase() : 'unknown';
-
-        const div = document.createElement('div');
-        div.className = 'day';
-        div.textContent = cellDate.getDate();
-
-        // Mark today
-        const today = new Date();
-        if (
-          cellDate.getFullYear() === today.getFullYear() &&
-          cellDate.getMonth() === today.getMonth() &&
-          cellDate.getDate() === today.getDate()
-        ) {
-          div.classList.add('today');
-        }
-
-        if (status === 'available') {
-          div.classList.add('available');
-        } else {
-          div.classList.add('reserved');
-        }
-
-        if (!isCurrentMonth) {
-          div.classList.add('faded');
-        }
-
-        div.title = row ? row['Reservation Status'] : 'No Data';
-        calendar.appendChild(div);
+      function fetchCalendarData(callback) {
+        fetch(webAppUrl)
+          .then(response => response.json())
+          .then(data => {
+            sheetData = data;
+            callback();
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
       }
+
+      function renderCalendar(year, month) {
+        const calendar = document.getElementById(calendarId);
+        calendar.innerHTML = '';
+
+        const header = document.getElementById(monthYearId);
+        const locale = navigator.language || 'en-US';
+        header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long' })} ${year}`;
+
+        const dayNames = Array.from({ length: 7 }, (_, i) =>
+          new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
+        );
+        dayNames.forEach(name => {
+          const el = document.createElement('div');
+          el.className = 'day-name';
+          el.textContent = name;
+          calendar.appendChild(el);
+        });
+
+        const firstDay = new Date(year, month, 1);
+        const totalDays = new Date(year, month + 1, 0).getDate();
+        const startOffset = firstDay.getDay();
+        const totalCells = Math.ceil((startOffset + totalDays) / 7) * 7;
+
+        for (let i = 0; i < totalCells; i++) {
+          const cellDate = new Date(year, month, i - startOffset + 1);
+          const isCurrentMonth = cellDate.getMonth() === month;
+          const dateStr = cellDate.toISOString().slice(0, 10);
+
+          const row = sheetData.find(r => {
+            const rowDateStr = new Date(r['Date']).toISOString().slice(0, 10);
+            return rowDateStr === dateStr;
+          });
+
+          let status = row ? row['Reservation Status'] : 'Unknown';
+          status = status ? status.trim().toLowerCase() : 'unknown';
+
+          const div = document.createElement('div');
+          div.className = 'day';
+          div.textContent = cellDate.getDate();
+
+          // Highlight today
+          const today = new Date();
+          if (
+            cellDate.getFullYear() === today.getFullYear() &&
+            cellDate.getMonth() === today.getMonth() &&
+            cellDate.getDate() === today.getDate()
+          ) {
+            div.classList.add('today');
+          }
+
+          if (status === 'available') {
+            div.classList.add('available');
+          } else {
+            div.classList.add('reserved');
+          }
+
+          if (!isCurrentMonth) {
+            div.classList.add('faded');
+          }
+
+          div.title = row ? row['Reservation Status'] : 'No Data';
+          calendar.appendChild(div);
+        }
+      }
+
+      function changeMonth(delta) {
+        currentDate.setMonth(currentDate.getMonth() + delta);
+        renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+      }
+
+      document.getElementById(prevBtnId).onclick = () => changeMonth(-1);
+      document.getElementById(nextBtnId).onclick = () => changeMonth(1);
+
+      fetchCalendarData(() => {
+        renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+      });
     }
 
-    function changeMonth(delta) {
-      currentDate.setMonth(currentDate.getMonth() + delta);
-      renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
-    }
+    // Initialize both calendars
+    createCalendar({
+      calendarId: 'calendar1',
+      monthYearId: 'monthYear1',
+      prevBtnId: 'prevBtn1',
+      nextBtnId: 'nextBtn1',
+      webAppUrl: 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec'
+    });
 
-    document.getElementById('prevBtn').onclick = () => changeMonth(-1);
-    document.getElementById('nextBtn').onclick = () => changeMonth(1);
-
-    fetchCalendarData(() => {
-      renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    createCalendar({
+      calendarId: 'calendar2',
+      monthYearId: 'monthYear2',
+      prevBtnId: 'prevBtn2',
+      nextBtnId: 'nextBtn2',
+      webAppUrl: 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec'
     });
   </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>House 2 Calendar</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-  <style>
-    body {
-      padding: 2rem;
-      background: #f7f7f7;
-    }
-    .calendar-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    .calendar-header button {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      padding: 0 1rem;
-      cursor: pointer;
-    }
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      max-width: 700px;
-      margin: auto;
-    }
-    .day, .day-name {
-      padding: 10px;
-      text-align: center;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    .day-name {
-      background: #ccc;
-    }
-    .available {
-      background: #b6d7a8;
-    }
-    .reserved {
-      background: #e06666;
-      color: white;
-    }
-    .faded {
-      opacity: 0.4;
-    }
-    .today {
-      border: 3px solid #007bff;
-    }
-  </style>
-</head>
-<body>
-  <h2 class="text-center mb-4">House 1 – Availability Calendar</h2>
-
-  <div class="calendar-header">
-    <button id="prevBtn">&lt;</button>
-    <span id="monthYear"></span>
-    <button id="nextBtn">&gt;</button>
-  </div>
-
-  <div class="calendar" id="calendar"></div>
-
-  <script>
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec';
-    let sheetData = [];
-    let currentDate = new Date();
-
-    function fetchCalendarData(callback) {
-      fetch(webAppUrl)
-        .then(response => response.json())
-        .then(data => {
-          sheetData = data;
-          callback();
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
-
-    function renderCalendar(year, month) {
-      const calendar = document.getElementById('calendar');
-      calendar.innerHTML = '';
-
-      const header = document.getElementById('monthYear');
-      const locale = navigator.language || 'en-US';
-      header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long' })} ${year}`;
-
-      const dayNames = Array.from({ length: 7 }, (_, i) =>
-        new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1))
-      );
-      dayNames.forEach(name => {
-        const el = document.createElement('div');
-        el.className = 'day-name';
-        el.textContent = name;
-        calendar.appendChild(el);
-      });
-
-      const firstDay = new Date(year, month, 1);
-      const totalDays = new Date(year, month + 1, 0).getDate();
-      const startOffset = firstDay.getDay();
-      const totalCells = Math.ceil((startOffset + totalDays) / 7) * 7;
-
-      for (let i = 0; i < totalCells; i++) {
-        const cellDate = new Date(year, month, i - startOffset + 1);
-        const isCurrentMonth = cellDate.getMonth() === month;
-        const dateStr = cellDate.toISOString().slice(0, 10);
-
-        const row = sheetData.find(r => {
-          const rowDateStr = new Date(r['Date']).toISOString().slice(0, 10);
-          return rowDateStr === dateStr;
-        });
-
-        let status = row ? row['Reservation Status'] : 'Unknown';
-        status = status ? status.trim().toLowerCase() : 'unknown';
-
-        const div = document.createElement('div');
-        div.className = 'day';
-        div.textContent = cellDate.getDate();
-
-        // Mark today
-        const today = new Date();
-        if (
-          cellDate.getFullYear() === today.getFullYear() &&
-          cellDate.getMonth() === today.getMonth() &&
-          cellDate.getDate() === today.getDate()
-        ) {
-          div.classList.add('today');
-        }
-
-        if (status === 'available') {
-          div.classList.add('available');
-        } else {
-          div.classList.add('reserved');
-        }
-
-        if (!isCurrentMonth) {
-          div.classList.add('faded');
-        }
-
-        div.title = row ? row['Reservation Status'] : 'No Data';
-        calendar.appendChild(div);
-      }
-    }
-
-    function changeMonth(delta) {
-      currentDate.setMonth(currentDate.getMonth() + delta);
-      renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
-    }
-
-    document.getElementById('prevBtn').onclick = () => changeMonth(-1);
-    document.getElementById('nextBtn').onclick = () => changeMonth(1);
-
-    fetchCalendarData(() => {
-      renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
-    });
-  </script>
-</body>
-</html>
-

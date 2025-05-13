@@ -1,251 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-<title>Date Availability Search</title>
-<link rel="stylesheet" href="https://teteje.github.io/datepicker.css">
-   <!-- Link Swiper's CSS -->
+  <meta charset="UTF-8">
+  <title>Wyszukiwanie dostępności dat</title>
+  <link rel="stylesheet" href="https://teteje.github.io/datepicker.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-  <!-- Link Swiper's CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-  <!-- Font Awesome CSS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
   <script src="https://teteje.github.io/datepicker-pl.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-        html,
-    body {
-      position: relative;
-      height: 100% !important;
-      width: 100% !important;
-      background: #eee;
-      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      color: #000;
-      margin: 0;
-      padding: 0;
+    #loadingSpinner {
+      display: none;
+      height: 60px;
+      vertical-align: middle;
+      margin-left: 10px;
     }
-h1 {
-  text-align: center;
-   padding-bottom: 10px; 
-}
+    html, body {
+      height:100%;
+      margin:0;
+      padding:0;
+      font-family:Arial,sans-serif;
+      background:#eee;
+    }
     .container {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      max-width:500px;
+      margin:20px auto;
+      padding:20px;
+      background:#fff;
+      border:1px solid #ccc;
+      border-radius:4px;
     }
-
+    h1 {
+      text-align:center;
+      margin-bottom:20px;
+    }
     label {
-      display: block;
-      margin-bottom: 10px;
-      color: #000;
+      display:block;
+      margin-bottom:8px;
     }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
+    input {
+      width:100%;
+      padding:8px;
+      margin-bottom:12px;
+      border:1px solid #ccc;
+      border-radius:4px;
+      box-sizing:border-box;
     }
-
     button {
-      padding: 10px 20px;
-      font-size: 14px;
-      color: #fff;
-      background-color: #ea9999;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 10px; /* Added margin */
+      padding:10px 20px;
+      background:#ea9999;
+      color:#fff;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
     }
-
     button:hover {
-      background-color: #fb6161;
+      background:#fb6161;
     }
-
     #message {
-      margin-top: 20px;
-      padding: 10px;
-      color: #000;
-      background-color: #eee;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      margin-top:20px;
+      padding:10px;
+      background:#eee;
+      border:1px solid #ccc;
+      border-radius:4px;
+      min-height:40px;
     }
-
-    #message .booking-link {
-      display: inline-block;
-      margin-top: 5px;
-      padding: 5px 10px;
-      color: #fff;
-      background-color: #ea9999;
-      border: none;
-      border-radius: 4px;
-      text-decoration: none;
+    .booking-link {
+      display:inline-block;
+      margin:5px 0;
+      padding:5px 10px;
+      background:#ea9999;
+      color:#fff;
+      border-radius:4px;
+      text-decoration:none;
     }
-
-    #message .booking-link:hover {
-      background-color: #fb6161;
+    .booking-link:hover {
+      background:#fb6161;
     }
-
     .error-message {
-      color: red;
-      margin-top: 10px;
+      color:red;
     }
-    
     #hiddenContainer {
-  display: none;
-  margin-top: 20px;
-  padding: 10px;
-  color: #000;
-  background-color: #eee;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-    
-    #hiddenContainer .button {
-  padding: 10px 20px;
-  font-size: 14px;
-  color: #fff;
-  background-color: #ea9999;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px; /* Added margin */
-}
-
-#hiddenContainer p {
-  margin-bottom: 10px;
-}
-
-#hiddenContainer {
-  display: none;
-  margin-top: 60px;
-  padding: 10px;
-  color: #000;
-  background-color: #fff; /* Add white background color */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+      display:none;
+      margin-top:20px;
+      padding:10px;
+      background:#fff;
+      border:1px solid #ccc;
+      border-radius:4px;
+    }
   </style>
   <script>
     $(document).ready(function() {
-      // Function to check availability and display appropriate message
+      $("#loadingSpinner").hide();
+
       async function checkAvailability() {
         var checkinDateStr = $("#checkin").val();
         var checkoutDateStr = $("#checkout").val();
 
-        // Check if check-in or checkout dates are not selected
+        $("#message").empty();
+        $("#hiddenContainer").hide();
+        $("#loadingSpinner").show();
+
         if (!checkinDateStr || !checkoutDateStr) {
           $("#message").text("Wybierz daty zameldowania i wymeldowania.");
+          $("#loadingSpinner").hide();
           return;
         }
 
         var checkinDate = new Date(checkinDateStr);
         var checkoutDate = new Date(checkoutDateStr);
 
-        // Make sure checkin and checkout dates are valid
         if (isNaN(checkinDate) || isNaN(checkoutDate)) {
-          $("#message").text("Invalid date format");
+          $("#message").text("Nieprawidłowy format daty.");
+          $("#loadingSpinner").hide();
           return;
         }
 
-        // Calculate the duration in nights
-        var duration = Math.floor((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24)) + 1;
+        var duration = Math.floor((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
 
-        // Check minimum stay requirement
         if (duration < 2) {
-          $("#message").html("<span class='error-message'>Minimalna wymagana długość pobytu, 2 noce.</span>");
+          $("#message").html("<span class='error-message'>Minimalna długość pobytu to 2 noce.</span>");
+          $("#loadingSpinner").hide();
           return;
         }
+
+        let timeoutId = setTimeout(() => {
+          if (!$("#message").text()) {
+            $("#message").html("<span class='error-message'>Wystąpił problem. Odśwież stronę i spróbuj ponownie.</span>");
+          }
+        }, 15000);
 
         try {
-          var house1Data = await fetchAvailabilityData("https://nobeds.app/Calendar/BetaData/2452740");
-          var house2Data = await fetchAvailabilityData("https://nobeds.app/Calendar/BetaData/2452741");
+          const url1 = 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec';
+          const url2 = 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec';
 
-          var house1Availability = checkHouseAvailability(house1Data);
-          var house2Availability = checkHouseAvailability(house2Data);
+          let [house1Data, house2Data] = await Promise.all([
+            fetchAvailabilityData(url1),
+            fetchAvailabilityData(url2)
+          ]);
 
-// Display appropriate message based on availability
-if (house1Availability && house2Availability) {
-  var bookingURL1 = "https://teteje.github.io/house1bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  var bookingURL2 = "https://teteje.github.io/house2bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("Domek 1 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj!</a><br>Domek 2 dostępny <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj!</a>");
-} else if (house1Availability) {
-  var bookingURL1 = "https://teteje.github.io/house1bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("Domek 1 dostępny <a href='" + bookingURL1 + "' class='booking-link'>Zarezerwuj!</a>");
-} else if (house2Availability) {
-  var bookingURL2 = "https://teteje.github.io/house2bookingpl.html?checkin=" + formatDate(checkinDate) + "&checkout=" + formatDate(checkoutDate);
-  $("#message").html("Domek 2 dostępny <a href='" + bookingURL2 + "' class='booking-link'>Zarezerwuj!</a>");
-} else {
-  var dateRange = formatDate(checkinDate) + " - " + formatDate(checkoutDate);
-  $("#message").text("Brak dostępności w wybranych terminach (" + dateRange + "). Proszę spróbować innych terminów.");
-  $("#hiddenContainer").show(); // Show the hidden container when there is no availability
-}
+          const isAvailable = (data, date) => {
+            const dateStr = moment(date).format("YYYY-MM-DD");
+            const entry = data.find(d => moment(d.Date).format("YYYY-MM-DD") === dateStr);
+            return entry && entry["Reservation Status"] === "Available";
+          };
 
+          function checkHouseAvailability(data) {
+            for (let d = new Date(checkinDate); d < checkoutDate; d.setDate(d.getDate() + 1)) {
+              if (!isAvailable(data, new Date(d))) return false;
+            }
+            return true;
+          }
+
+          let house1Available = checkHouseAvailability(house1Data);
+          let house2Available = checkHouseAvailability(house2Data);
+
+          clearTimeout(timeoutId);
+          $("#loadingSpinner").hide();
+
+          if (house1Available && house2Available) {
+            $("#message").html(
+              `Domek 1 dostępny <a href='https://teteje.github.io/house1bookingpl.html?checkin=${checkinDateStr}&checkout=${checkoutDateStr}' class='booking-link'>Zarezerwuj!</a><br>
+               Domek 2 dostępny <a href='https://teteje.github.io/house2bookingpl.html?checkin=${checkinDateStr}&checkout=${checkoutDateStr}' class='booking-link'>Zarezerwuj!</a>`);
+          } else if (house1Available) {
+            $("#message").html(
+              `Domek 1 dostępny <a href='https://teteje.github.io/house1bookingpl.html?checkin=${checkinDateStr}&checkout=${checkoutDateStr}' class='booking-link'>Zarezerwuj!</a>`);
+          } else if (house2Available) {
+            $("#message").html(
+              `Domek 2 dostępny <a href='https://teteje.github.io/house2bookingpl.html?checkin=${checkinDateStr}&checkout=${checkoutDateStr}' class='booking-link'>Zarezerwuj!</a>`);
+          } else {
+            $("#message").text(`Brak dostępności w wybranych terminach (${checkinDateStr} - ${checkoutDateStr}). Spróbuj innych dat.`);
+            $("#hiddenContainer").show();
+          }
 
         } catch (error) {
-          $("#message").text("Wystąpił błąd podczas pobierania danych o dostępności. Spróbuj ponownie później.");
+          clearTimeout(timeoutId);
+          $("#loadingSpinner").hide();
+          $("#message").text("Wystąpił błąd podczas pobierania danych. Spróbuj ponownie później.");
         }
       }
 
-      // Function to fetch availability data for a house
       function fetchAvailabilityData(url) {
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
           $.getJSON(url)
-            .done(function(data) {
-              resolve(data);
-            })
-            .fail(function(jqxhr, textStatus, error) {
-              reject(error);
-            });
+            .done(data => resolve(data))
+            .fail((jqxhr, textStatus, error) => reject(error));
         });
       }
 
-      // Function to check availability for a particular house
-      function checkHouseAvailability(data) {
-        var checkinDateStr = $("#checkin").val();
-        var checkoutDateStr = $("#checkout").val();
-        var checkinDate = new Date(checkinDateStr);
-        var checkoutDate = new Date(checkoutDateStr);
-
-        for (var currentDate = new Date(checkinDate); currentDate <= checkoutDate; currentDate.setDate(currentDate.getDate() + 1)) {
-          var formattedDate = formatDate(currentDate);
-          if (data[formattedDate] !== 1) {
-            return false;
-          }
-        }
-        return true;
-      }
-
-      // Function to format a date as "YYYY-MM-DD"
       function formatDate(date) {
-        var year = date.getFullYear();
-        var month = String(date.getMonth() + 1).padStart(2, "0");
-        var day = String(date.getDate()).padStart(2, "0");
-        return year + "-" + month + "-" + day;
+        return moment(date).format("YYYY-MM-DD");
       }
 
-      // Initialize datepicker for check-in and checkout fields
       var currentDate = new Date();
       $("#checkin").datepicker({
         dateFormat: "yy-mm-dd",
-        minDate: currentDate, // Set the minimum date to the current date
+        minDate: currentDate,
+        firstDay: 1,
         onSelect: function(selectedDate) {
-          // Automatically set the minimum date for the checkout field based on the selected check-in date
           var minDate = new Date(selectedDate);
-          minDate.setDate(minDate.getDate() + 2); // Minimum checkout date is 1 day after check-in
+          minDate.setDate(minDate.getDate() + 2);
           $("#checkout").datepicker("option", "minDate", minDate);
-
-          // Check if the current checkout date is less than the minimum date, if so, update it
           var checkoutDate = new Date($("#checkout").val());
           if (checkoutDate < minDate) {
             $("#checkout").val(formatDate(minDate));
@@ -255,42 +214,36 @@ if (house1Availability && house2Availability) {
 
       $("#checkout").datepicker({
         dateFormat: "yy-mm-dd",
-        onSelect: function(selectedDate) {
+        firstDay: 1,
+        onSelect: function() {
           checkAvailability();
         }
       });
 
-      // Disable manual input for check-in and checkout fields
-      $("#checkin").prop("readonly", true);
-      $("#checkout").prop("readonly", true);
-
-      // Event listener for the search button
+      $("#checkin, #checkout").prop("readonly", true);
       $("#searchButton").click(checkAvailability);
-
-
-  });
+    });
   </script>
 </head>
 <body>
   <div class="container">
     <h1>Wyszukiwanie dostępności</h1>
-    <label for="checkin">Zameldowanie:</label>
+    <label for="checkin">Data zameldowania:</label>
     <input type="text" id="checkin" autocomplete="off">
     <br>
-    <label for="checkout">Wymeldowanie:</label>
+    <label for="checkout">Data wymeldowania:</label>
     <input type="text" id="checkout" autocomplete="off">
     <br>
     <button id="searchButton">Szukaj</button>
+    <img id="loadingSpinner" src="https://i.gifer.com/YCZH.gif" alt="Ładowanie..." />
     <br>
     <div id="message"></div>
   </div>
   <div id="hiddenContainer" class="container">
-    <p>Brak dostępnych terminów w okresie, którego szukasz? Zajrzyj do naszego pełnego kalendarza dostępności:</p>
+    <p>Brak dostępnych dat w wybranym okresie? Sprawdź cały kalendarz dostępności:</p>
     <div class="text-center">
-  <p><a href="https://teteje.github.io/avialabilitycalendarpl.html" class="button">Sprawdź!</a></p>
-</div>
-
+      <p><a href="https://teteje.github.io/avialabilitycalendar.html" class="button">Sprawdź!</a></p>
+    </div>
   </div>
 </body>
-
 </html>

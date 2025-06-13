@@ -22,3 +22,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// Hamburger menu toggle
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.createElement('div');
+  hamburger.classList.add('hamburger');
+  hamburger.innerHTML = '<div></div><div></div><div></div>';
+
+  const headerContent = document.querySelector('.header-content');
+  headerContent.insertBefore(hamburger, headerContent.querySelector('.main-nav'));
+
+  const nav = document.querySelector('.main-nav');
+
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    hamburger.classList.toggle('open');
+  });
+
+  // Toggle submenu on mobile (click on parent li)
+  document.querySelectorAll('.menu > li > a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const li = link.parentElement;
+      if (window.innerWidth <= 768 && li.querySelector('.submenu')) {
+        e.preventDefault();
+        li.classList.toggle('open');
+      }
+    });
+  });
+});

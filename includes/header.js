@@ -1,5 +1,3 @@
-// /includes/header.js
-
 document.addEventListener("DOMContentLoaded", () => {
   // Highlight active menu link
   const current = location.pathname.split("/").pop();

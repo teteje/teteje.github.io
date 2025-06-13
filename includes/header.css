@@ -12,9 +12,8 @@
 .header-overlay {
   background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  width: 100%;
+  position: relative;
 }
 
 .header-content {
@@ -24,6 +23,7 @@
   padding: 2rem;
   flex-wrap: wrap;
   position: relative;
+  z-index: 10;
 }
 
 .logo img {
@@ -92,17 +92,17 @@ body.rezerwacja .menu-link {
   opacity: 0.8;
 }
 
-/* === Social + Language Icons === */
+/* === Social + Language Icons (Right side, vertically centered) === */
 .icons {
-  position: absolute;
+  position: fixed;
   top: 50%;
-  right: 2rem;
+  right: 1rem;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
-  z-index: 100;
+  z-index: 20;
 }
 
 .icon {
@@ -125,6 +125,8 @@ body.rezerwacja .menu-link {
   justify-content: center;
   margin-bottom: 1.5rem;
   animation: fadeIn 2s ease-in;
+  position: relative;
+  z-index: 10;
 }
 
 .scroll-down img {
@@ -165,6 +167,18 @@ body.rezerwacja .menu-link {
     margin-top: 1.5rem;
   }
 
+  .submenu {
+    position: static;
+    background: #111;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+
+  .menu li:hover .submenu {
+    display: block;
+  }
+
   .icons {
     position: static;
     transform: none;
@@ -177,17 +191,5 @@ body.rezerwacja .menu-link {
   .icon {
     width: 24px;
     height: 24px;
-  }
-
-  .submenu {
-    position: static;
-    background: #111;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    margin-top: 0.5rem;
-  }
-
-  .menu li:hover .submenu {
-    display: block;
   }
 }

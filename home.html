@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl" class="rezerwacja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rezerwacja</title>
+  <link rel="stylesheet" href="/includes/header.css" />
+  <style>
+    .site-header {
+      background-image: url('/assets/bg-rezerwacja.jpg');
+    }
+  </style>
+</head>
+<body class="rezerwacja">
+  <!-- Include header -->
+  <div id="header-placeholder"></div>
+
+  <!-- Main content -->
+  <main id="main-content">
+    <h1>Rezerwacja</h1>
+    <p>Here goes your page content.</p>
+  </main>
+
+  <script src="/includes/header.js"></script>
+  <script>
+    // Dynamically include the header
+    fetch('/includes/header.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+  </script>
+</body>
+</html>

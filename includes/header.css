@@ -10,12 +10,13 @@
 }
 
 .header-overlay {
-  background-color: rgba(0, 0, 0, 0.4);
+  position: relative;  /* Needed for absolute positioning inside */
   height: 100%;
   width: 100%;
-  position: relative;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
+/* Flex container for logo and nav */
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -49,6 +50,7 @@
   text-decoration: none;
   font-size: 1rem;
   transition: color 0.3s ease;
+  cursor: pointer;
 }
 
 /* Special for "rezerwacja" page */
@@ -93,7 +95,6 @@ body.rezerwacja .menu-link {
 }
 
 /* === Social + Language Icons (Right side, vertically centered) === */
-/* Icons - now free to be positioned */
 .icons {
   position: absolute;
   top: 50%;
@@ -113,28 +114,12 @@ body.rezerwacja .menu-link {
   border-radius: 50%;
   border: 2px solid white;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
 }
 
 .icon:hover {
   transform: scale(1.1);
   opacity: 0.85;
-}
-
-/* Responsive layout */
-@media (max-width: 768px) {
-  .icons {
-    position: static;
-    transform: none;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 1rem;
-    gap: 1rem;
-  }
-
-  .icon {
-    width: 24px;
-    height: 24px;
-  }
 }
 
 /* === Scroll Down Arrow === */
@@ -145,12 +130,12 @@ body.rezerwacja .menu-link {
   transform: translateX(-50%);
   z-index: 10;
   cursor: pointer;
-  animation: fadeIn 2s ease-in;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;  /* or size you want */
+  width: 40px;
   height: 40px;
+  animation: fadeIn 2s ease-in;
 }
 
 .scroll-down img {
@@ -165,7 +150,6 @@ body.rezerwacja .menu-link {
   transform: translateY(4px);
   opacity: 1;
 }
-
 
 @keyframes gentleBounce {
   0%, 100% { transform: translateY(0); }
@@ -209,7 +193,7 @@ body.rezerwacja .menu-link {
     transform: none;
     flex-direction: row;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     gap: 1rem;
   }
 
@@ -217,4 +201,20 @@ body.rezerwacja .menu-link {
     width: 24px;
     height: 24px;
   }
+
+  .scroll-down {
+    bottom: 1rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .scroll-down img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Smooth scroll behavior for the whole document (optional) */
+html {
+  scroll-behavior: smooth;
 }

@@ -1,0 +1,127 @@
+/* /includes/header.css */
+.site-header {
+  position: relative;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.header-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.menu li {
+  position: relative;
+}
+
+.menu-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.menu .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: black;
+  padding: 1rem;
+  list-style: none;
+  min-width: 150px;
+}
+
+.menu li:hover .submenu {
+  display: block;
+}
+
+.submenu li a {
+  color: white;
+  display: block;
+  padding: 0.5rem 0;
+  text-decoration: none;
+}
+
+.icons {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.scroll-down {
+  display: block;
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Bold for active page */
+.menu-link.active {
+  font-weight: bold;
+}
+
+/* Special styling for rezerwacja */
+body.rezerwacja .menu-link {
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-nav .menu {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .icons {
+    position: static;
+    margin-top: 1rem;
+  }
+}

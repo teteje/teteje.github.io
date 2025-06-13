@@ -1,272 +1,242 @@
-/* === Base Header Styles === */
-.site-header {
-  position: relative;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
-}
-
-.header-overlay {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* Flex container for logo and nav */
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 2rem;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 10;
-}
-
-/* Logo */
-.logo img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* === Navigation Menu === */
-.main-nav .menu {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
+/* Reset & base */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-.menu li {
+.site-header {
   position: relative;
-}
-
-.menu-link {
+  height: 100vh;
   color: white;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Special for "rezerwacja" page */
-body.rezerwacja .menu-link {
-  color: black;
-}
-
-/* Highlight current page */
-.menu-link.active {
-  font-weight: bold;
-}
-
-/* Dropdown submenu */
-.submenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: black;
-  padding: 0.5rem 1rem;
-  list-style: none;
-  min-width: 160px;
-  z-index: 1000;
-  border-radius: 4px;
-}
-
-.menu li:hover .submenu {
-  display: block;
-}
-
-.submenu li a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  padding: 0.5rem 0;
-  font-size: 0.95rem;
-  transition: opacity 0.2s ease;
-}
-
-.submenu li a:hover {
-  opacity: 0.8;
-}
-
-/* === Social + Language Icons (Right side, vertically centered) === */
-.icons {
-  position: absolute;
-  top: 50%;
-  right: 1.5rem;
-  transform: translateY(-50%);
+.header-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* You will set different background images per page inline or via body classes */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
-  z-index: 10;
 }
 
-.icon {
-  width: 26px;
-  height: 26px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid white;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  cursor: pointer;
-}
-
-.icon:hover {
-  transform: scale(1.1);
-  opacity: 0.85;
-}
-
-/* === Scroll Down Arrow === */
-.scroll-down {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  cursor: pointer;
+.header-content {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
-  animation: fadeIn 2s ease-in;
+  justify-content: space-between;
+  padding: 15px 30px;
+  flex: 1 0 auto;
+  z-index: 10;
 }
 
-.scroll-down img {
-  width: 28px;
-  height: 28px;
-  opacity: 0.6;
-  animation: gentleBounce 2.5s infinite;
-  transition: transform 0.3s ease;
+.logo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
-.scroll-down img:hover {
-  transform: translateY(4px);
-  opacity: 1;
-}
-
-@keyframes gentleBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* === Hamburger Menu Button === */
+/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 28px;
-  height: 24px;
+  height: 20px;
   cursor: pointer;
   z-index: 20;
 }
-
 .hamburger div {
-  width: 28px;
   height: 3px;
   background-color: white;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
 
-/* === Responsive Design === */
-@media (max-width: 768px) {
-  .header-content {
-    flex-wrap: nowrap;
-    align-items: center;
-    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
-  }
+/* Hamburger open animation */
+.hamburger.open div:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.open div:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open div:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
 
-  /* Show hamburger */
+/* Navigation */
+.main-nav {
+  display: flex;
+}
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+.menu > li {
+  position: relative;
+}
+.menu-link {
+  text-decoration: none;
+  color: white;
+  font-weight: 400;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+.menu-link:hover {
+  color: #ccc;
+}
+.menu-link.active {
+  font-weight: 700;
+}
+
+/* Submenu */
+.submenu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: black;
+  min-width: 140px;
+  display: none;
+  flex-direction: column;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  z-index: 100;
+}
+.submenu li {
+  padding: 8px 15px;
+}
+.submenu li a {
+  color: white;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+.submenu li a:hover {
+  color: #ccc;
+}
+
+/* Show submenu on hover for desktop */
+.menu > li:hover > .submenu {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Special case for 'Rezerwacja' menu link */
+.menu-link[href="rezerwacja.html"] {
+  color: white;
+}
+.header-overlay[data-page="rezerwacja"] .menu-link[href="rezerwacja.html"] {
+  color: black !important;
+}
+
+/* Icons container */
+.icons {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 15;
+}
+.icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.icon:hover {
+  transform: scale(1.1);
+}
+
+/* Scroll down arrow */
+.scroll-down {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 15;
+  width: 36px;
+  height: 36px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+.scroll-down:hover {
+  opacity: 1;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
   .hamburger {
     display: flex;
   }
 
-  /* Hide menu initially */
   .main-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    border-radius: 0 0 10px 10px;
-    z-index: 15;
-  }
-
-  /* Menu list vertical on mobile */
-  .main-nav.open {
-    max-height: 500px; /* enough height for menu */
-  }
-
-  .main-nav .menu {
+    position: fixed;
+    top: 60px; /* adjust based on header height */
+    right: 0;
+    background-color: rgba(0,0,0,0.95);
+    height: calc(100vh - 60px);
+    width: 220px;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1rem 2rem;
+    padding: 20px;
+    gap: 15px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    z-index: 1000;
   }
 
+  .main-nav.open {
+    transform: translateX(0);
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Hide submenu by default */
   .submenu {
-    position: static;
-    background: #111;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    margin-top: 0.5rem;
-  }
-
-  .menu li:hover .submenu {
-    display: block;
-  }
-
-  /* Hide submenu by default on mobile, toggle by clicking parent link */
-  .submenu {
+    position: relative;
+    top: 0;
+    background: none;
+    box-shadow: none;
     display: none;
-  }
-  .menu li.open > .submenu {
-    display: block;
+    padding-left: 15px;
   }
 
-  /* Social icons horizontal below header */
+  /* Show submenu if open class on li */
+  .menu > li.open > .submenu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Submenu links style on mobile */
+  .submenu li a {
+    color: white;
+    font-size: 0.95rem;
+  }
+
+  /* Icons on mobile: smaller, right side middle */
   .icons {
-    position: static;
-    transform: none;
-    flex-direction: row;
-    justify-content: center;
-    margin: 1rem 0 0 0;
-    gap: 1rem;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .icon {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 
-  /* Scroll arrow smaller and near bottom */
-  .scroll-down {
-    bottom: 1rem;
-    width: 36px;
-    height: 36px;
-  }
-
-  .scroll-down img {
-    width: 24px;
-    height: 24px;
-  }
-
-  /* Limit header height on mobile to 100vh (screen height) */
+  /* Header height adjustment on mobile: cover viewport height exactly */
   .site-header {
     height: 100vh;
   }

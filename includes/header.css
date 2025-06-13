@@ -139,12 +139,18 @@ body.rezerwacja .menu-link {
 
 /* === Scroll Down Arrow === */
 .scroll-down {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  cursor: pointer;
+  animation: fadeIn 2s ease-in;
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
-  animation: fadeIn 2s ease-in;
-  position: relative;
-  z-index: 10;
+  align-items: center;
+  width: 40px;  /* or size you want */
+  height: 40px;
 }
 
 .scroll-down img {
@@ -159,6 +165,7 @@ body.rezerwacja .menu-link {
   transform: translateY(4px);
   opacity: 1;
 }
+
 
 @keyframes gentleBounce {
   0%, 100% { transform: translateY(0); }

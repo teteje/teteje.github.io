@@ -1,14 +1,16 @@
-/* /includes/header.css */
+/* === Header Styles === */
 .site-header {
   position: relative;
   height: 100vh;
   background-size: cover;
   background-position: center;
   color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
 }
 
 .header-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -21,6 +23,7 @@
   align-items: flex-start;
   padding: 2rem;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .logo img {
@@ -28,15 +31,13 @@
   height: auto;
 }
 
-.main-nav {
-  display: flex;
-  align-items: center;
-}
-
-.menu {
+/* === Navigation === */
+.main-nav .menu {
   list-style: none;
   display: flex;
   gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
 .menu li {
@@ -46,18 +47,32 @@
 .menu-link {
   color: white;
   text-decoration: none;
-  font-weight: 400;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
-.menu .submenu {
+/* Special for "rezerwacja" page */
+body.rezerwacja .menu-link {
+  color: black;
+}
+
+/* Highlight current page */
+.menu-link.active {
+  font-weight: bold;
+}
+
+/* Dropdown submenu */
+.submenu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
   background: black;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   list-style: none;
-  min-width: 150px;
+  min-width: 160px;
+  z-index: 1000;
+  border-radius: 4px;
 }
 
 .menu li:hover .submenu {
@@ -66,14 +81,22 @@
 
 .submenu li a {
   color: white;
+  text-decoration: none;
   display: block;
   padding: 0.5rem 0;
-  text-decoration: none;
+  font-size: 0.95rem;
+  transition: opacity 0.2s ease;
 }
 
+.submenu li a:hover {
+  opacity: 0.8;
+}
+
+/* === Social + Language Icons === */
 .icons {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.6rem;
   position: absolute;
   right: 2rem;
   top: 50%;
@@ -81,47 +104,76 @@
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   object-fit: cover;
+  border-radius: 50%;
   border: 2px solid white;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+.icon:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* === Scroll Down Arrow === */
 .scroll-down {
-  display: block;
-  text-align: center;
-  margin-bottom: 2rem;
-  animation: bounce 2s infinite;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 2s ease-in;
 }
 
-@keyframes bounce {
+.scroll-down img {
+  width: 28px;
+  height: 28px;
+  opacity: 0.6;
+  animation: gentleBounce 2.5s infinite;
+  transition: transform 0.3s ease;
+}
+
+.scroll-down img:hover {
+  transform: translateY(4px);
+  opacity: 1;
+}
+
+@keyframes gentleBounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
+  50% { transform: translateY(6px); }
 }
 
-/* Bold for active page */
-.menu-link.active {
-  font-weight: bold;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Special styling for rezerwacja */
-body.rezerwacja .menu-link {
-  color: black;
-}
-
+/* === Responsive Design === */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    padding: 1.5rem;
   }
+
   .main-nav .menu {
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
+    margin-top: 1rem;
   }
+
   .icons {
     position: static;
+    transform: none;
     margin-top: 1rem;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
   }
 }

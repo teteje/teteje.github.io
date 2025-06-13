@@ -93,21 +93,22 @@ body.rezerwacja .menu-link {
 }
 
 /* === Social + Language Icons (Right side, vertically centered) === */
+/* Icons - now free to be positioned */
 .icons {
-  position: fixed;
+  position: absolute;
   top: 50%;
-  right: 1rem;
+  right: 1.5rem;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  z-index: 20;
+  gap: 0.7rem;
+  z-index: 10;
 }
 
 .icon {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid white;
@@ -116,7 +117,24 @@ body.rezerwacja .menu-link {
 
 .icon:hover {
   transform: scale(1.1);
-  opacity: 0.9;
+  opacity: 0.85;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .icons {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* === Scroll Down Arrow === */

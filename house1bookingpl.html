@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-  <title>House 2 Booking</title>
+  <title>Domek 1 Rezerwacja</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
@@ -179,14 +179,17 @@
 
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2salon.jpg" alt="Salon"></div>
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2salon2.jpg" alt="Salon View 2"></div>
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2kitchen.jpg" alt="Kitchen"></div>
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2mainroom.jpg" alt="Main Bedroom"></div>
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2roomsecond.jpg" alt="Second Room"></div>
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2roomsecond2.jpg" alt="Second Room View 2"></div>
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2bathroom.jpg" alt="Bathroom"></div>
-      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house2all.jpg" alt="Exterior"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1-salon.jpg" alt="Salon"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1salon2.jpg" alt="Salon View 2"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1salon3.jpg" alt="Salon View 3"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1kitchen.jpg" alt="Kitchen"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1kitchen2.jpg" alt="Kitchen View 2"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1mainroom.jpg" alt="Main Bedroom"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1roomsecond.jpg" alt="Second Room"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1roomsecond2.jpg" alt="Second Room View 2"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1bathroom.jpg" alt="Bathroom"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1games.jpg" alt="Games"></div>
+      <div class="swiper-slide"><img src="https://teteje.github.io/assets/house1-all.jpg" alt="Exterior"></div>
     </div>
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
@@ -194,17 +197,17 @@
   </div>
 
   <div class="card-block">
-    <h4 class="card-title text-theme">House 2</h4>
+    <h4 class="card-title text-theme">Domek 1</h4>
     <div class="text-center mb-4">
       <ul class="list-inline text-sm">
-        <li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Guests</li>
-        <li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Bathroom</li>
-        <li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 3 Beds</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Os.</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Łazienka</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 4 Łóżka</li>
         <li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
-        <li class="list-inline-item me-3"><i class="fa-solid fa-snowflake"></i> AC</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-snowflake"></i> Klima</li>
         <li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
       </ul>
-      <a href="https://teteje.github.io/moreinfodomek2.html" class="btn btn-theme">More Information</a>
+      <a href="https://teteje.github.io/moreinfodomek1pl.html" class="btn btn-theme">Więcej szczegółów</a>
     </div>
   </div>
 
@@ -213,8 +216,8 @@
 
   <div id="loading">
     <div class="spinner"></div>
-    <p style="margin-top: 15px; font-weight: bold;">Processing booking...</p>
-    <p style="font-size: 12px; color: #666;">This may take up to 15 seconds</p>
+    <p style="margin-top: 15px; font-weight: bold;">Przetwarzanie rezerwacji...</p>
+    <p style="font-size: 12px; color: #666;">Może to potrwać do 15 sekund</p>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -301,7 +304,7 @@
       }
 
       // ==========================================
-      // FORM BUILDING & UI
+      // FORM BUILDING & UI (POLISH)
       // ==========================================
 
       var priceInput; // Global ref
@@ -311,66 +314,73 @@
         $container.empty();
 
         // 1. Read-only Dates & Price
-        $container.append(createField('text', 'from', 'Check-in:', true));
-        $container.append(createField('text', 'to', 'Check-out:', true));
+        $container.append(createField('text', 'from', 'Zameldowanie:', true));
+        $container.append(createField('text', 'to', 'Wymeldowanie:', true));
         
-        var $priceGroup = createField('text', 'price', 'Price (PLN):', true);
+        var $priceGroup = createField('text', 'price', 'Cena (PLN):', true);
         priceInput = $priceGroup.find('input'); // Store reference
         $container.append($priceGroup);
 
         // 2. Guest Selection
-        var $guestLabel = $('<label>').addClass('required-label').text('Number of Guests:');
+        var $guestLabel = $('<label>').addClass('required-label').text('Liczba gości:');
         var $guestSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
-        [1, 2, 3, 4, 5, 6].forEach(num => {
-          $guestSelect.append(`<option value="${num}">${num} ${num === 1 ? 'Guest' : 'Guests'}</option>`);
-        });
+        
+        $guestSelect.append('<option value="1">1 osoba</option>');
+        $guestSelect.append('<option value="2">2 osoby</option>');
+        $guestSelect.append('<option value="3">3 osoby</option>');
+        $guestSelect.append('<option value="4">4 osoby</option>');
+        $guestSelect.append('<option value="5">5 osób</option>');
+        $guestSelect.append('<option value="6">6 osób</option>');
+        
         $container.append($('<div>').addClass('form-group').append($guestLabel).append($guestSelect));
 
         // 3. User Details
-        $container.append(createField('text', 'name', 'Name and Surname:', false, true));
-        $container.append(createField('text', 'address', 'Address:', false, true));
+        $container.append(createField('text', 'name', 'Imię i nazwisko:', false, true));
+        $container.append(createField('text', 'address', 'Adres:', false, true));
         $container.append(createField('email', 'email', 'Email:', false, true));
         
         // --- Custom Country Code + Phone Field ---
         var $phoneGroup = $('<div>').addClass('form-group');
-        var $phoneLabel = $('<label>').addClass('required-label').text('Phone Number:');
+        var $phoneLabel = $('<label>').addClass('required-label').text('Nr kontaktowy:');
         
         var $inputGroup = $('<div>').addClass('phone-input-group');
         
-        // Country Selector (English Page)
+        // Country Selector
         var $countrySelect = $('<select>').attr('id', 'countryCode');
-        $countrySelect.append('<option value="+44">🇬🇧 +44</option>');
-        $countrySelect.append('<option value="+1">🇺🇸 +1</option>');
         $countrySelect.append('<option value="+48">🇵🇱 +48</option>');
         $countrySelect.append('<option value="+49">🇩🇪 +49</option>');
-        $countrySelect.append('<option value="+33">🇫🇷 +33</option>');
+        $countrySelect.append('<option value="+44">🇬🇧 +44</option>');
         $countrySelect.append('<option value="+380">🇺🇦 +380</option>');
-        $countrySelect.append('<option value="">Other (+..)</option>');
+        $countrySelect.append('<option value="+420">🇨🇿 +420</option>');
+        $countrySelect.append('<option value="+421">🇸🇰 +421</option>');
+        $countrySelect.append('<option value="+1">🇺🇸 +1</option>');
+        $countrySelect.append('<option value="">Inny (+..)</option>');
 
         var $phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true).attr('placeholder', '123 456 789');
         
         $inputGroup.append($countrySelect).append($phoneInput);
         $phoneGroup.append($phoneLabel).append($inputGroup);
         $container.append($phoneGroup);
+        // ----------------------------------------
         
         // 4. Comments
-        var $commentLabel = $('<label>').text('Comments:');
+        var $commentLabel = $('<label>').text('Uwagi:');
         var $commentArea = $('<textarea>').attr('name', 'comments').attr('rows', 3);
         $container.append($('<div>').addClass('form-group').append($commentLabel).append($commentArea));
 
         // 5. Terms
         var $acceptDiv = $('<div>').addClass('accept-container');
         var $acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
-        var $acceptLabel = $('<label>').addClass('required-label').text('I accept the ');
-        var $link = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Terms & Conditions (PL Only)');
-        $acceptDiv.append($acceptInput).append($acceptLabel).append($link);
+        var $acceptLabel = $('<label>').addClass('required-label').text('Zapoznałem się z regulaminem obiektu: ');
+        var $link = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Regulamin obiektu');
+        $acceptDiv.append($acceptLabel).append($acceptInput).append($link);
         $container.append($acceptDiv);
 
         $container.append('<hr class="separator">');
 
         // 6. Submit Button
         var $btn = $('<button>').attr('type', 'submit').attr('id', 'submitBtn').addClass('submit-button')
-          .html('<span class="btn-text">Book Now!</span><img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" class="loading-icon-btn" />');
+          .html('<span class="btn-text">Rezerwacja!</span><img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" class="loading-icon-btn" />');
         $container.append($btn);
 
         // --- Event Listeners for Price Updates ---
@@ -421,29 +431,37 @@
         var formData = {};
 
         // 1. Basic Fields Check
-        ['numberOfGuests', 'name', 'address', 'email', 'phone'].forEach(function(field) {
-          var val = $(`[name="${field}"]`).val();
-          formData[field] = val;
-          if (!val) {
-            isValid = false;
-            showError(field, 'This field is required.');
-          }
-        });
+        var validationMap = {
+            'numberOfGuests': 'Liczba gości',
+            'name': 'Imię i nazwisko',
+            'address': 'Adres',
+            'email': 'Email',
+            'phone': 'Nr kontaktowy'
+        };
+
+        for (var key in validationMap) {
+            var val = $(`[name="${key}"]`).val();
+            formData[key] = val;
+            if (!val) {
+                isValid = false;
+                showError(key, 'Proszę wypełnić: ' + validationMap[key] + '.');
+            }
+        }
 
         // 2. Terms Check
         if (!$('[name="accept"]').is(':checked')) {
           isValid = false;
-          showError('accept', 'You must accept the terms.');
+          showError('accept', 'Proszę zaakceptować regulamin.');
         }
 
         // 3. Regex Validation
         if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-           isValid = false; showError('email', 'Invalid email format.');
+           isValid = false; showError('email', 'Proszę podać poprawny adres e-mail.');
         }
         
-        // Phone (Simple Numeric Check for Input)
+        // Simple numeric check for phone input (since code is separate)
         if (formData.phone && !/^[\d\s\-\(\)]{5,15}$/.test(formData.phone)) {
-           isValid = false; showError('phone', 'Invalid phone number format.');
+           isValid = false; showError('phone', 'Proszę podać poprawny numer telefonu.');
         }
 
         if (isValid) {
@@ -464,12 +482,12 @@
           $btn.prop('disabled', true);
           
           $.ajax({
-            // HOUSE 2 SPECIFIC URL
-            url: 'https://script.google.com/macros/s/AKfycbyTsus-p5f5h3tgCiwSTrHP9NZ5sT8i9fvLCIlB6-XEcwvD6j5R2iogO3fHbFPgRzTn/exec',
+            // HOUSE 1 URL
+            url: 'https://script.google.com/macros/s/AKfycbz96K3JPVWSXztUaUsc8IvtJU5PMPGPg2k6zWDlQj3VPGUBOBbKOJAv37jBQIqb-xCv/exec',
             type: 'POST',
             data: formData,
-            success: function() { window.location.href = 'https://teteje.github.io/congrats.html'; },
-            error: function() { window.location.href = 'https://teteje.github.io/congrats.html'; }, 
+            success: function() { window.location.href = 'https://teteje.github.io/congratspl.html'; },
+            error: function() { window.location.href = 'https://teteje.github.io/congratspl.html'; }, 
             complete: function() {
                $('#loading').hide();
             }
@@ -481,7 +499,7 @@
         var $el = fieldName === 'accept' ? $('.accept-container') : $(`[name="${fieldName}"]`);
         // Handle phone group specifically because of nested structure
         if(fieldName === 'phone') $el = $('.phone-input-group');
-
+        
         var $err = $('<div>').addClass('error-container').text(msg);
         $el.after($err);
       }

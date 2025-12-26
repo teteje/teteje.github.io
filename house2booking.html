@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
   <style>
-    /* --- CSS Variables for Easy Theme Management --- */
+    /* --- CSS Variables --- */
     :root {
       --primary-color: #ea9999;
       --primary-hover: #fb6161;
@@ -69,10 +69,10 @@
       object-fit: cover;
     }
 
-    /* --- Card & Layout --- */
+    /* --- Layout --- */
     .card-block { padding: 20px; }
     
-    /* --- Form Styling --- */
+    /* --- Form --- */
     #form-container {
       margin: 20px auto;
       padding: 30px;
@@ -86,7 +86,6 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
     #form-container > * { flex-basis: 100%; }
-    
     .form-group { margin-bottom: 15px; }
     
     input, select, textarea {
@@ -104,17 +103,26 @@
       color: #666;
     }
 
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-      color: #555;
+    /* Phone Input Group Styling */
+    .phone-input-group {
+      display: flex;
+      width: 100%;
     }
-    
-    .required-label::after {
-      content: ' *';
-      color: red;
+    .phone-input-group select {
+      width: 35%;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: 0;
+      background-color: #f8f9fa;
     }
+    .phone-input-group input {
+      width: 65%;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
+    .required-label::after { content: ' *'; color: red; }
 
     /* Submit Button */
     .submit-button {
@@ -134,26 +142,11 @@
     }
     .submit-button:hover { background-color: var(--primary-hover); }
 
-    .accept-container {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-    }
+    .accept-container { display: flex; align-items: center; margin-top: 10px; }
     .accept-container input { width: auto; margin-right: 10px; }
     .accept-container label { margin: 0; margin-right: 5px;}
-
-    .separator {
-      border: 0;
-      border-top: 1px solid #eee;
-      margin: 20px 0;
-    }
-
-    /* --- Errors --- */
-    .error-container {
-      color: #dc3545;
-      font-size: 12px;
-      margin-top: 5px;
-    }
+    .separator { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+    .error-container { color: #dc3545; font-size: 12px; margin-top: 5px; }
 
     /* --- Loading Spinner --- */
     #loading {
@@ -166,12 +159,7 @@
       justify-content: center;
       align-items: center;
     }
-    .loading-icon-btn {
-      width: 20px;
-      height: 20px;
-      display: none;
-      margin-left: 10px;
-    }
+    .loading-icon-btn { width: 20px; height: 20px; display: none; margin-left: 10px; }
     
     .spinner {
       border: 4px solid rgba(0, 0, 0, 0.1);
@@ -211,7 +199,8 @@
       <ul class="list-inline text-sm">
         <li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Guests</li>
         <li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Bathroom</li>
-        <li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 3 Beds</li> <li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 3 Beds</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
         <li class="list-inline-item me-3"><i class="fa-solid fa-snowflake"></i> AC</li>
         <li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
       </ul>
@@ -250,8 +239,6 @@
       // ==========================================
       // CONFIGURATION & PRICING LOGIC
       // ==========================================
-      
-      // 1. Define Price List for 2026 onwards
       const PRICES_2026 = {
         '1-2': 410,
         '3': 440,
@@ -259,24 +246,17 @@
         '5-6': 530
       };
 
-      // 2. Define Special Date Ranges for 2026
-      // Format: [Start Date, End Date (Inclusive)]
       const SPECIAL_RANGES_2026 = [
         ['2026-04-04', '2026-04-06'],
-        ['2026-05-01', '2026-05-03'], // Majówka (May long weekend)
+        ['2026-05-01', '2026-05-03'], // Majówka
         ['2026-12-24', '2026-12-26'], // Christmas
-        ['2026-12-31', '2027-01-01']  // Sylvester / New Year
+        ['2026-12-31', '2027-01-01']  // New Year
       ];
 
-      // Helper: Check if a date falls within special ranges
       function isSpecialDay(dateString) {
         const checkDate = dayjs(dateString);
-        
-        // Check 2026 Ranges
         for (let range of SPECIAL_RANGES_2026) {
-          if (checkDate.isBetween(range[0], range[1], 'day', '[]')) {
-            return true;
-          }
+          if (checkDate.isBetween(range[0], range[1], 'day', '[]')) return true;
         }
         return false;
       }
@@ -286,24 +266,17 @@
         const dateString = dateObj.format('YYYY-MM-DD');
         let basePrice = 0;
 
-        // --- LOGIC FOR 2026 ONWARDS ---
         if (year >= 2026) {
-          // Get Base Price
           if (guests <= 2) basePrice = PRICES_2026['1-2'];
           else if (guests === 3) basePrice = PRICES_2026['3'];
           else if (guests === 4) basePrice = PRICES_2026['4'];
           else basePrice = PRICES_2026['5-6'];
 
-          // Apply 10% Increase for Special Days
-          if (isSpecialDay(dateString)) {
-            // Logic: Base + 10%, rounded up to nearest integer
-            return Math.ceil(basePrice * 1.10);
-          }
-          
+          if (isSpecialDay(dateString)) return Math.ceil(basePrice * 1.10);
           return basePrice;
         } 
         
-        // --- LOGIC FOR 2025 (Fallback/Transition) ---
+        // 2025 Fallback
         if (guests <= 2) return 400;
         if (guests === 3) return 420;
         if (guests === 4) return 450;
@@ -341,7 +314,7 @@
         $container.append(createField('text', 'from', 'Check-in:', true));
         $container.append(createField('text', 'to', 'Check-out:', true));
         
-        var $priceGroup = createField('text', 'price', 'Price (PLN):', true);
+        var $priceGroup = createField('text', 'price', 'Total Price (PLN):', true);
         priceInput = $priceGroup.find('input'); // Store reference
         $container.append($priceGroup);
 
@@ -357,7 +330,30 @@
         $container.append(createField('text', 'name', 'Name and Surname:', false, true));
         $container.append(createField('text', 'address', 'Address:', false, true));
         $container.append(createField('email', 'email', 'Email:', false, true));
-        $container.append(createField('tel', 'phone', 'Phone number:', false, true));
+        
+        // --- Custom Country Code + Phone Field ---
+        var $phoneGroup = $('<div>').addClass('form-group');
+        var $phoneLabel = $('<label>').addClass('required-label').text('Phone Number:');
+        
+        var $inputGroup = $('<div>').addClass('phone-input-group');
+        
+        // Country Selector
+        var $countrySelect = $('<select>').attr('id', 'countryCode');
+        $countrySelect.append('<option value="+48">🇵🇱 +48</option>');
+        $countrySelect.append('<option value="+49">🇩🇪 +49</option>');
+        $countrySelect.append('<option value="+44">🇬🇧 +44</option>');
+        $countrySelect.append('<option value="+380">🇺🇦 +380</option>');
+        $countrySelect.append('<option value="+420">🇨🇿 +420</option>');
+        $countrySelect.append('<option value="+421">🇸🇰 +421</option>');
+        $countrySelect.append('<option value="+1">🇺🇸 +1</option>');
+        $countrySelect.append('<option value="">Other (+..)</option>');
+
+        var $phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true).attr('placeholder', '123 456 789');
+        
+        $inputGroup.append($countrySelect).append($phoneInput);
+        $phoneGroup.append($phoneLabel).append($inputGroup);
+        $container.append($phoneGroup);
+        // ----------------------------------------
         
         // 4. Comments
         var $commentLabel = $('<label>').text('Comments:');
@@ -368,7 +364,7 @@
         var $acceptDiv = $('<div>').addClass('accept-container');
         var $acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
         var $acceptLabel = $('<label>').addClass('required-label').text('I accept the ');
-        var $link = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Terms & Conditions (PL)');
+        var $link = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Terms & Conditions (PL Only)');
         $acceptDiv.append($acceptInput).append($acceptLabel).append($link);
         $container.append($acceptDiv);
 
@@ -447,12 +443,16 @@
         if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
            isValid = false; showError('email', 'Invalid email format.');
         }
-        // Phone (Allows + and digits)
-        if (formData.phone && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(formData.phone)) {
-           isValid = false; showError('phone', 'Invalid phone number.');
+        // Phone (Simple Numeric Check for Input)
+        if (formData.phone && !/^[\d\s\-\(\)]{5,15}$/.test(formData.phone)) {
+           isValid = false; showError('phone', 'Invalid phone number format.');
         }
 
         if (isValid) {
+          // COMBINE Country Code + Phone Number
+          var countryCode = $('#countryCode').val();
+          formData.phone = countryCode + ' ' + formData.phone;
+
           // Add Read-only data to payload
           formData.checkin = $('input[name="from"]').val();
           formData.checkout = $('input[name="to"]').val();
@@ -481,6 +481,9 @@
 
       function showError(fieldName, msg) {
         var $el = fieldName === 'accept' ? $('.accept-container') : $(`[name="${fieldName}"]`);
+        // Handle phone group specifically because of nested structure
+        if(fieldName === 'phone') $el = $('.phone-input-group');
+
         var $err = $('<div>').addClass('error-container').text(msg);
         $el.after($err);
       }

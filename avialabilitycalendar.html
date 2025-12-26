@@ -2,289 +2,328 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>House Calendars</title>
+  <title>Availability Calendars</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  
   <style>
+    /* --- Theme Variables --- */
+    :root {
+      --primary-color: #ea9999;
+      --primary-hover: #fb6161;
+      --reserved-color: #e06666;
+      --available-color: #b6d7a8;
+      --past-color: #e9ecef;
+      --text-muted: #adb5bd;
+    }
+
     body {
       padding: 2rem;
       background: #f7f7f7;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    .calendar-container {
-      margin-bottom: 4rem;
+
+    .calendar-wrapper {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+      position: relative;
     }
+
     .calendar-header {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .nav-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    .nav-btn:hover { background: var(--primary-hover); }
+
+    /* Grid Setup */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    /* Day Names (Mon, Tue...) */
+    .day-name {
+      text-align: center;
+      font-weight: bold;
+      color: #777;
+      font-size: 0.9rem;
+      padding-bottom: 10px;
+    }
+
+    /* Day Cells */
+    .day-cell {
+      aspect-ratio: 1/1; /* Keeps cells square */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-weight: 500;
+      position: relative;
+      cursor: default;
+      font-size: 0.9rem;
+    }
+
+    /* Status Styles */
+    .status-available { background-color: var(--available-color); color: #155724; }
+    .status-reserved { background-color: var(--reserved-color); color: white; }
+    
+    .past-date {
+      background-color: var(--past-color);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .is-today {
+      border: 2px solid #007bff;
+    }
+
+    .faded { opacity: 0; pointer-events: none; } /* Hide empty cells */
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      font-size: 0.85rem;
+    }
+    .legend-item { display: flex; align-items: center; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 2px; margin-right: 5px; }
+
+    /* Loading Overlay */
+    .loader-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255,255,255,0.8);
+      z-index: 10;
+      display: none; /* Hidden by default */
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      font-weight: bold;
+      border-radius: 8px;
     }
-    .calendar-header button {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      padding: 0 1rem;
-      cursor: pointer;
-    }
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 8px;
-  width: 100%;
-  max-width: 100%;
-  margin: auto;
-  box-sizing: border-box;
-}
 
-    .day, .day-name {
-      padding: 10px;
-      text-align: center;
-      border-radius: 5px;
-      font-weight: bold;
+    /* CSS Spinner */
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(0,0,0,0.1);
+      border-radius: 50%;
+      border-left-color: var(--primary-color);
+      animation: spin 1s linear infinite;
     }
-    .day-name {
-  background: #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px; /* Optional: ensures consistent height across devices */
-  line-height: 1; /* Prevents excess vertical space */
-}
-
-    .available {
-      background: #b6d7a8;
-    }
-    .reserved {
-      background: #e06666;
-      color: white;
-    }
-    .faded {
-      opacity: 0.4;
-    }
-    .today {
-      border: 3px solid #007bff;
-    }
-    /* Make the loader cover the entire calendar space */
-    .loader-container {
-      position: relative;
-      width: 20%;
-      height: 20%;
-    }
-    #loader-house1, #loader-house2 {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 20%;
-      height: 20%;
-    }
-    /* Hide the arrows during loading */
-    .calendar-header button {
-      display: none;
-    }
-    .calendar-header.loaded button {
-      display: inline-block;
-    }
-    .past-date {
-  background: #d3d3d3;  /* Light grey */
-}
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 
   </style>
 </head>
 <body>
 
-  <!-- House 1 -->
-  <div class="calendar-container">
-    <h2 class="text-center mb-2">House 1 – Availability Calendar</h2>
-    <div class="text-center mb-2 loader-container" id="loader-house1" style="display:none;">
-      <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." width="100%">
+<div class="container">
+  <div class="row">
+    
+    <div class="col-lg-6">
+      <div class="calendar-wrapper" id="house1-wrapper">
+        <div class="loader-overlay">
+          <div class="spinner"></div>
+        </div>
+        
+        <div class="calendar-header">
+          <button class="nav-btn" onclick="changeMonth('house1', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="calendar-title" id="house1-title"></div>
+          <button class="nav-btn" onclick="changeMonth('house1', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="calendar-grid" id="house1-grid"></div>
+        
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot status-available"></div>Available</div>
+          <div class="legend-item"><div class="legend-dot status-reserved"></div>Reserved</div>
+        </div>
+      </div>
     </div>
-    <div class="calendar-header" id="header-house1">
-      <button onclick="changeMonth1(-1)">&lt;</button>
-      <span id="monthYear1"></span>
-      <button onclick="changeMonth1(1)">&gt;</button>
+
+    <div class="col-lg-6">
+      <div class="calendar-wrapper" id="house2-wrapper">
+        <div class="loader-overlay">
+          <div class="spinner"></div>
+        </div>
+
+        <div class="calendar-header">
+          <button class="nav-btn" onclick="changeMonth('house2', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="calendar-title" id="house2-title"></div>
+          <button class="nav-btn" onclick="changeMonth('house2', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="calendar-grid" id="house2-grid"></div>
+
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot status-available"></div>Available</div>
+          <div class="legend-item"><div class="legend-dot status-reserved"></div>Reserved</div>
+        </div>
+      </div>
     </div>
-    <div class="calendar" id="calendar1"></div>
+
   </div>
+</div>
 
-  <!-- House 2 -->
-  <div class="calendar-container">
-    <h2 class="text-center mb-2">House 2 – Availability Calendar</h2>
-    <div class="text-center mb-2 loader-container" id="loader-house2" style="display:none;">
-      <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." width="100%">
-    </div>
-    <div class="calendar-header" id="header-house2">
-      <button onclick="changeMonth2(-1)">&lt;</button>
-      <span id="monthYear2"></span>
-      <button onclick="changeMonth2(1)">&gt;</button>
-    </div>
-    <div class="calendar" id="calendar2"></div>
-  </div>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/en-gb.js"></script>
+<script>
+  // Set Locale to English (Great Britain) so week starts on Monday
+  dayjs.locale('en-gb');
 
-  <script>
-    const locale = navigator.language || 'en-US';
+  // --- Configuration ---
+  const HOUSES = {
+    house1: {
+      name: 'House 1',
+      url: 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec',
+      currentDate: dayjs(),
+      data: []
+    },
+    house2: {
+      name: 'House 2',
+      url: 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec',
+      currentDate: dayjs(),
+      data: []
+    }
+  };
 
-    // ---- HOUSE 1 ----
-    const url1 = 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec';
-    let data1 = [];
-    let date1 = new Date();
+  // --- Fetch Data ---
+  async function fetchHouseData(houseId) {
+    const house = HOUSES[houseId];
+    const loader = document.querySelector(`#${houseId}-wrapper .loader-overlay`);
+    
+    loader.style.display = 'flex'; // Show loader
 
-    function fetchCalendarData1(callback) {
-      document.getElementById('loader-house1').style.display = 'block';
-      document.getElementById('header-house1').classList.remove('loaded');
-      fetch(url1)
-        .then(res => res.json())
-        .then(json => {
-          data1 = json;
-          callback();
-          document.getElementById('loader-house1').style.display = 'none';
-          document.getElementById('header-house1').classList.add('loaded');
-        }).catch(err => {
-          console.error(err);
-          document.getElementById('loader-house1').style.display = 'none';
-          document.getElementById('header-house1').classList.add('loaded');
-        });
+    try {
+      const response = await fetch(house.url);
+      const json = await response.json();
+      house.data = json;
+      renderCalendar(houseId);
+    } catch (error) {
+      console.error(`Error fetching ${house.name}:`, error);
+      document.getElementById(`${houseId}-grid`).innerHTML = '<p class="text-center text-danger w-100">Error loading data.</p>';
+    } finally {
+      loader.style.display = 'none'; // Hide loader
+    }
+  }
+
+  // --- Render Calendar ---
+  function renderCalendar(houseId) {
+    const house = HOUSES[houseId];
+    const grid = document.getElementById(`${houseId}-grid`);
+    const title = document.getElementById(`${houseId}-title`);
+    const viewDate = house.currentDate; // The month we are viewing
+    const today = dayjs(); // Real today
+
+    grid.innerHTML = '';
+    
+    // Update Header (e.g., "House 1 - December 2024")
+    title.textContent = `${house.name} – ${viewDate.format('MMMM YYYY')}`;
+
+    // 1. Render Day Headers (Mon, Tue...)
+    // Start of week in en-gb is Monday. 
+    for (let i = 0; i < 7; i++) {
+      const dayName = dayjs().day(i + 1).format('ddd'); // +1 because dayjs(0) is Sunday, we want Mon first in loop
+      const headerEl = document.createElement('div');
+      headerEl.className = 'day-name';
+      headerEl.textContent = dayName;
+      grid.appendChild(headerEl);
     }
 
-    function renderCalendar1(year, month) {
-  const cal = document.getElementById('calendar1');
-  const header = document.getElementById('monthYear1');
-  cal.innerHTML = '';
-  header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long', year: 'numeric' })}`;
+    // 2. Calculate Calendar Cells
+    const startOfMonth = viewDate.startOf('month');
+    const daysInMonth = viewDate.daysInMonth();
+    
+    // Calculate empty slots before the 1st of the month
+    // day() returns 0 (Sun) to 6 (Sat). We want Mon(1) to be index 0.
+    const firstDayIndex = (startOfMonth.day() + 6) % 7; 
 
-  const days = Array.from({ length: 7 }, (_, i) =>
-  new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1)).replace(/\.$/, '')
-);
-  days.forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'day-name';
-    el.textContent = d;
-    cal.appendChild(el);
+    // Add empty slots
+    for (let i = 0; i < firstDayIndex; i++) {
+      const emptyEl = document.createElement('div');
+      emptyEl.className = 'day-cell faded';
+      grid.appendChild(emptyEl);
+    }
+
+    // Add actual days
+    for (let day = 1; day <= daysInMonth; day++) {
+      const currentDayDate = startOfMonth.date(day);
+      const dateStr = currentDayDate.format('YYYY-MM-DD');
+      
+      const el = document.createElement('div');
+      el.className = 'day-cell';
+      el.textContent = day;
+
+      // Check Past Dates
+      if (currentDayDate.isBefore(today, 'day')) {
+        el.classList.add('past-date');
+      } else {
+        // Find availability
+        const record = house.data.find(r => dayjs(r.Date).format('YYYY-MM-DD') === dateStr);
+        const status = record ? (record['Reservation Status'] || '').toLowerCase() : 'unknown';
+
+        if (status === 'available') {
+          el.classList.add('status-available');
+          el.title = 'Available';
+        } else if (status.includes('reserved') || status.includes('booked')) {
+          el.classList.add('status-reserved');
+          el.title = 'Reserved';
+        } else {
+          el.style.backgroundColor = '#eee'; 
+        }
+      }
+
+      // Highlight Today
+      if (currentDayDate.isSame(today, 'day')) {
+        el.classList.add('is-today');
+      }
+
+      grid.appendChild(el);
+    }
+  }
+
+  // --- Navigation Function ---
+  window.changeMonth = function(houseId, delta) {
+    HOUSES[houseId].currentDate = HOUSES[houseId].currentDate.add(delta, 'month');
+    renderCalendar(houseId);
+  };
+
+  // --- Initialize ---
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchHouseData('house1');
+    fetchHouseData('house2');
   });
 
-  const firstDay = new Date(year, month, 1);
-  const totalDays = new Date(year, month + 1, 0).getDate();
-  const offset = firstDay.getDay();
-  const totalCells = Math.ceil((offset + totalDays) / 7) * 7;
+</script>
 
-  const today = new Date();
-  // Set time to midnight for a proper comparison
-  today.setHours(0, 0, 0, 0);
-
-  for (let i = 0; i < totalCells; i++) {
-    const d = new Date(year, month, i - offset + 1);
-    const currentMonth = d.getMonth() === month;
-    const dayStr = d.toISOString().slice(0, 10);
-    const matched = data1.find(r => new Date(r['Date']).toISOString().slice(0, 10) === dayStr);
-    const status = matched ? (matched['Reservation Status'] || 'unknown').trim().toLowerCase() : 'unknown';
-
-    const el = document.createElement('div');
-    el.className = 'day';
-    el.textContent = d.getDate();
-
-    if (d.toDateString() === today.toDateString()) el.classList.add('today');
-    
-    // Add the grey background if the date is in the past, but not today
-    if (d < today) {
-      el.classList.add('past-date');
-    }
-
-    el.classList.add(status === 'available' ? 'available' : 'reserved');
-    if (!currentMonth) el.classList.add('faded');
-    el.title = matched ? matched['Reservation Status'] : 'No data';
-    cal.appendChild(el);
-  }
-}
-
-
-    function changeMonth1(delta) {
-      date1.setMonth(date1.getMonth() + delta);
-      renderCalendar1(date1.getFullYear(), date1.getMonth());
-    }
-
-    fetchCalendarData1(() => renderCalendar1(date1.getFullYear(), date1.getMonth()));
-
-    // ---- HOUSE 2 ----
-    const url2 = 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec';
-    let data2 = [];
-    let date2 = new Date();
-
-    function fetchCalendarData2(callback) {
-      document.getElementById('loader-house2').style.display = 'block';
-      document.getElementById('header-house2').classList.remove('loaded');
-      fetch(url2)
-        .then(res => res.json())
-        .then(json => {
-          data2 = json;
-          callback();
-          document.getElementById('loader-house2').style.display = 'none';
-          document.getElementById('header-house2').classList.add('loaded');
-        }).catch(err => {
-          console.error(err);
-          document.getElementById('loader-house2').style.display = 'none';
-          document.getElementById('header-house2').classList.add('loaded');
-        });
-    }
-
-   function renderCalendar2(year, month) {
-  const cal = document.getElementById('calendar2');
-  const header = document.getElementById('monthYear2');
-  cal.innerHTML = '';
-  header.textContent = `${new Date(year, month).toLocaleString(locale, { month: 'long', year: 'numeric' })}`;
-
-  const days = Array.from({ length: 7 }, (_, i) =>
-  new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2021, 7, i + 1)).replace(/\.$/, '')
-);
-
-  days.forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'day-name';
-    el.textContent = d;
-    cal.appendChild(el);
-  });
-
-  const firstDay = new Date(year, month, 1);
-  const totalDays = new Date(year, month + 1, 0).getDate();
-  const offset = firstDay.getDay();
-  const totalCells = Math.ceil((offset + totalDays) / 7) * 7;
-
-  const today = new Date();
-  // Set time to midnight for a proper comparison
-  today.setHours(0, 0, 0, 0);
-
-  for (let i = 0; i < totalCells; i++) {
-    const d = new Date(year, month, i - offset + 1);
-    const currentMonth = d.getMonth() === month;
-    const dayStr = d.toISOString().slice(0, 10);
-    const matched = data2.find(r => new Date(r['Date']).toISOString().slice(0, 10) === dayStr);
-    const status = matched ? (matched['Reservation Status'] || 'unknown').trim().toLowerCase() : 'unknown';
-
-    const el = document.createElement('div');
-    el.className = 'day';
-    el.textContent = d.getDate();
-
-    if (d.toDateString() === today.toDateString()) el.classList.add('today');
-    
-    // Add the grey background if the date is in the past, but not today
-    if (d < today) {
-      el.classList.add('past-date');
-    }
-
-    el.classList.add(status === 'available' ? 'available' : 'reserved');
-    if (!currentMonth) el.classList.add('faded');
-    el.title = matched ? matched['Reservation Status'] : 'No data';
-    cal.appendChild(el);
-  }
-}
-    function changeMonth2(delta) {
-      date2.setMonth(date2.getMonth() + delta);
-      renderCalendar2(date2.getFullYear(), date2.getMonth());
-    }
-
-    fetchCalendarData2(() => renderCalendar2(date2.getFullYear(), date2.getMonth()));
-  </script>
 </body>
 </html>

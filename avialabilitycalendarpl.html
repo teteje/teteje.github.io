@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kalendarze Dostępności</title>
+  <title>Availability Calendars</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   
   <style>
+    /* --- Theme Variables --- */
     :root {
       --primary-color: #ea9999;
       --primary-hover: #fb6161;
@@ -44,7 +45,6 @@
       font-size: 1.25rem;
       font-weight: bold;
       color: #333;
-      text-transform: capitalize;
     }
 
     .nav-btn {
@@ -164,8 +164,8 @@
         <div class="calendar-grid" id="house1-grid"></div>
         
         <div class="legend">
-          <div class="legend-item"><div class="legend-dot status-available"></div>Dostępny</div>
-          <div class="legend-item"><div class="legend-dot status-reserved"></div>Zarezerwowany</div>
+          <div class="legend-item"><div class="legend-dot status-available"></div>Available</div>
+          <div class="legend-item"><div class="legend-dot status-reserved"></div>Reserved</div>
         </div>
       </div>
     </div>
@@ -185,8 +185,8 @@
         <div class="calendar-grid" id="house2-grid"></div>
 
         <div class="legend">
-          <div class="legend-item"><div class="legend-dot status-available"></div>Dostępny</div>
-          <div class="legend-item"><div class="legend-dot status-reserved"></div>Zarezerwowany</div>
+          <div class="legend-item"><div class="legend-dot status-available"></div>Available</div>
+          <div class="legend-item"><div class="legend-dot status-reserved"></div>Reserved</div>
         </div>
       </div>
     </div>
@@ -195,21 +195,21 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/pl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/en-gb.js"></script>
 <script>
-  // Set Locale to Polish
-  dayjs.locale('pl');
+  // Set Locale to English (Great Britain) so week starts on Monday
+  dayjs.locale('en-gb');
 
   // --- Configuration ---
   const HOUSES = {
     house1: {
-      name: 'Domek 1',
+      name: 'House 1',
       url: 'https://script.google.com/macros/s/AKfycbz800vAt7-yh-6KuWQVVzQ9Gt6wMyZUSp649RJJYILkFKozrce4Zm61w9E_b3gI6Kmi/exec',
       currentDate: dayjs(),
       data: []
     },
     house2: {
-      name: 'Domek 2',
+      name: 'House 2',
       url: 'https://script.google.com/macros/s/AKfycbyrUqT0pe9YU_H3L_by_OC72L9-4bSCEpuFRgcgXevr19Dpt63bUDIO9KSMv0MyEhOO/exec',
       currentDate: dayjs(),
       data: []
@@ -230,7 +230,7 @@
       renderCalendar(houseId);
     } catch (error) {
       console.error(`Error fetching ${house.name}:`, error);
-      document.getElementById(`${houseId}-grid`).innerHTML = '<p class="text-center text-danger w-100">Błąd ładowania danych.</p>';
+      document.getElementById(`${houseId}-grid`).innerHTML = '<p class="text-center text-danger w-100">Error loading data.</p>';
     } finally {
       loader.style.display = 'none'; // Hide loader
     }
@@ -246,13 +246,12 @@
 
     grid.innerHTML = '';
     
-    // Update Header (e.g., "Domek 1 - Grudzień 2024")
+    // Update Header
     title.textContent = `${house.name} – ${viewDate.format('MMMM YYYY')}`;
 
-    // 1. Render Day Headers (Pn, Wt...)
-    // Start of week in PL is Monday. 
+    // 1. Render Day Headers (Mon, Tue...)
     for (let i = 0; i < 7; i++) {
-      const dayName = dayjs().day(i + 1).format('ddd'); // +1 because dayjs(0) is Sunday, we want Mon first
+      const dayName = dayjs().day(i + 1).format('ddd');
       const headerEl = document.createElement('div');
       headerEl.className = 'day-name';
       headerEl.textContent = dayName;
@@ -263,9 +262,6 @@
     const startOfMonth = viewDate.startOf('month');
     const daysInMonth = viewDate.daysInMonth();
     
-    // Calculate empty slots before the 1st of the month
-    // day() returns 0 (Sun) to 6 (Sat). We want Mon(1) to be index 0.
-    // Logic: (day() + 6) % 7 converts Sun(0)->6, Mon(1)->0, Tue(2)->1
     const firstDayIndex = (startOfMonth.day() + 6) % 7; 
 
     // Add empty slots
@@ -289,18 +285,21 @@
         el.classList.add('past-date');
       } else {
         // Find availability
-        // Google Script usually returns ISO dates like "2024-12-25T00:00:00.000Z"
         const record = house.data.find(r => dayjs(r.Date).format('YYYY-MM-DD') === dateStr);
-        const status = record ? (record['Reservation Status'] || '').toLowerCase() : 'unknown';
+        // Normalize status to lowercase
+        const status = record ? (record['Reservation Status'] || record['Status'] || '').toLowerCase() : 'unknown';
 
-        if (status === 'available') {
+        // --- UPDATED LOGIC HERE ---
+        if (status.includes('available')) {
           el.classList.add('status-available');
-          el.title = 'Dostępny';
-        } else if (status.includes('reserved') || status.includes('booked')) {
+          el.title = 'Available';
+        } 
+        // Catches "reservation", "reserved", "booked"
+        else if (status.includes('reservation') || status.includes('reserved') || status.includes('booked')) {
           el.classList.add('status-reserved');
-          el.title = 'Zarezerwowany';
-        } else {
-          // Default fallback if unknown (treat as reserved or neutral)
+          el.title = 'Reserved';
+        } 
+        else {
           el.style.backgroundColor = '#eee'; 
         }
       }

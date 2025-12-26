@@ -250,9 +250,8 @@
     title.textContent = `${house.name} – ${viewDate.format('MMMM YYYY')}`;
 
     // 1. Render Day Headers (Mon, Tue...)
-    // Start of week in en-gb is Monday. 
     for (let i = 0; i < 7; i++) {
-      const dayName = dayjs().day(i + 1).format('ddd'); // +1 because dayjs(0) is Sunday, we want Mon first in loop
+      const dayName = dayjs().day(i + 1).format('ddd'); // +1 because dayjs(0) is Sunday
       const headerEl = document.createElement('div');
       headerEl.className = 'day-name';
       headerEl.textContent = dayName;
@@ -263,8 +262,7 @@
     const startOfMonth = viewDate.startOf('month');
     const daysInMonth = viewDate.daysInMonth();
     
-    // Calculate empty slots before the 1st of the month
-    // day() returns 0 (Sun) to 6 (Sat). We want Mon(1) to be index 0.
+    // Calculate empty slots before the 1st
     const firstDayIndex = (startOfMonth.day() + 6) % 7; 
 
     // Add empty slots
@@ -289,15 +287,20 @@
       } else {
         // Find availability
         const record = house.data.find(r => dayjs(r.Date).format('YYYY-MM-DD') === dateStr);
-        const status = record ? (record['Reservation Status'] || '').toLowerCase() : 'unknown';
+        // Normalize status
+        const status = record ? (record['Reservation Status'] || record['Status'] || '').toLowerCase() : 'unknown';
 
-        if (status === 'available') {
+        // --- UPDATED LOGIC HERE ---
+        if (status.includes('available')) {
           el.classList.add('status-available');
           el.title = 'Available';
-        } else if (status.includes('reserved') || status.includes('booked')) {
+        } 
+        // Catches "reservation", "reserved", "booked", "booking"
+        else if (status.includes('reservation') || status.includes('reserved') || status.includes('booked')) {
           el.classList.add('status-reserved');
           el.title = 'Reserved';
-        } else {
+        } 
+        else {
           el.style.backgroundColor = '#eee'; 
         }
       }

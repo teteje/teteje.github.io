@@ -3,751 +3,484 @@
 
 <head>
   <meta charset="utf-8" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <title>Swiper demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-  <!-- Link Swiper's CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-  <!-- Bootstrap CSS -->
+  <title>House 2 Booking</title>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
- <!-- Demo styles -->
-<style>
-  html,
-  body {
-    position: relative;
-    height: 100%;
-    background: #eee;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-  }
-    .fa-solid,
-  fa-users {
-    color: #ea9999 !important;
-  }
-  .text-info {
-    color: #ea9999 !important;
-  }
-  .btn-info {
-    color: white;
-    background-color: #ea9999;
-    border-color: #ff9494;
-  }
-  .btn-info:hover {
-    background-color: #fb6161;
-    border-color: #ff9494;
-  }
-  .btn-info:active {
-    background-color: #fb6161 !important;
-    border-color: #ff9494 !important;
-  }
-  .Guestselection {
-    color: white;
-    background-color: #ea9999;
-    border-color: #ff9494;
-    width: 100px;
-    margin: auto;
-    font-size: 16px;
-  }
-  .Guestselection:hover {
-    background-color: #fb6161;
-    border-color: #ff9494;
-  }
-  .Guestselection:active {
-    background-color: #fb6161 !important;
-    border-color: #ff9494 !important;
-  }
-    .card-block {
-    padding: 20px;
-  }
-  .card-title {
-    text-align: center;
-  }
-  /* Style for the form container */
-    .read-only-field {
-    background-color: #f0f0f0 !important; /* Add the desired background color and !important */
-    cursor: not-allowed;
-  }
-  #form-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  #form-container > * {
-    flex-basis: 100%;
-  }
-  #form-container input,
-  #form-container select,
-  #form-container textarea {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background-color: #fff;
-  }
-  /* Style for the labels */
-  #form-container label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  /* Style for the "Book!" button */
-  #form-container button {
-    margin-top: 10px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 3px;
-    background-color: #ea9999;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  #form-container button:last-child {
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
-  .accept-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-right: 70px;
-  }
-  .accept-container label {
-    margin-right: 5px;
-  }
 
-  .required-label::after {
-    content: "*";
-    color: red;
-  }
-  .required-label::after {
-  content: '*';
-  color: red;
-  margin-left: 4px;
-}
-
-
-  .separator {
-    border: none;
-    border-top: 1px solid #ccc;
-    margin: 20px 0;
-  }
-    .error-container {
-    margin-top: -10px;
-    margin-bottom: 10px;
-    padding: 0px;
-    color: #ff0000;
-  }
-
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin: 0;
-}
-
-
-  
-  @keyframes ldio-5pc9ti1scmm {
-  0% { opacity: 1 }
-  100% { opacity: 0 }
-}
-.ldio-5pc9ti1scmm div {
-  left: 94px;
-  top: 48px;
-  position: absolute;
-  animation: ldio-5pc9ti1scmm linear 1s infinite;
-  background: #fe718d;
-  width: 12px;
-  height: 24px;
-  border-radius: 6px / 12px;
-  transform-origin: 6px 52px;
-}.ldio-5pc9ti1scmm div:nth-child(1) {
-  transform: rotate(0deg);
-  animation-delay: -0.9166666666666666s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(2) {
-  transform: rotate(30deg);
-  animation-delay: -0.8333333333333334s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(3) {
-  transform: rotate(60deg);
-  animation-delay: -0.75s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(4) {
-  transform: rotate(90deg);
-  animation-delay: -0.6666666666666666s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(5) {
-  transform: rotate(120deg);
-  animation-delay: -0.5833333333333334s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(6) {
-  transform: rotate(150deg);
-  animation-delay: -0.5s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(7) {
-  transform: rotate(180deg);
-  animation-delay: -0.4166666666666667s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(8) {
-  transform: rotate(210deg);
-  animation-delay: -0.3333333333333333s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(9) {
-  transform: rotate(240deg);
-  animation-delay: -0.25s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(10) {
-  transform: rotate(270deg);
-  animation-delay: -0.16666666666666666s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(11) {
-  transform: rotate(300deg);
-  animation-delay: -0.08333333333333333s;
-  background: #fe718d;
-}.ldio-5pc9ti1scmm div:nth-child(12) {
-  transform: rotate(330deg);
-  animation-delay: 0s;
-  background: #fe718d;
-}
-.loadingio-spinner-spinner-7646pt8rie {
-  width: 300px;
-  height: 300px;
-  display: inline-block;
-  overflow: hidden;
-  background: rgba(NaN, NaN, NaN, 0);
-}
-.ldio-5pc9ti1scmm {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform: translateZ(0) scale(1);
-  backface-visibility: hidden;
-  transform-origin: 0 0; /* see note above */
-}
-.ldio-5pc9ti1scmm div { box-sizing: content-box; }
-#loading {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-}
-
-#loading p {
-  margin-top: 10px;
-  color: #333;
-  font-size: 14px;
-  opacity: 0; /* Set initial opacity to 0 */
-  animation: fadeAnimation 2s infinite; /* Apply the animation */
-}
-
-@keyframes fadeAnimation {
-  0% {
-    opacity: 0; /* Start with fade out */
-  }
-  50% {
-    opacity: 1; /* Fade in */
-  }
-  100% {
-    opacity: 0; /* Fade out */
-  }
-}
-  
-      .fa-arrow-left:before {
-        content: "<" !important;
+  <style>
+    /* --- CSS Variables for Easy Theme Management --- */
+    :root {
+      --primary-color: #ea9999;
+      --primary-hover: #fb6161;
+      --border-color: #ff9494;
     }
-    .fa-arrow-right:before {
-        content: ">" !important;
+
+    html, body {
+      position: relative;
+      height: 100%;
+      background: #eee;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+      margin: 0;
+      padding: 0;
     }
-    .flaticon2-left-arrow:before {
-        content: "<";
-    }
-    .flaticon2-right-arrow:before {
-        content: ">";
-    }
-  
-  .swiper {
-  max-width: 550px;
-  max-height: 300px;
-  width: 100%;
-  height: 100%;
-}
 
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-  .loading-icon {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-    width: 16px; /* Adjust width as needed */
-  height: 16px; /* Adjust height as needed */
-}
-</style>
-</head>
-<body>
-  
-  <!-- Swiper -->
- <div class="swiper mySwiper">
-  <div class="swiper-wrapper">
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444918851.jpg?k=1e25a9ee5f00b032ad80c55a948cca8b831ef909b738565326c95949431aacc0&o=" alt="salon"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444645076.jpg?k=8a40c604f8dc4b75300571134a134a898ed277266476860389d34c2318bdaf60&o=" alt="kitchen"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444915623.jpg?k=e1e3fe0c9019dfa3539135cdc40d0a9bb7d1fef12b5884d2c41c2b06b7c86e56&o=" alt="small room"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444646311.jpg?k=012105363354b162209527d38e947ea8e1d3901e316e68b8f1bff1665f006f35&o=" alt="big room"></div>
-    <div class="swiper-slide"><img class="img-fluid swiper-lazy" src="https://i.ibb.co/ggK1mkg/20221203-145844.jpg" alt="bathroom"></div>
-  </div>
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-pagination"></div>
-</div>
-
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-<!-- Initialize Swiper -->
-<script>
-  var swiper = new Swiper(".mySwiper", {
-    slidesPerView: "auto",
-    spaceBetween: 10,
-    pagination: {
-      el: ".swiper-pagination",
-      type: "progressbar",
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-  });
-</script>
-
-    <!-- Your card div content here -->
-<div class="card-block">
-<h4 class="card-title text-info">House 2</h4>
-<ul class="list-inline text-sm mb-4" align="center">
-<li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Guests</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Bathroom</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 3 Beds</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-snowflake"></i> AC</li>
-<li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
-
-</ul>
-<p align="center"><a href="https://teteje.github.io/moreinfodomek2.html" class="btn btn-info">More Information</a></p>
-</div>
-    <!-- Form container -->
-    <div id="form-container">
-      
-
-
-      <!-- Form fields will be added here dynamically -->
-    </div>
+    /* --- Typography & Icons --- */
+    .text-theme { color: var(--primary-color) !important; }
+    .fa-solid, .fa-users { color: var(--primary-color) !important; }
     
-
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-  <!-- jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-<div id="loading" class="loadingio-spinner-spinner-7646pt8rie"><p>This may take up to 15 seconds...</p><div class="ldio-5pc9ti1scmm">
-<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-</div></div>
-<script>
-  $(document).ready(function() {
-// Pricing logic
-var specialDayPrices = {
-  '2024-12-23': 475, // Christmas: December 25, 2024
-  '2024-12-24': 475, // Christmas: December 25, 2024
-  '2024-12-25': 475, // Christmas: December 25, 2024
-  '2024-12-26': 475, // Date in between special days: December 26, 2024
-  '2024-12-27': 475, // Christmas: December 27, 2024
-  '2024-12-28': 475, // Christmas: December 25, 2024
-  '2024-12-29': 475, // Christmas: December 25, 2024
-  '2024-12-30': 475, // Christmas: December 25, 2024
-  '2024-12-31': 475, // Christmas: December 25, 2024
-  '2025-01-01': 475, // Christmas: December 25, 2024
-  '2024-05-01': 475, // May 1st and May 3rd 2024
-  '2024-05-02': 475, // May 1st and May 3rd 2024
-  
-};
-
-var normalDayPriceUntil2024 = 375;
-var normalDayPriceFrom2025 = 400;
-
-function calculateTotalPrice(startDate, endDate, numberOfGuests) {
-  // Assuming startDate and endDate are in the format 'YYYY-MM-DD'
-  var start = dayjs(startDate);
-  var end = dayjs(endDate);
-
-  // Calculate the number of nights
-  var numberOfNights = end.diff(start, 'day'); // not Include the end date
-
-  var totalPrice = 0;
-
-  // Iterate through each night and calculate the price
-  for (var i = 0; i < numberOfNights; i++) {
-    var currentDate = start.add(i, 'day').format('YYYY-MM-DD');
-    var isSpecialDay = specialDayPrices[currentDate] !== undefined;
-
-    // Adjust special day price based on the number of guests
-    if (isSpecialDay) {
-      switch (numberOfGuests) {
-        case 1:
-        case 2:
-          totalPrice += 430; // Special day price for 1 or 2 guests
-          break;
-        case 3:
-          totalPrice += 470; // Special day price for 3 guests
-          break;
-        case 4:
-          totalPrice += 490; // Special day price for 4 guests
-          break;
-        case 5:
-        case 6:
-          totalPrice += 540; // Special day price for 5 or 6 guests
-          break;
-        default:
-          totalPrice += specialDayPrices[currentDate]; // Use the original special day price for other guest counts
-      }
-    } else if (start.year() <= 2024) {
-      // Pricing until the end of 2024
-      switch (numberOfGuests) {
-        case 1:
-        case 2:
-          totalPrice += normalDayPriceUntil2024; // Normal day price for 1 or 2 guests
-          break;
-        case 3:
-          totalPrice += 395; // Normal day price for 3 guests
-          break;
-        case 4:
-          totalPrice += 420; // Normal day price for 4 guests
-          break;
-        case 5:
-        case 6:
-          totalPrice += 450; // Normal day price for 5 or 6 guests
-          break;
-      }
-    } else {
-      // Pricing from 2025 onward
-      switch (numberOfGuests) {
-        case 1:
-        case 2:
-          totalPrice += normalDayPriceFrom2025; // Normal day price from 2024 onward for 1 or 2 guests
-          break;
-        case 3:
-          totalPrice += 420; // Normal day price from 2024 onward for 3 guests
-          break;
-        case 4:
-          totalPrice += 450; // Normal day price from 2024 onward for 4 guests
-          break;
-        case 5:
-        case 6:
-          totalPrice += 490; // Normal day price from 2024 onward for 5 or 6 guests
-          break;
-      }
+    /* --- Buttons --- */
+    .btn-theme {
+      color: white;
+      background-color: var(--primary-color);
+      border-color: var(--border-color);
+      transition: all 0.3s;
     }
-  }
+    .btn-theme:hover, .btn-theme:active {
+      background-color: var(--primary-hover);
+      border-color: var(--border-color);
+      color: white;
+    }
 
-  return totalPrice;
-}
+    /* --- Swiper --- */
+    .swiper {
+      max-width: 550px;
+      height: 300px;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .swiper-slide {
+      text-align: center;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
+    /* --- Card & Layout --- */
+    .card-block { padding: 20px; }
+    
+    /* --- Form Styling --- */
+    #form-container {
+      margin: 20px auto;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 800px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    #form-container > * { flex-basis: 100%; }
+    
+    .form-group { margin-bottom: 15px; }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      box-sizing: border-box;
+    }
+    
+    .read-only-field {
+      background-color: #f0f0f0 !important;
+      cursor: not-allowed;
+      color: #666;
+    }
 
-    var checkin;
-    var checkout;
-    var numberOfGuestsSelect;
-    var nameInput;
-    var addressInput;
-    var emailInput;
-    var phoneInput;
-    var commentsInput;
-    var acceptInput;
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #555;
+    }
+    
+    .required-label::after {
+      content: ' *';
+      color: red;
+    }
 
-    function updateForm() {
-      var formContainer = $('#form-container');
-      // Clear existing form fields
-      formContainer.empty();
-      var fromLabel = $('<label>').text('Check-in:');
-      var fromInput = $('<input>').attr('type', 'text').attr('name', 'from').addClass('read-only-field').attr('readonly', true);
-      formContainer.append(fromLabel).append(fromInput);
+    /* Submit Button */
+    .submit-button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      background-color: var(--primary-color);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .submit-button:hover { background-color: var(--primary-hover); }
 
-      var toLabel = $('<label>').text('Check-out:');
-      var toInput = $('<input>').attr('type', 'text').attr('name', 'to').addClass('read-only-field').attr('readonly', true);
-      formContainer.append(toLabel).append(toInput);
+    .accept-container {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .accept-container input { width: auto; margin-right: 10px; }
+    .accept-container label { margin: 0; margin-right: 5px;}
 
-      var priceLabel = $('<label>').text('Price: ');
-      // Assign the priceInput element to the global variable
-        priceInput = $('<input>').attr('type', 'text').attr('name', 'price').addClass('read-only-field').prop('disabled', true);
-        formContainer.append(priceLabel).append(priceInput);
+    .separator {
+      border: 0;
+      border-top: 1px solid #eee;
+      margin: 20px 0;
+    }
 
+    /* --- Errors --- */
+    .error-container {
+      color: #dc3545;
+      font-size: 12px;
+      margin-top: 5px;
+    }
 
-      var numberOfGuestsLabel = $('<label>').text('Number of Guests:').addClass('required-label');
-      numberOfGuestsSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
-      numberOfGuestsSelect.append('<option value="1">1 Guest</option>');
-      numberOfGuestsSelect.append('<option value="2">2 Guests</option>');
-      numberOfGuestsSelect.append('<option value="3">3 Guests</option>');
-      numberOfGuestsSelect.append('<option value="4">4 Guests</option>');
-      numberOfGuestsSelect.append('<option value="5">5 Guests</option>');
-      numberOfGuestsSelect.append('<option value="6">6 Guests</option>');
-      formContainer.append(numberOfGuestsLabel).append(numberOfGuestsSelect);
+    /* --- Loading Spinner --- */
+    #loading {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .loading-icon-btn {
+      width: 20px;
+      height: 20px;
+      display: none;
+      margin-left: 10px;
+    }
+    
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border-left-color: var(--primary-color);
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    .swiper-button-next, .swiper-button-prev { color: var(--primary-color); }
+  </style>
+</head>
 
-      var nameLabel = $('<label>').text('Name and Surname:').addClass('required-label');
-      nameInput = $('<input>').attr('type', 'text').attr('name', 'name').prop('required', true);
-      formContainer.append(nameLabel).append(nameInput);
+<body>
 
-      var addressLabel = $('<label>').text('Address:').addClass('required-label');
-      addressInput = $('<input>').attr('type', 'text').attr('name', 'address').prop('required', true);
-      formContainer.append(addressLabel).append(addressInput);
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444918851.jpg?k=1e25a9ee5f00b032ad80c55a948cca8b831ef909b738565326c95949431aacc0&o=" alt="salon"></div>
+      <div class="swiper-slide"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444645076.jpg?k=8a40c604f8dc4b75300571134a134a898ed277266476860389d34c2318bdaf60&o=" alt="kitchen"></div>
+      <div class="swiper-slide"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444915623.jpg?k=e1e3fe0c9019dfa3539135cdc40d0a9bb7d1fef12b5884d2c41c2b06b7c86e56&o=" alt="small room"></div>
+      <div class="swiper-slide"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/444646311.jpg?k=012105363354b162209527d38e947ea8e1d3901e316e68b8f1bff1665f006f35&o=" alt="big room"></div>
+      <div class="swiper-slide"><img src="https://i.ibb.co/ggK1mkg/20221203-145844.jpg" alt="bathroom"></div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
 
-      var emailLabel = $('<label>').text('Email:').addClass('required-label');
-      emailInput = $('<input>').attr('type', 'email').attr('name', 'email').prop('required', true);
-      formContainer.append(emailLabel).append(emailInput);
+  <div class="card-block">
+    <h4 class="card-title text-theme">House 2</h4>
+    <div class="text-center mb-4">
+      <ul class="list-inline text-sm">
+        <li class="list-inline-item me-3"><i class="fa-solid fa-users"></i> 6 Guests</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-shower"></i> 1 Bathroom</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-bed"></i> 3 Beds</li> <li class="list-inline-item me-3"><i class="fa-solid fa-square-parking"></i> 1 Park.</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-snowflake"></i> AC</li>
+        <li class="list-inline-item me-3"><i class="fa-solid fa-wifi"></i> WiFi</li>
+      </ul>
+      <a href="https://teteje.github.io/moreinfodomek2.html" class="btn btn-theme">More Information</a>
+    </div>
+  </div>
 
-      var phoneLabel = $('<label>').text('Phone number:').addClass('required-label');
-      phoneInput = $('<input>').attr('type', 'tel').attr('name', 'phone').prop('required', true);
-      formContainer.append(phoneLabel).append(phoneInput);
+  <div id="form-container">
+    </div>
 
-      var commentsLabel = $('<label>').text('Comments: ');
-      commentsInput = $('<textarea>').attr('name', 'comments');
-      formContainer.append(commentsLabel).append(commentsInput);
+  <div id="loading">
+    <div class="spinner"></div>
+    <p style="margin-top: 15px; font-weight: bold;">Processing booking...</p>
+    <p style="font-size: 12px; color: #666;">This may take up to 15 seconds</p>
+  </div>
 
-      var acceptContainer = $('<div>').addClass('accept-container');
-      var acceptLabel = $('<label>').text('I accept the Terms & Conditions:').addClass('required-label');
-      acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
-      var termsLink = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Terms & Conditions (PL Only)');
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/isBetween.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-      acceptContainer.append(acceptLabel).append(acceptInput).append(termsLink);
-      formContainer.append(acceptContainer);
-      // Add a separator
-      var separator = $('<hr>').addClass('separator');
-      formContainer.append(separator);
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: "auto",
+      spaceBetween: 10,
+      pagination: { el: ".swiper-pagination", type: "progressbar" },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    });
+  </script>
 
-      // Create the submit button
-var submitButton = $('<button>')
-  .attr('type', 'submit')
-  .attr('id', 'submitBtn')
-  .addClass('submit-button') // Add this class for styling
-  .text('Book Now!')
-  .append('<img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" class="loading-icon" alt="Loading..." />');
+  <script>
+    dayjs.extend(window.dayjs_plugin_isBetween);
 
-formContainer.append(submitButton);
+    $(document).ready(function() {
+      
+      // ==========================================
+      // CONFIGURATION & PRICING LOGIC
+      // ==========================================
+      
+      // 1. Define Price List for 2026 onwards
+      const PRICES_2026 = {
+        '1-2': 410,
+        '3': 440,
+        '4': 470,
+        '5-6': 530
+      };
 
+      // 2. Define Special Date Ranges for 2026
+      // Format: [Start Date, End Date (Inclusive)]
+      const SPECIAL_RANGES_2026 = [
+        ['2026-05-01', '2026-05-03'], // Majówka (May long weekend)
+        ['2026-12-24', '2026-12-26'], // Christmas
+        ['2026-12-31', '2027-01-01']  // Sylvester / New Year
+      ];
 
-      // Get the URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
-      checkin = urlParams.get('checkin');
-      checkout = urlParams.get('checkout');
+      // Helper: Check if a date falls within special ranges
+      function isSpecialDay(dateString) {
+        const checkDate = dayjs(dateString);
+        
+        // Check 2026 Ranges
+        for (let range of SPECIAL_RANGES_2026) {
+          if (checkDate.isBetween(range[0], range[1], 'day', '[]')) {
+            return true;
+          }
+        }
+        return false;
+      }
 
-      // Set the values of the fromInput and toInput fields
-      fromInput.val(checkin);
-      toInput.val(checkout);
+      function getPriceForNight(dateObj, guests) {
+        const year = dateObj.year();
+        const dateString = dateObj.format('YYYY-MM-DD');
+        let basePrice = 0;
 
-      // Calculate and set the initial price
-      var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-      var startDate = moment(checkin);
-      var endDate = moment(checkout);
-      var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-      priceInput.val(totalPrice);
+        // --- LOGIC FOR 2026 ONWARDS ---
+        if (year >= 2026) {
+          // Get Base Price
+          if (guests <= 2) basePrice = PRICES_2026['1-2'];
+          else if (guests === 3) basePrice = PRICES_2026['3'];
+          else if (guests === 4) basePrice = PRICES_2026['4'];
+          else basePrice = PRICES_2026['5-6'];
 
-      // Update the price when the number of guests or check-in date changes
-      numberOfGuestsSelect.on('change', function() {
-        var numberOfGuests = parseInt($(this).val());
-        var startDate = moment(checkin);
-        var endDate = moment(checkout);
+          // Apply 10% Increase for Special Days
+          if (isSpecialDay(dateString)) {
+            // Logic: Base + 10%, rounded up to nearest integer
+            return Math.ceil(basePrice * 1.10);
+          }
+          
+          return basePrice;
+        } 
+        
+        // --- LOGIC FOR 2025 (Fallback/Transition) ---
+        if (guests <= 2) return 400;
+        if (guests === 3) return 420;
+        if (guests === 4) return 450;
+        return 490;
+      }
 
-        // Reset additionalPrice
-        additionalPrice = 0;
+      function calculateTotalPrice(startDateStr, endDateStr, numberOfGuests) {
+        if (!startDateStr || !endDateStr) return 0;
 
-        // Update additionalPrice based on the number of guests
-        if (numberOfGuests === 3) {
-          additionalPrice = 20;
-        } else if (numberOfGuests === 4) {
-          additionalPrice = 35;
-        } else if (numberOfGuests >= 5) {
-          additionalPrice = 70;
+        const start = dayjs(startDateStr);
+        const end = dayjs(endDateStr);
+        const numberOfNights = end.diff(start, 'day'); // Exclude end date for checkout
+
+        let totalPrice = 0;
+
+        for (let i = 0; i < numberOfNights; i++) {
+          let currentNight = start.add(i, 'day');
+          totalPrice += getPriceForNight(currentNight, numberOfGuests);
         }
 
-        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-        priceInput.val(totalPrice);
-      });
-
-      fromInput.on('change', function() {
-        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-        var startDate = moment($(this).val());
-        var endDate = moment(checkout);
-        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-        priceInput.val(totalPrice);
-      });
-
-      toInput.on('change', function() {
-        var numberOfGuests = parseInt(numberOfGuestsSelect.val());
-        var startDate = moment(checkin);
-        var endDate = moment($(this).val());
-        var totalPrice = calculateTotalPrice(startDate, endDate, numberOfGuests);
-        priceInput.val(totalPrice);
-      });
-    }
-
-    // Call the updateForm function to generate the form
-    updateForm();
-
-    var submitButton = $('#submitBtn');
-
-    submitButton.on('click', function(e) {
-      e.preventDefault(); // Prevent the default form submission behavior
-
-      // Hide any existing error messages
-      $('.error-container').remove();
-
-      // Perform form validation
-      var isValid = true;
-
-    // Check if all mandatory fields are filled
-var mandatoryFields = [
-  { name: 'numberOfGuests', message: 'Number of Guests' },
-  { name: 'name', message: 'Name & Surname' },
-  { name: 'address', message: 'Address' },
-  { name: 'email', message: 'Email' },
-  { name: 'phone', message: 'Phone number' },
-  { name: 'accept', message: 'Accept Terms & Conditions' }
-];
-
-for (var i = 0; i < mandatoryFields.length; i++) {
-  var field = mandatoryFields[i].name;
-  var fieldValue = $('[name="' + field + '"]').val();
-  if (!fieldValue) {
-    isValid = false;
-    showErrorMessage(field, 'Please fill in ' + mandatoryFields[i].message + '.');
-  }
-}
-
-
-      // Validate the phone number format
-var phoneNumber = $('[name="phone"]').val();
-var phoneRegex = /^\+?\d+$/; // Updated regular expression
-if (!phoneRegex.test(phoneNumber)) {
-  isValid = false;
-  showErrorMessage('phone', 'Please provide a valid phone number.');
-}
-
-
-      // Validate the email format
-      var email = $('[name="email"]').val();
-      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        isValid = false;
-        showErrorMessage('email', 'Please provide a valid email.');
+        return totalPrice;
       }
 
-        // Check if the "Accept terms and conditions" checkbox is checked
-  var acceptChecked = $('[name="accept"]').prop('checked');
-  if (!acceptChecked) {
-    isValid = false;
-    showErrorMessage('accept', 'Please accept the terms and conditions.');
-  }
+      // ==========================================
+      // FORM BUILDING & UI
+      // ==========================================
 
-      if (isValid) {
-        // Show the loading GIF
-        $('#loading').show();
-                 submitButton.find('.button-text').hide();
-    submitButton.find('.loading-icon').show();
+      var priceInput; // Global ref
 
-        // Get form data
-        var formData = {
-      checkin: checkin,
-      checkout: checkout,
-      numberOfGuests: numberOfGuestsSelect.val(),
-      price: priceInput.val(),
-      name: nameInput.val(),
-      address: addressInput.val(),
-      email: emailInput.val(),
-      phone: phoneInput.val(),
-      comments: commentsInput.val(),
-      accept: "Accepted"
-    };
+      function buildForm() {
+        var $container = $('#form-container');
+        $container.empty();
 
-    // Submit the form data via AJAX
-    $.ajax({
-      url: 'https://script.google.com/macros/s/AKfycbyTsus-p5f5h3tgCiwSTrHP9NZ5sT8i9fvLCIlB6-XEcwvD6j5R2iogO3fHbFPgRzTn/exec',
-      type: 'POST',
-      data: formData,
-      success: function(response) {
-        // Hide loading GIF
-        $('#loading').hide();
-             submitButton.find('.loading-icon').hide();
-        submitButton.find('.button-text').hide();
-
-        // Redirect to congratulatory page
-        redirectToCongratulationsPage();
-      },
-      error: function() {
-        // Hide loading GIF
-        $('#loading').hide();
-     submitButton.find('.loading-icon').hide();
-        submitButton.find('.button-text').hide();
+        // 1. Read-only Dates & Price
+        $container.append(createField('text', 'from', 'Check-in:', true));
+        $container.append(createField('text', 'to', 'Check-out:', true));
         
-        // Redirect to congratulatory page
-        redirectToCongratulationsPage();
+        var $priceGroup = createField('text', 'price', 'Price (PLN):', true);
+        priceInput = $priceGroup.find('input'); // Store reference
+        $container.append($priceGroup);
+
+        // 2. Guest Selection
+        var $guestLabel = $('<label>').addClass('required-label').text('Number of Guests:');
+        var $guestSelect = $('<select>').attr('name', 'numberOfGuests').prop('required', true);
+        [1, 2, 3, 4, 5, 6].forEach(num => {
+          $guestSelect.append(`<option value="${num}">${num} ${num === 1 ? 'Guest' : 'Guests'}</option>`);
+        });
+        $container.append($('<div>').addClass('form-group').append($guestLabel).append($guestSelect));
+
+        // 3. User Details
+        $container.append(createField('text', 'name', 'Name and Surname:', false, true));
+        $container.append(createField('text', 'address', 'Address:', false, true));
+        $container.append(createField('email', 'email', 'Email:', false, true));
+        $container.append(createField('tel', 'phone', 'Phone number:', false, true));
+        
+        // 4. Comments
+        var $commentLabel = $('<label>').text('Comments:');
+        var $commentArea = $('<textarea>').attr('name', 'comments').attr('rows', 3);
+        $container.append($('<div>').addClass('form-group').append($commentLabel).append($commentArea));
+
+        // 5. Terms
+        var $acceptDiv = $('<div>').addClass('accept-container');
+        var $acceptInput = $('<input>').attr('type', 'checkbox').attr('name', 'accept');
+        var $acceptLabel = $('<label>').addClass('required-label').text('I accept the ');
+        var $link = $('<a>').attr('href', 'https://www.napanskiejgorze.com/regulamin').attr('target', '_blank').text('Terms & Conditions (PL)');
+        $acceptDiv.append($acceptInput).append($acceptLabel).append($link);
+        $container.append($acceptDiv);
+
+        $container.append('<hr class="separator">');
+
+        // 6. Submit Button
+        var $btn = $('<button>').attr('type', 'submit').attr('id', 'submitBtn').addClass('submit-button')
+          .html('<span class="btn-text">Book Now!</span><img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" class="loading-icon-btn" />');
+        $container.append($btn);
+
+        // --- Event Listeners for Price Updates ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const checkin = urlParams.get('checkin');
+        const checkout = urlParams.get('checkout');
+
+        // Pre-fill
+        $('input[name="from"]').val(checkin);
+        $('input[name="to"]').val(checkout);
+
+        function refreshPrice() {
+          const guests = parseInt($guestSelect.val());
+          const total = calculateTotalPrice(checkin, checkout, guests);
+          priceInput.val(total);
+        }
+
+        $guestSelect.on('change', refreshPrice);
+        
+        // Initial Calculation
+        refreshPrice();
+      }
+
+      // Helper to create standard fields
+      function createField(type, name, labelText, isReadOnly, isRequired) {
+        var $div = $('<div>').addClass('form-group');
+        var $label = $('<label>').text(labelText);
+        if (isRequired) $label.addClass('required-label');
+        
+        var $input = $('<input>').attr('type', type).attr('name', name);
+        if (isReadOnly) $input.addClass('read-only-field').prop('readonly', true);
+        if (isRequired) $input.prop('required', true);
+
+        return $div.append($label).append($input);
+      }
+
+      // Initialize
+      buildForm();
+
+      // ==========================================
+      // FORM SUBMISSION & VALIDATION
+      // ==========================================
+      $('#submitBtn').on('click', function(e) {
+        e.preventDefault();
+        $('.error-container').remove(); // Clear previous errors
+
+        var isValid = true;
+        var formData = {};
+
+        // 1. Basic Fields Check
+        ['numberOfGuests', 'name', 'address', 'email', 'phone'].forEach(function(field) {
+          var val = $(`[name="${field}"]`).val();
+          formData[field] = val;
+          if (!val) {
+            isValid = false;
+            showError(field, 'This field is required.');
+          }
+        });
+
+        // 2. Terms Check
+        if (!$('[name="accept"]').is(':checked')) {
+          isValid = false;
+          showError('accept', 'You must accept the terms.');
+        }
+
+        // 3. Regex Validation
+        // Email
+        if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+           isValid = false; showError('email', 'Invalid email format.');
+        }
+        // Phone (Allows + and digits)
+        if (formData.phone && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(formData.phone)) {
+           isValid = false; showError('phone', 'Invalid phone number.');
+        }
+
+        if (isValid) {
+          // Add Read-only data to payload
+          formData.checkin = $('input[name="from"]').val();
+          formData.checkout = $('input[name="to"]').val();
+          formData.price = priceInput.val();
+          formData.comments = $('textarea[name="comments"]').val();
+          formData.accept = "Accepted";
+
+          // UI Loading State
+          $('#loading').css('display', 'flex'); // Show Full screen loader
+          var $btn = $('#submitBtn');
+          $btn.prop('disabled', true);
+          
+          $.ajax({
+            // HOUSE 2 SPECIFIC URL
+            url: 'https://script.google.com/macros/s/AKfycbyTsus-p5f5h3tgCiwSTrHP9NZ5sT8i9fvLCIlB6-XEcwvD6j5R2iogO3fHbFPgRzTn/exec',
+            type: 'POST',
+            data: formData,
+            success: function() { window.location.href = 'https://teteje.github.io/congrats.html'; },
+            error: function() { window.location.href = 'https://teteje.github.io/congrats.html'; }, 
+            complete: function() {
+               $('#loading').hide();
+            }
+          });
+        }
+      });
+
+      function showError(fieldName, msg) {
+        var $el = fieldName === 'accept' ? $('.accept-container') : $(`[name="${fieldName}"]`);
+        var $err = $('<div>').addClass('error-container').text(msg);
+        $el.after($err);
       }
     });
-  }
-}); // <-- Add this closing parenthesis
-
-function redirectToCongratulationsPage() {
-  // Redirect to the congratulatory page
-  window.location.href = 'https://teteje.github.io/congrats.html';
-}
-
-function showErrorMessage(field, message) {
-  // Remove any existing error messages for the field
-  $('#' + field + '-error').remove();
-
-  // Create the error message element
-  var errorContainer = $('<div>').addClass('error-container').attr('id', field + '-error');
-  var errorMessage = $('<p>').addClass('error-message').text(message);
-
-  // Append the error message after the input field
-  var fieldInput = $('[name="' + field + '"]');
-  fieldInput.after(errorContainer.append(errorMessage));
-
-  // Adjust the position of the error message
-  var fieldBottom = fieldInput.position().top + fieldInput.outerHeight();
-  errorContainer.css('top', fieldBottom + 'px');
-}
-
-
-
-  });
-</script>
-
-
+  </script>
 </body>
 </html>
